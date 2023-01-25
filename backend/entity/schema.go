@@ -9,35 +9,40 @@ import (
 type GENDER struct {
 	gorm.Model
 	Gender_Type string
-	Admin       []ADMIN `gorm:"foreignKey:GenderID"`
+
+	Admin   []ADMIN   `gorm:"foreignKey:GenderID"`
 	Student []STUDENT `gorm:"foreignKey:GenderID"`
 }
 type PROVINCE struct {
 	gorm.Model
 	Province_Name string
-	Admin         []ADMIN `gorm:"foreignKey:ProvinceID"`
+
+	Admin   []ADMIN   `gorm:"foreignKey:ProvinceID"`
 	Student []STUDENT `gorm:"foreignKey:ProvinceID"`
 }
 type DEGREE struct {
 	gorm.Model
 	Degree_Name string
 
-	
+	Course  []COURSE  `gorm:"foreignKey:DegreeID"`
 	Student []STUDENT `gorm:"foreignKey:DegreeID"`
 }
 type PREFIX struct {
 	gorm.Model
 	Prefix_Name string
-	Admin        []ADMIN   `gorm:"foreignKey:PrefixID"`
+
+	Admin   []ADMIN   `gorm:"foreignKey:PrefixID"`
+	Branch  []BRANCH  `gorm:foreignKey:PrefixID`
+	Course  []COURSE  `gorm:"foreignKey:PrefixID"`
 	Student []STUDENT `gorm:"foreignKey:PrefixID"`
-	Branch []BRANCH `gorm:foreignKey:PrefixID`
 }
 type INSTITUTE struct {
 	gorm.Model
 	Institute_Name string
 
+	Branch  []BRANCH  `gorm:"foreignKey:InstituteID"`
+	Course  []COURSE  `gorm:"foreignKey:InstituteID"`
 	Student []STUDENT `gorm:"foreignKey:InstituteID"`
-	Branch []BRANCH `gorm:"foreignKey:InstituteID"`
 }
 
 type ADMIN struct {
@@ -56,8 +61,32 @@ type ADMIN struct {
 	Gender   GENDER
 	Province PROVINCE
 
+	Branch  []BRANCH  `gorm:"foreignKey:AdminID"`
+	Course  []COURSE  `gorm:"foreignKey:AdminID"`
+	Student []STUDENT `gorm:"foreignKey:AdminID"`
+}
 
+type COURSE struct {
+	gorm.Model
+	Course_Name    string
+	Course_Teacher string
+	Course_Credit  uint
+	Course_Detail  string
+	Course_Year    uint
 
+	DegreeID    *uint
+	PrefixID    *uint
+	InstituteID *uint
+	BranchID    *uint
+	AdminID     *uint
+
+	Degree    DEGREE
+	Prefix    PREFIX
+	Institute INSTITUTE
+	Branch    BRANCH
+	Admin     ADMIN
+
+	Student []STUDENT `gorm:"foreignKey:CourseID"`
 }
 
 type STUDENT struct {
@@ -106,6 +135,9 @@ type BRANCH struct {
 	Prefix    PREFIX
 	Institute INSTITUTE
 	Admin     ADMIN
+
+	Course  []COURSE  `gorm:"foreignKey:BranchID"`
+	Student []STUDENT `gorm:"foreignKey:BranchID"`
 
 	// ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
 }
