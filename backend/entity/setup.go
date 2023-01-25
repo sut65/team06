@@ -27,7 +27,7 @@ func SetupDatabase() {
 		&DEGREE{},
 		&INSTITUTE{},
 		&PREFIX{},
-		// &ADMIN{},
+		&ADMIN{},
 		// &BRANCH{},
 		// &COURSE{},
 		&STUDENT{},
