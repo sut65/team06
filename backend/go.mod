@@ -1,4 +1,4 @@
-module github.com/supakanboss/team06
+module github.com/sut65/team06
 
 go 1.19
 
