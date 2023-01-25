@@ -116,5 +116,19 @@ func main() {
 	r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
 	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Grade
+	r.POST("/create_Grade", controller.CreateGrade)
+	//แสดงข้อมูลตารางGrade
+	r.GET("/grade_table", controller.ListGradeTable)
+	// ดึงข้อมูล Grade by id
+	r.GET("/grade/:id", controller.ListGradeByID)
+	// แก้ไขข้อมูล Grade
+	r.PATCH("/update_grade", controller.UpdateGrade)
+	// ลบข้อมูล Grade by id
+	r.DELETE("/delete_Grade/:id", controller.DeleteGradeByID)
+
+	/////////////////////////////////////////////////////////////
+
+
 	r.Run()
 }
