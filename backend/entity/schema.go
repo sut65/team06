@@ -30,12 +30,14 @@ type PREFIX struct {
 	Prefix_Name string
 	Admin        []ADMIN   `gorm:"foreignKey:PrefixID"`
 	Student []STUDENT `gorm:"foreignKey:PrefixID"`
+	Branch []BRANCH `gorm:foreignKey:PrefixID`
 }
 type INSTITUTE struct {
 	gorm.Model
 	Institute_Name string
 
 	Student []STUDENT `gorm:"foreignKey:InstituteID"`
+	Branch []BRANCH `gorm:"foreignKey:InstituteID"`
 }
 
 type ADMIN struct {
@@ -77,16 +79,33 @@ type STUDENT struct {
 	PrefixID    *uint
 	InstituteID *uint
 	ProvinceID  *uint
-	// BranchID    *uint
-	// CourseID    *uint
-	// AdminID     *uint
+	BranchID    *uint
+	CourseID    *uint
+	AdminID     *uint
 
 	Gender    GENDER
 	Degree    DEGREE
 	Prefix    PREFIX
 	Institute INSTITUTE
 	Province  PROVINCE
-	// Branch    BRANCH
-	// Course    COURSE
-	// Admin     ADMIN
+	Branch    BRANCH
+	Course    COURSE
+	Admin     ADMIN
+}
+
+type BRANCH struct {
+	gorm.Model
+	Branch_Name    string
+	Branch_Teacher string
+	Branch_Info    string
+
+	PrefixID    *uint
+	InstituteID *uint
+	AdminID     *uint
+
+	Prefix    PREFIX
+	Institute INSTITUTE
+	Admin     ADMIN
+
+	// ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
 }
