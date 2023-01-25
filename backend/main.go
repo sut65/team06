@@ -60,5 +60,16 @@ func main() {
 
 	/////////////////////////////////////////////////////////////
 
+	//รับข้อมูลเข้าตาราง Admin
+	r.POST("/create_Admin", controller.CreateAdmiin)
+	//แสดงข้อมูลตาราง Admin
+	r.GET("/admin_table", controller.ListAdminTable)
+	// ดึงข้อมูล admin by id
+	r.GET("/admin/:id", controller.ListAdminByID)
+	// แก้ไขข้อมูล admin
+	r.PATCH("/update_admin", controller.UpdateAdmin)
+	// ลบข้อมูล admin by id
+	r.DELETE("/delete_admin/:id", controller.DeleteAdminByID)
+	
 	r.Run()
 }
