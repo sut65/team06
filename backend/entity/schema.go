@@ -77,16 +77,16 @@ type STUDENT struct {
 	PrefixID    *uint
 	InstituteID *uint
 	ProvinceID  *uint
-	// BranchID    *uint
-	// CourseID    *uint
-	// AdminID     *uint
+	BranchID    *uint
+	CourseID    *uint
+	AdminID     *uint
 
 	Gender    GENDER
 	Degree    DEGREE
 	Prefix    PREFIX
 	Institute INSTITUTE
 	Province  PROVINCE
-	// Branch    BRANCH
-	// Course    COURSE
-	// Admin     ADMIN
+	Branch    BRANCH
+	Course    COURSE
+	Admin     ADMIN
 }
