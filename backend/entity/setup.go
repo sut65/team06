@@ -551,33 +551,33 @@ func SetupDatabase() {
 
 	///////////////ข้อมูลใน entity COURSE///////////////////////////////
 
-	// Course1 := COURSE{
-	// 	Course_Name:    "วิศวกรรมคอมพิวเตอร์หลักสูตร(พ.ศ.2560)",
-	// 	Course_Teacher: "หาย ไม่บอก",
-	// 	Course_Credit:  178,
-	// 	Course_Detail:  "เป็นหลักสูตรของสาขาวิศวกรรมคอมพิวเตอร์เป็นหลักสูตรที่ออกแบบมาเพื่อตอบโจทย์กับอนาคต",
-	// 	Course_Year:    2560,
-	// 	Degree:         Degree1,
-	// 	Prefix:         Prefix5,
-	// 	Institute:      Institute1,
-	// 	Branch:         Branch1,
-	// 	Admin:          Admin1,
-	// }
-	// db.Model(&COURSE{}).Create(&Course1)
+	Course1 := COURSE{
+		Course_Name:    "วิศวกรรมคอมพิวเตอร์หลักสูตร(พ.ศ.2560)",
+		Course_Teacher: "หาย ไม่บอก",
+		Course_Credit:  178,
+		Course_Detail:  "เป็นหลักสูตรของสาขาวิศวกรรมคอมพิวเตอร์เป็นหลักสูตรที่ออกแบบมาเพื่อตอบโจทย์กับอนาคต",
+		Course_Year:    2560,
+		Degree:         Degree1,
+		Prefix:         Prefix5,
+		Institute:      Institute1,
+		Branch:         Branch1,
+		Admin:          Admin1,
+	}
+	db.Model(&COURSE{}).Create(&Course1)
 
-	// Course2 := COURSE{
-	// 	Course_Name:    "วิศวกรรมเครื่องกลหลักสูตร(พ.ศ.2560)",
-	// 	Course_Teacher: "แอบมอง คนดี",
-	// 	Course_Credit:  192,
-	// 	Course_Detail:  "เป็นหลักสูตรของสาขาวิศวกรรมเครื่องกลเป็นหลักสูตรที่ออกแบบมาเพื่อตอบโจทย์กับอนาคต",
-	// 	Course_Year:    2560,
-	// 	Degree:         Degree1,
-	// 	Prefix:         Prefix4,
-	// 	Institute:      Institute1,
-	// 	Branch:         Branch2,
-	// 	Admin:          Admin2,
-	// }
-	// db.Model(&COURSE{}).Create(&Course2)
+	Course2 := COURSE{
+		Course_Name:    "วิศวกรรมเครื่องกลหลักสูตร(พ.ศ.2560)",
+		Course_Teacher: "แอบมอง คนดี",
+		Course_Credit:  192,
+		Course_Detail:  "เป็นหลักสูตรของสาขาวิศวกรรมเครื่องกลเป็นหลักสูตรที่ออกแบบมาเพื่อตอบโจทย์กับอนาคต",
+		Course_Year:    2560,
+		Degree:         Degree1,
+		Prefix:         Prefix4,
+		Institute:      Institute1,
+		Branch:         Branch2,
+		Admin:          Admin2,
+	}
+	db.Model(&COURSE{}).Create(&Course2)
 
 	///////////////ข้อมูลใน entity STUDENT///////////////////////////////
 
