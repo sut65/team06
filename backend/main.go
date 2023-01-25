@@ -53,6 +53,10 @@ func main() {
 	r.GET("/activityType", controller.ListActivityType)
 	//combobox Trimester
 	r.GET("/trimester", controller.ListTrimester)
+	//combobx dormitorytype
+	r.GET("/dormitorytype", controller.ListDormitoryType)
+	//combobx roomtype
+	r.GET("/roomtype", controller.ListRoomType)
 
 
 	/////////////////////////////////////////////////////////////
@@ -144,7 +148,18 @@ func main() {
 	r.DELETE("/delete_activity/:id", controller.DeleteActivityByID)
 
 	///////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Dormitory
+	r.POST("/dormitory", controller.CreateDormitory)
+	//แสดงข้อมูลตาราง Dormitory
+	r.GET("/dormitory_table", controller.ListDormitoryTable)
+	// ดึงข้อมูล dormitory by id
+	r.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
+	// แก้ไขข้อมูล Dormitory
+	r.PATCH("/update_dormitory", controller.UpdateDormitory)
+	// ลบข้อมูล Dormitory by id
+	r.DELETE("/delete_dormitoty/:id", controller.DeleteDormitoyByID)
 
+	///////////////////////////////////////////////////////////
 
 	r.Run()
 }
