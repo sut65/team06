@@ -126,3 +126,25 @@ func ListTrimester(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Trimester})
 }
+
+// 5:GET dormitorytype เตรียมข้อมูลให้ combobox
+func ListDormitoryType(c *gin.Context) {
+	var dormitorytype []entity.DORMITORYTYPE
+	
+	if err := entity.DB().Raw("SELECT * FROM dormitorytypes").Scan(&dormitorytype).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": dormitorytype})
+}
+
+// 6:GET roomtype เตรียมข้อมูลให้ combobox
+func ListRoomType(c *gin.Context) {
+	var roomtype []entity.ROOMTYPE
+	
+	if err := entity.DB().Raw("SELECT * FROM roomtypes").Scan(&roomtype).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": roomtype})
+}
