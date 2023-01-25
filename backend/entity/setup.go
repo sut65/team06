@@ -850,6 +850,30 @@ func SetupDatabase() {
 		Branch:                   Branch2,
 	}
 	db.Model(&DORMITORY{}).Create(&Dormitory2)
+
+	Suggestion1 := SUGGESTION{
+		Suggestion_Teacher:        "อ.เกษม จิตดี",
+		Suggestion_Student_Number: "B6300000",
+		Suggestion_Student_Name:   "ศุภกานต์ แสงจันทร์",
+		Suggestion_Date:           t,
+		Suggestion_Detail:         "ปรับการพูดตอนสอนในช้าลงกว่านี้ได้ไหมครับ",
+		Prefix:                    Prefix1,
+		Institute:                 Institute1,
+		Branch:                    Branch1,
+	}
+	db.Model(&SUGGESTION{}).Create(&Suggestion1)
+
+	Suggestion2 := SUGGESTION{
+		Suggestion_Teacher:        "ดร.เปรมณัต วงศ์ดี",
+		Suggestion_Student_Number: "B6311010",
+		Suggestion_Student_Name:   "สมจิต สีแดง",
+		Suggestion_Date:           t,
+		Suggestion_Detail:         "อยากให้อ.มีกิจกรรมเล็กๆ น้อยๆ ระหว่างการสอนด้วยค่ะ",
+		Prefix:                    Prefix1,
+		Institute:                 Institute2,
+		Branch:                    Branch2,
+	}
+	db.Model(&SUGGESTION{}).Create(&Suggestion2)
 }
 
 
