@@ -32,7 +32,7 @@ type PREFIX struct {
 	Prefix_Name string
 
 	Admin   []ADMIN   `gorm:"foreignKey:PrefixID"`
-	Branch  []BRANCH  `gorm:foreignKey:PrefixID`
+	Branch  []BRANCH  `gorm:"foreignKey:PrefixID"`
 	Course  []COURSE  `gorm:"foreignKey:PrefixID"`
 	Student []STUDENT `gorm:"foreignKey:PrefixID"`
 }

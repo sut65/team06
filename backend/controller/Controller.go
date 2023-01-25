@@ -83,3 +83,25 @@ func ListProvince(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Province})
 }
+
+// GET scholarship เตรียมข้อมูลให้ combobox
+func ListScholarship(c *gin.Context) {
+	var Scholarship []entity.SCHOLARSHIP
+
+	if err := entity.DB().Raw("SELECT * FROM scholarsh_ips").Scan(&Scholarship).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListScholarship_error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Scholarship})
+}
+
+// GET scholarship_type เตรียมข้อมูลให้ combobox
+func ListScholarshipType(c *gin.Context) {
+	var ScholarshipType []entity.SCHOLARSHIPTYPE
+
+	if err := entity.DB().Raw("SELECT * FROM scholarsh_ip_types").Scan(&ScholarshipType).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListScholarshipType_error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": ScholarshipType})
+}
