@@ -118,7 +118,7 @@ func ListStudentTable(c *gin.Context) {
 // ดึงข้อมูล student by id
 func ListStudentByID(c *gin.Context) {
 
-	var Student []entity.STUDENT
+	var Student entity.STUDENT
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM students WHERE id = ?", id).Scan(&Student).Error; err != nil {
 
