@@ -84,7 +84,20 @@ func main() {
 	// ลบข้อมูล branch by id
 	r.DELETE("/delete_branch/:id", controller.DeleteBranchByID)
 
+	/////////////////////////////////////////////////////////////
 
+	//รับข้อมูลเข้าตาราง Course
+	r.POST("/create_course", controller.CreateCourse)
+	//แสดงข้อมูลตาราง Course
+	r.GET("/course_table", controller.ListCourseTable)
+	// ดึงข้อมูล course by id
+	r.GET("/course/:id", controller.ListStudentByID)
+	// แก้ไขข้อมูล course
+	r.PATCH("/update_course", controller.UpdateStudent)
+	// ลบข้อมูล course by id
+	r.DELETE("/delete_course/:id", controller.DeleteStudentByID)
+
+	/////////////////////////////////////////////////////////////
 
 	r.Run()
 }
