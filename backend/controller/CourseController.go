@@ -88,7 +88,7 @@ func ListCourseTable(c *gin.Context) {
 // ดึงข้อมูล Course by id
 func ListCourseByID(c *gin.Context) {
 
-	var Course []entity.COURSE
+	var Course entity.COURSE
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM courses WHERE id = ?", id).Scan(&Course).Error; err != nil {
 
