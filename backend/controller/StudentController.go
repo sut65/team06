@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/supakanboss/team06/entity"
+	"github.com/sut65/team06/entity"
 )
 
 func CreateStudent(c *gin.Context) {
