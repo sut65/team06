@@ -503,29 +503,29 @@ func SetupDatabase() {
 
 	password, err := bcrypt.GenerateFromPassword([]byte("123456789"), 14)
 
-	// Admin1 := ADMIN{
-	// 	Admin_Name:     "สมใจ จิตดี",
-	// 	Admin_Email:    "Admin0001@gmail.com",
-	// 	Admin_Password: string(password),
-	// 	Admin_Tel:      "0957423478",
-	// 	Admin_Address:  "123/456 ต.คลอง1 อ.คลองหลวง จ.ปทุมธานี",
-	// 	Gender:         GenderFemale,
-	// 	Prefix:         Prefix3,
-	// 	Province:       Province29,
-	// }
-	// db.Model(&ADMIN{}).Create(&Admin1)
+	Admin1 := ADMIN{
+		Admin_Name:     "สมใจ จิตดี",
+		Admin_Email:    "Admin0001@gmail.com",
+		Admin_Password: string(password),
+		Admin_Tel:      "0957423478",
+		Admin_Address:  "123/456 ต.คลอง1 อ.คลองหลวง จ.ปทุมธานี",
+		Gender:         GenderFemale,
+		Prefix:         Prefix3,
+		Province:       Province29,
+	}
+	db.Model(&ADMIN{}).Create(&Admin1)
 
-	// Admin2 := ADMIN{
-	// 	Admin_Name:     "เก่ง สมใจ",
-	// 	Admin_Email:    "Admin0002@gmail.com",
-	// 	Admin_Password: string(password),
-	// 	Admin_Tel:      "0655619892",
-	// 	Admin_Address:  "788/21 ต.คลอง3 อ.คลองหลวง จ.ปทุมธานี",
-	// 	Gender:         GenderMale,
-	// 	Prefix:         Prefix1,
-	// 	Province:       Province29,
-	// }
-	// db.Model(&ADMIN{}).Create(&Admin2)
+	Admin2 := ADMIN{
+		Admin_Name:     "เก่ง สมใจ",
+		Admin_Email:    "Admin0002@gmail.com",
+		Admin_Password: string(password),
+		Admin_Tel:      "0655619892",
+		Admin_Address:  "788/21 ต.คลอง3 อ.คลองหลวง จ.ปทุมธานี",
+		Gender:         GenderMale,
+		Prefix:         Prefix1,
+		Province:       Province29,
+	}
+	db.Model(&ADMIN{}).Create(&Admin2)
 
 	///////////////ข้อมูลใน entity BRANCH///////////////////////////////
 
