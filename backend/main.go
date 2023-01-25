@@ -172,5 +172,17 @@ func main() {
 	r.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
 	
 	///////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Postponement
+	r.POST("/create_Postponement", controller.CreatePostponement)
+	//แสดงข้อมูลตาราง Postponement
+	r.GET("/postponement_table", controller.ListPostponementTable)
+	// ดึงข้อมูล Postponement by id
+	r.GET("/postponement/:id", controller.ListPostponementByID)
+	// แก้ไขข้อมูล Postponement
+	r.PATCH("/update_postponement", controller.UpdatePostponement)
+	// ลบข้อมูล Postponement by id
+	r.DELETE("/delete_postponementadmin/:id", controller.DeletePostponementByID)
+	
+	//////////////////////////////////////////////////////////////////
 	r.Run()
 }
