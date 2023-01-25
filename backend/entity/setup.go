@@ -874,6 +874,40 @@ func SetupDatabase() {
 		Branch:                    Branch2,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion2)
+
+	Postponement1 := POSTPONEMENT{
+		Postponement_Student_Number: "B6300000",
+		Postponement_Student_Name:   "ศุภกานต์ แสงจันทร์",
+		Postponement_AcademicYear:   "2565",
+		Postponement_Gpax:           "4.00",
+		Postponement_Credit:         "22",
+		Postponement_Date:           t,
+		Postponement_Reasons:        "เนื่องจากทางบ้านมีปัญหาเรื่องการเงิน",
+		Prefix:    Prefix1,
+		Degree:    Degree1,
+		Trimester: Trimester2,
+		Institute: Institute1,
+		Branch:    Branch1,
+
+	}
+	db.Model(&POSTPONEMENT{}).Create(&Postponement1)
+
+	Postponement2 := POSTPONEMENT{
+		Postponement_Student_Number: "B6311010",
+		Postponement_Student_Name:   "สมจิต สีแดง",
+		Postponement_AcademicYear:   "2565",
+		Postponement_Gpax:           "3.50",
+		Postponement_Credit:         "18",
+		Postponement_Date:           t,
+		Postponement_Reasons:        "เนื่องจากทางบ้านมีปัญหาเรื่องการเงิน",
+		Prefix:    Prefix2,
+		Degree:    Degree1,
+		Trimester: Trimester2,
+		Institute: Institute1,
+		Branch:    Branch2,
+
+	}
+	db.Model(&POSTPONEMENT{}).Create(&Postponement2)
 }
 
 
