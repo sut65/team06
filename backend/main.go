@@ -50,6 +50,10 @@ func main() {
 	r.GET("/scholarship_type", controller.ListScholarshipType)
 	//combobox branch
 	r.GET("/branch", controller.ListBranch)
+	r.GET("/activityType", controller.ListActivityType)
+	//combobox Trimester
+	r.GET("/trimester", controller.ListTrimester)
+
 
 	/////////////////////////////////////////////////////////////
 
@@ -128,6 +132,18 @@ func main() {
 	r.DELETE("/delete_Grade/:id", controller.DeleteGradeByID)
 
 	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Activity
+	r.POST("/create_Activity", controller.CreateActivity)
+	//แสดงข้อมูลตาราง Activity
+	r.GET("/activity_table", controller.ListActivityTable)
+	// ดึงข้อมูล Activity by id
+	r.GET("/activity/:id", controller.ListActivityByID)
+	// แก้ไขข้อมูล Activity
+	r.PATCH("/update_activity", controller.UpdateActivity)
+	// ลบข้อมูล Activity by id
+	r.DELETE("/delete_activity/:id", controller.DeleteActivityByID)
+
+	///////////////////////////////////////////////////////////
 
 
 	r.Run()
