@@ -105,3 +105,24 @@ func ListScholarshipType(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": ScholarshipType})
 }
+// GET ActivityType เตรียมข้อมูลให้ combobox
+func ListActivityType(c *gin.Context) {
+	var ActivityType []entity.ACTIVITYTYPE
+
+	if err := entity.DB().Raw("SELECT * FROM activityTypes").Scan(&ActivityType).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListActivityType_error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": ActivityType})
+}
+
+// GET Trimester เตรียมข้อมูลให้ combobox
+func ListTrimester(c *gin.Context) {
+	var Trimester []entity.TRIMESTER
+
+	if err := entity.DB().Raw("SELECT * FROM trimesters").Scan(&Trimester).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListTrimester_error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Trimester})
+}
