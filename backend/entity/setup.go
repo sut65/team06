@@ -34,6 +34,7 @@ func SetupDatabase() {
 		&SCHOLARSHIP{},
 		&SCHOLARSHIPAP{},
 		&SCHOLARSHIPTYPE{},
+		&GRADE{},
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -695,4 +696,32 @@ func SetupDatabase() {
 		Student: Student2,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
+
+	///////////////ข้อมูลใน entity GRADE ///////////////////////////////
+
+	Grade1 := GRADE{
+		Grade_Student_Number: "B6428531",
+		Grade_GPA:            3.50,
+		Grade_Code_Supject:   "SOFTWARE ENGINEERING",
+		Grade_Supject:        "523332",
+		Grade:                "A",
+		Institute:            Institute1,
+		Branch:               Branch1,
+		Admin:                Admin1,
+	}
+	db.Model(&GRADE{}).Create(&Grade1)
+
+	Grade2 := GRADE{
+		Grade_Student_Number: "B6175324",
+		Grade_GPA:            3.66,
+		Grade_Code_Supject:   "MATH",
+		Grade_Supject:        "235661",
+		Grade:                "B",
+		Institute:            Institute1,
+		Branch:               Branch1,
+		Admin:                Admin2,
+	}
+	db.Model(&GRADE{}).Create(&Grade2)
 }
+
+
