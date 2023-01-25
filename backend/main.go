@@ -71,5 +71,20 @@ func main() {
 	// ลบข้อมูล admin by id
 	r.DELETE("/delete_admin/:id", controller.DeleteAdminByID)
 	
+	/////////////////////////////////////////////////////////////
+
+	//รับข้อมูลเข้าตาราง Branch
+	r.POST("/create_branch", controller.CreateBranch)
+	//แสดงข้อมูลตาราง Branch
+	r.GET("/data_branch", controller.ListBranchTable)
+	// ดึงข้อมูล Branch by id
+	r.GET("/branch/:id", controller.ListBranchByID)
+	// แก้ไขข้อมูล branch
+	r.PATCH("/update_branch", controller.UpdateBranch)
+	// ลบข้อมูล branch by id
+	r.DELETE("/delete_branch/:id", controller.DeleteBranchByID)
+
+
+
 	r.Run()
 }
