@@ -28,7 +28,7 @@ func SetupDatabase() {
 		&INSTITUTE{},
 		&PREFIX{},
 		&ADMIN{},
-		// &BRANCH{},
+		&BRANCH{},
 		// &COURSE{},
 		&STUDENT{},
 	)
@@ -529,25 +529,25 @@ func SetupDatabase() {
 
 	///////////////ข้อมูลใน entity BRANCH///////////////////////////////
 
-	// Branch1 := BRANCH{
-	// 	Branch_Name:    "วิศวกรรมคอมพิวเตอร์",
-	// 	Branch_Teacher: "หาย ไม่บอก",
-	// 	Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
-	// 	Prefix:         Prefix5,
-	// 	Institute:      Institute1,
-	// 	Admin:          Admin1,
-	// }
-	// db.Model(&BRANCH{}).Create(&Branch1)
+	Branch1 := BRANCH{
+		Branch_Name:    "วิศวกรรมคอมพิวเตอร์",
+		Branch_Teacher: "หาย ไม่บอก",
+		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Prefix:         Prefix5,
+		Institute:      Institute1,
+		Admin:          Admin1,
+	}
+	db.Model(&BRANCH{}).Create(&Branch1)
 
-	// Branch2 := BRANCH{
-	// 	Branch_Name:    "วิศวกรรมเครื่องกล",
-	// 	Branch_Teacher: "แอบมอง คนดี",
-	// 	Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
-	// 	Prefix:         Prefix4,
-	// 	Institute:      Institute1,
-	// 	Admin:          Admin1,
-	// }
-	// db.Model(&BRANCH{}).Create(&Branch2)
+	Branch2 := BRANCH{
+		Branch_Name:    "วิศวกรรมเครื่องกล",
+		Branch_Teacher: "แอบมอง คนดี",
+		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Prefix:         Prefix4,
+		Institute:      Institute1,
+		Admin:          Admin1,
+	}
+	db.Model(&BRANCH{}).Create(&Branch2)
 
 	///////////////ข้อมูลใน entity COURSE///////////////////////////////
 
