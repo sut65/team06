@@ -722,6 +722,83 @@ func SetupDatabase() {
 		Admin:                Admin2,
 	}
 	db.Model(&GRADE{}).Create(&Grade2)
+
+	
+	///////////////ข้อมูลใน entity ACTIVITY_TYPE  ///////////////////////////////
+
+	ActivityType1 := ACTIVITYTYPE{
+		Activity_Type_Name: "กิจกรรในมหาวิทยาลัย",
+	}
+	db.Model(&ACTIVITYTYPE{}).Create(&ActivityType1)
+
+	ActivityType2 := ACTIVITYTYPE{
+		Activity_Type_Name: "กิจกรรมนอกมหาวิทยาลัย",
+	}
+	db.Model(&ACTIVITYTYPE{}).Create(&ActivityType2)
+
+	///////////////ข้อมูลใน entity TRIMESTER   ///////////////////////////////
+
+	Trimester1 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 1",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester1)
+
+	Trimester2 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 2",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester2)
+
+	Trimester3 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 3",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester3)
+
+	///////////////ข้อมูลใน entity ACTIVITY   ///////////////////////////////
+
+	Activity1 := ACTIVITY{
+		Activity_Student_Number: "B6332426",
+		Activity_Name:           "กิจกรรมปลูกป่ารักโลก",
+		Location:                "ป่าชายเลน",
+		Position:                "เข้าร่วมกิจกรรม",
+		Activity_Date:           t,
+		Activity_Year:           "2565",
+		Hour:                    12,
+
+		ActivityType: ActivityType2,
+		Trimester:    Trimester2,
+		Admin:        Admin1,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity1)
+
+	Activity2 := ACTIVITY{
+		Activity_Student_Number: "B6204419",
+		Activity_Name:           "จิตอาสารับรายงานตัวปี1เข้าหอพัก",
+		Location:                "หอใน",
+		Position:                "ช่วยขนของ",
+		Activity_Date:           t,
+		Activity_Year:           "2565",
+		Hour:                    7,
+
+		ActivityType: ActivityType1,
+		Trimester:    Trimester1,
+		Admin:        Admin2,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity2)
+
+	Activity3 := ACTIVITY{
+		Activity_Student_Number: "B6478521",
+		Activity_Name:           "โครงการ SUT mini badminton",
+		Location:                "โรงยิมแบดมินตัน",
+		Position:                "คณะทำงาน",
+		Activity_Date:           t,
+		Activity_Year:           "2564",
+		Hour:                    15,
+
+		ActivityType: ActivityType1,
+		Trimester:    Trimester3,
+		Admin:        Admin2,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity3)
 }
 
 
