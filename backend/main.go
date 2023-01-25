@@ -160,6 +160,17 @@ func main() {
 	r.DELETE("/delete_dormitoty/:id", controller.DeleteDormitoyByID)
 
 	///////////////////////////////////////////////////////////
-
+	//รับข้อมูลเข้าตาราง Suggestion
+	r.POST("/suggestion", controller.CreatSuggestion)
+	//แสดงข้อมูลตาราง Suggestion
+	r.GET("/suggestion_table", controller.ListSuggestionTable)
+	// ดึงข้อมูล Suggestion by id
+	r.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
+	// แก้ไขข้อมูล Suggestion
+	r.PATCH("/update_suggestion", controller.UpdateSuggestion)
+	// ลบข้อมูล Suggestion by id
+	r.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
+	
+	///////////////////////////////////////////////////////////
 	r.Run()
 }
