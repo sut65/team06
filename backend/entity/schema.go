@@ -306,12 +306,14 @@ type POSTPONEMENT struct {
 	Postponement_Credit         string
 	Postponement_Date           time.Time
 	Postponement_Reasons        string
+	
 	PrefixID                    *uint
 	DegreeID                    *uint
 	TrimesterID                 *uint
 	InstituteID                 *uint
 	BranchID                    *uint
 	StudentID					*uint
+
 	Prefix    PREFIX
 	Degree    DEGREE
 	Trimester TRIMESTER

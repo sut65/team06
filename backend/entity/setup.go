@@ -38,7 +38,9 @@ func SetupDatabase() {
 		&DORMITORYTYPE{}, 
 		&ROOMTYPE{},
 		&TRIMESTER{},   
-		&DORMITORY{},  
+		&DORMITORY{},
+		&POSTPONEMENT{},
+
 	)
 	//////////////////////////////////////////////
 	db = database
