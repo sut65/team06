@@ -67,6 +67,7 @@ type ADMIN struct {
 	Course  []COURSE  `gorm:"foreignKey:AdminID"`
 	Student []STUDENT `gorm:"foreignKey:AdminID"`
 	Grade    []GRADE    `gorm:"foreignKey:AdminID"`
+	Activity []ACTIVITY `gorm:"foreignKey:AdminID"`
 }
 
 type COURSE struct {
@@ -201,5 +202,37 @@ type GRADE struct {
 	Branch    BRANCH
 	Admin     ADMIN
 }
+
+type ACTIVITYTYPE struct {
+	gorm.Model
+	Activity_Type_Name string
+
+	Activity []ACTIVITY `gorm:"foreignKey:ActivityTypeID"`
+}
+type TRIMESTER struct {
+	gorm.Model
+	Trimester_Name string
+
+	Activity []ACTIVITY `gorm:"foreignKey:TrimesterID"`
+}
+type ACTIVITY struct {
+	gorm.Model
+	Activity_Student_Number string
+	Activity_Name           string
+	Location                string
+	Position                string
+	Activity_Date           time.Time
+	Activity_Year           string
+	Hour                    uint
+
+	ActivityTypeID *uint
+	TrimesterID    *uint
+	AdminID        *uint
+
+	ActivityType ACTIVITYTYPE
+	Trimester    TRIMESTER
+	Admin        ADMIN
+}
+
 
 
