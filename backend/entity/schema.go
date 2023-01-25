@@ -68,6 +68,7 @@ type ADMIN struct {
 	Student []STUDENT `gorm:"foreignKey:AdminID"`
 	Grade    []GRADE    `gorm:"foreignKey:AdminID"`
 	Activity []ACTIVITY `gorm:"foreignKey:AdminID"`
+	Dormitory           []DORMITORY `gorm:"foreignkey:AdminID"`
 }
 
 type COURSE struct {
@@ -146,6 +147,7 @@ type BRANCH struct {
 	Student []STUDENT `gorm:"foreignKey:BranchID"`
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
 	Grade     []GRADE `gorm:"foreignKey:BranchID"`
+	Dormitory  []DORMITORY  `gorm:"foreignkey:BranchID"`
 }
 
 type SCHOLARSHIPTYPE struct {
@@ -214,6 +216,7 @@ type TRIMESTER struct {
 	Trimester_Name string
 
 	Activity []ACTIVITY `gorm:"foreignKey:TrimesterID"`
+	Dormitory  []DORMITORY  `gorm:"foreignkey:TrimesterID"`
 }
 type ACTIVITY struct {
 	gorm.Model
@@ -234,5 +237,32 @@ type ACTIVITY struct {
 	Admin        ADMIN
 }
 
+type DORMITORYTYPE struct {
+	gorm.Model
+	Dormitory_Type_Name string
+	Dormitory           []DORMITORY `gorm:"foreignkey:DormitoryTypeID"`
+}
 
+type ROOMTYPE struct {
+	gorm.Model
+	Room_Type_Name string
+	Dormitory      []DORMITORY `gorm:"foreignkey:RoomTypeID"`
+}
 
+type DORMITORY struct {
+	gorm.Model
+	Dormitory_Student_Number string `gorm:"uniqueIndex"`
+	Dormitory_AcademicYear   uint
+	Room_Number              uint
+
+	TrimesterID     *uint
+	DormitoryTypeID *uint
+	RoomTypeID      *uint
+	BranchID        *uint
+
+	Trimester     TRIMESTER
+	DormitoryType DORMITORYTYPE
+	RoomType      ROOMTYPE
+	Branch        BRANCH
+	Admin     	ADMIN
+}
