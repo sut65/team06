@@ -31,6 +31,14 @@ func SetupDatabase() {
 		&BRANCH{},
 		&COURSE{},
 		&STUDENT{},
+		&SCHOLARSHIP{},
+		&SCHOLARSHIPAP{},
+		&SCHOLARSHIPTYPE{},
+		&GRADE{},
+		&DORMITORYTYPE{}, 
+		&ROOMTYPE{},
+		&TRIMESTER{},   
+		&DORMITORY{},  
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -626,4 +634,246 @@ func SetupDatabase() {
 		Admin:                 Admin2,
 	}
 	db.Model(&STUDENT{}).Create(&Student2)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	ScholarshipType1 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "ยืมเรียน",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType1)
+
+	ScholarshipType2 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "ยากจน",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType2)
+
+	ScholarshipType3 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "เรียนดี",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType3)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	Scholarship1 := SCHOLARSHIP{
+		Scholarship_Name: "กยศ",
+
+		ScholarshipType: ScholarshipType1,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship1)
+
+	Scholarship2 := SCHOLARSHIP{
+		Scholarship_Name: "ปันสุข",
+
+		ScholarshipType: ScholarshipType2,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship2)
+
+	Scholarship3 := SCHOLARSHIP{
+		Scholarship_Name: "แม่ป้าข้างบ้าน",
+
+		ScholarshipType: ScholarshipType3,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship3)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
+	ScholarshipAp1 := SCHOLARSHIPAP{
+		Student_Identity_Card: "1134900124561",
+		Reasons:				"เนื่องจากไม่มีเงิน…",
+		GPAX:	2.34,
+
+		ScholarshipType: ScholarshipType1,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student1,
+	}
+	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp1)
+
+	ScholarshipAp2 := SCHOLARSHIPAP{
+		Student_Name: "",
+		Student_Identity_Card: "1134900124129",
+		Reasons:				"หนูต้องการทุนใน…",
+		GPAX:	2.33,
+
+		ScholarshipType: ScholarshipType1,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student2,
+	}
+	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
+
+	///////////////ข้อมูลใน entity GRADE ///////////////////////////////
+
+	Grade1 := GRADE{
+		Grade_Student_Number: "B6428531",
+		Grade_GPA:            3.50,
+		Grade_Code_Supject:   "SOFTWARE ENGINEERING",
+		Grade_Supject:        "523332",
+		Grade:                "A",
+		Institute:            Institute1,
+		Branch:               Branch1,
+		Admin:                Admin1,
+	}
+	db.Model(&GRADE{}).Create(&Grade1)
+
+	Grade2 := GRADE{
+		Grade_Student_Number: "B6175324",
+		Grade_GPA:            3.66,
+		Grade_Code_Supject:   "MATH",
+		Grade_Supject:        "235661",
+		Grade:                "B",
+		Institute:            Institute1,
+		Branch:               Branch1,
+		Admin:                Admin2,
+	}
+	db.Model(&GRADE{}).Create(&Grade2)
+
+	
+	///////////////ข้อมูลใน entity ACTIVITY_TYPE  ///////////////////////////////
+
+	ActivityType1 := ACTIVITYTYPE{
+		Activity_Type_Name: "กิจกรรในมหาวิทยาลัย",
+	}
+	db.Model(&ACTIVITYTYPE{}).Create(&ActivityType1)
+
+	ActivityType2 := ACTIVITYTYPE{
+		Activity_Type_Name: "กิจกรรมนอกมหาวิทยาลัย",
+	}
+	db.Model(&ACTIVITYTYPE{}).Create(&ActivityType2)
+
+	///////////////ข้อมูลใน entity TRIMESTER   ///////////////////////////////
+
+	Trimester1 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 1",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester1)
+
+	Trimester2 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 2",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester2)
+
+	Trimester3 := TRIMESTER{
+		Trimester_Name: "ภาคการศึกษาที่ 3",
+	}
+	db.Model(&TRIMESTER{}).Create(&Trimester3)
+
+	///////////////ข้อมูลใน entity ACTIVITY   ///////////////////////////////
+
+	Activity1 := ACTIVITY{
+		Activity_Student_Number: "B6332426",
+		Activity_Name:           "กิจกรรมปลูกป่ารักโลก",
+		Location:                "ป่าชายเลน",
+		Position:                "เข้าร่วมกิจกรรม",
+		Activity_Date:           t,
+		Activity_Year:           "2565",
+		Hour:                    12,
+
+		ActivityType: ActivityType2,
+		Trimester:    Trimester2,
+		Admin:        Admin1,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity1)
+
+	Activity2 := ACTIVITY{
+		Activity_Student_Number: "B6204419",
+		Activity_Name:           "จิตอาสารับรายงานตัวปี1เข้าหอพัก",
+		Location:                "หอใน",
+		Position:                "ช่วยขนของ",
+		Activity_Date:           t,
+		Activity_Year:           "2565",
+		Hour:                    7,
+
+		ActivityType: ActivityType1,
+		Trimester:    Trimester1,
+		Admin:        Admin2,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity2)
+
+	Activity3 := ACTIVITY{
+		Activity_Student_Number: "B6478521",
+		Activity_Name:           "โครงการ SUT mini badminton",
+		Location:                "โรงยิมแบดมินตัน",
+		Position:                "คณะทำงาน",
+		Activity_Date:           t,
+		Activity_Year:           "2564",
+		Hour:                    15,
+
+		ActivityType: ActivityType1,
+		Trimester:    Trimester3,
+		Admin:        Admin2,
+	}
+	db.Model(&ACTIVITY{}).Create(&Activity3)
+
+	Dormitory_type1 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอชายในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type1)
+
+	Dormitory_type2 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอหญิงในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type2)
+
+	Dormitory_type3 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอนอกในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type3)
+
+	Room_type1 := ROOMTYPE{
+		Room_Type_Name: "หอพักห้องน้ำในตัว",
+	}
+	db.Model(&ROOMTYPE{}).Create(&Room_type1)
+
+	Room_type2 := ROOMTYPE{
+		Room_Type_Name: "หอพักห้องน้ำรวม",
+	}
+	db.Model(&ROOMTYPE{}).Create(&Room_type2)
+
+	Dormitory1 := DORMITORY{
+		Dormitory_Student_Number: "B6300000",
+		Dormitory_AcademicYear:   2565,
+		Room_Number:              8210,
+		Trimester:                Trimester2,
+		DormitoryType:            Dormitory_type1,
+		RoomType:                 Room_type2,
+		Branch:                   Branch1,
+	}
+	db.Model(&DORMITORY{}).Create(&Dormitory1)
+
+	Dormitory2 := DORMITORY{
+		Dormitory_Student_Number: "B6311010",
+		Dormitory_AcademicYear:   2564,
+		Room_Number:              6241,
+		Trimester:                Trimester2,
+		DormitoryType:            Dormitory_type2,
+		RoomType:                 Room_type2,
+		Branch:                   Branch2,
+	}
+	db.Model(&DORMITORY{}).Create(&Dormitory2)
+
+	Suggestion1 := SUGGESTION{
+		Suggestion_Teacher:        "อ.เกษม จิตดี",
+		Suggestion_Student_Number: "B6300000",
+		Suggestion_Student_Name:   "ศุภกานต์ แสงจันทร์",
+		Suggestion_Date:           t,
+		Suggestion_Detail:         "ปรับการพูดตอนสอนในช้าลงกว่านี้ได้ไหมครับ",
+		Prefix:                    Prefix1,
+		Institute:                 Institute1,
+		Branch:                    Branch1,
+	}
+	db.Model(&SUGGESTION{}).Create(&Suggestion1)
+
+	Suggestion2 := SUGGESTION{
+		Suggestion_Teacher:        "ดร.เปรมณัต วงศ์ดี",
+		Suggestion_Student_Number: "B6311010",
+		Suggestion_Student_Name:   "สมจิต สีแดง",
+		Suggestion_Date:           t,
+		Suggestion_Detail:         "อยากให้อ.มีกิจกรรมเล็กๆ น้อยๆ ระหว่างการสอนด้วยค่ะ",
+		Prefix:                    Prefix1,
+		Institute:                 Institute2,
+		Branch:                    Branch2,
+	}
+	db.Model(&SUGGESTION{}).Create(&Suggestion2)
 }
+
+

@@ -44,6 +44,20 @@ func main() {
 	r.GET("/gender", controller.ListGender)
 	//combobox Province
 	r.GET("/province", controller.ListProvince)
+	//combobox Scholarship
+	r.GET("/scholarship", controller.ListScholarship)
+	//combobox Scholarship type
+	r.GET("/scholarship_type", controller.ListScholarshipType)
+	//combobox branch
+	r.GET("/branch", controller.ListBranch)
+	r.GET("/activityType", controller.ListActivityType)
+	//combobox Trimester
+	r.GET("/trimester", controller.ListTrimester)
+	//combobx dormitorytype
+	r.GET("/dormitorytype", controller.ListDormitoryType)
+	//combobx roomtype
+	r.GET("/roomtype", controller.ListRoomType)
+
 
 	/////////////////////////////////////////////////////////////
 
@@ -98,6 +112,65 @@ func main() {
 	r.DELETE("/delete_course/:id", controller.DeleteStudentByID)
 
 	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง scholarship applicant
+	r.POST("/create_scholarship_applicant", controller.CreateScholarshipAp)
+	//แสดงข้อมูลตาราง scholarship applicants
+	r.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
+	// ดึงข้อมูล scholarship applicants by id
+	r.GET("/scholarship_applicants/:id", controller.ListScholarshipApByID)
+	// แก้ไขข้อมูล scholarship applicants
+	r.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
+	// ลบข้อมูล scholarship applicants by id
+	r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
+	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Grade
+	r.POST("/create_Grade", controller.CreateGrade)
+	//แสดงข้อมูลตารางGrade
+	r.GET("/grade_table", controller.ListGradeTable)
+	// ดึงข้อมูล Grade by id
+	r.GET("/grade/:id", controller.ListGradeByID)
+	// แก้ไขข้อมูล Grade
+	r.PATCH("/update_grade", controller.UpdateGrade)
+	// ลบข้อมูล Grade by id
+	r.DELETE("/delete_Grade/:id", controller.DeleteGradeByID)
+
+	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Activity
+	r.POST("/create_Activity", controller.CreateActivity)
+	//แสดงข้อมูลตาราง Activity
+	r.GET("/activity_table", controller.ListActivityTable)
+	// ดึงข้อมูล Activity by id
+	r.GET("/activity/:id", controller.ListActivityByID)
+	// แก้ไขข้อมูล Activity
+	r.PATCH("/update_activity", controller.UpdateActivity)
+	// ลบข้อมูล Activity by id
+	r.DELETE("/delete_activity/:id", controller.DeleteActivityByID)
+
+	///////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Dormitory
+	r.POST("/dormitory", controller.CreateDormitory)
+	//แสดงข้อมูลตาราง Dormitory
+	r.GET("/dormitory_table", controller.ListDormitoryTable)
+	// ดึงข้อมูล dormitory by id
+	r.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
+	// แก้ไขข้อมูล Dormitory
+	r.PATCH("/update_dormitory", controller.UpdateDormitory)
+	// ลบข้อมูล Dormitory by id
+	r.DELETE("/delete_dormitoty/:id", controller.DeleteDormitoyByID)
+
+	///////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง Suggestion
+	r.POST("/suggestion", controller.CreatSuggestion)
+	//แสดงข้อมูลตาราง Suggestion
+	r.GET("/suggestion_table", controller.ListSuggestionTable)
+	// ดึงข้อมูล Suggestion by id
+	r.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
+	// แก้ไขข้อมูล Suggestion
+	r.PATCH("/update_suggestion", controller.UpdateSuggestion)
+	// ลบข้อมูล Suggestion by id
+	r.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
+	
+	///////////////////////////////////////////////////////////
 	r.Run()
 }
