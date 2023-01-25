@@ -31,6 +31,9 @@ func SetupDatabase() {
 		&BRANCH{},
 		&COURSE{},
 		&STUDENT{},
+		&SCHOLARSHIP{},
+		&SCHOLARSHIPAP{},
+		&SCHOLARSHIPTYPE{},
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -626,4 +629,70 @@ func SetupDatabase() {
 		Admin:                 Admin2,
 	}
 	db.Model(&STUDENT{}).Create(&Student2)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	ScholarshipType1 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "ยืมเรียน",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType1)
+
+	ScholarshipType2 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "ยากจน",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType2)
+
+	ScholarshipType3 := SCHOLARSHIPTYPE{
+		Scholarship_Type_Name:    "เรียนดี",
+	}
+	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType3)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	Scholarship1 := SCHOLARSHIP{
+		Scholarship_Name: "กยศ",
+
+		ScholarshipType: ScholarshipType1,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship1)
+
+	Scholarship2 := SCHOLARSHIP{
+		Scholarship_Name: "ปันสุข",
+
+		ScholarshipType: ScholarshipType2,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship2)
+
+	Scholarship3 := SCHOLARSHIP{
+		Scholarship_Name: "แม่ป้าข้างบ้าน",
+
+		ScholarshipType: ScholarshipType3,
+	}
+	db.Model(&SCHOLARSHIP{}).Create(&Scholarship3)
+
+///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
+	ScholarshipAp1 := SCHOLARSHIPAP{
+		Student_Identity_Card: "1134900124561",
+		Reasons:				"เนื่องจากไม่มีเงิน…",
+		GPAX:	2.34,
+
+		ScholarshipType: ScholarshipType1,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student1,
+	}
+	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp1)
+
+	ScholarshipAp2 := SCHOLARSHIPAP{
+		Student_Name: "",
+		Student_Identity_Card: "1134900124129",
+		Reasons:				"หนูต้องการทุนใน…",
+		GPAX:	2.33,
+
+		ScholarshipType: ScholarshipType1,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student2,
+	}
+	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
 }
