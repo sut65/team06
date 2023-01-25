@@ -35,6 +35,7 @@ type PREFIX struct {
 	Branch  []BRANCH  `gorm:"foreignKey:PrefixID"`
 	Course  []COURSE  `gorm:"foreignKey:PrefixID"`
 	Student []STUDENT `gorm:"foreignKey:PrefixID"`
+	Suggestion  []SUGGESTION `gorm:"foreignkey:PrefixID"`
 }
 type INSTITUTE struct {
 	gorm.Model
@@ -45,6 +46,7 @@ type INSTITUTE struct {
 	Student []STUDENT `gorm:"foreignKey:InstituteID"`
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:InstituteID"`
 	Grade  []GRADE  `gorm:"foreignKey:InstituteID"`
+	Suggestion     []SUGGESTION `gorm:"foreignkey:InstituteID"`
 }
 
 type ADMIN struct {
@@ -127,6 +129,7 @@ type STUDENT struct {
 	Admin     ADMIN
 
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:StudentID"`
+	Suggestion  []SUGGESTION `gorm:"foreignkey:StudentID"`
 }
 
 type BRANCH struct {
@@ -148,6 +151,7 @@ type BRANCH struct {
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
 	Grade     []GRADE `gorm:"foreignKey:BranchID"`
 	Dormitory  []DORMITORY  `gorm:"foreignkey:BranchID"`
+	Suggestion []SUGGESTION `gorm:"foreignkey:BranchID"`
 }
 
 type SCHOLARSHIPTYPE struct {
@@ -259,10 +263,30 @@ type DORMITORY struct {
 	DormitoryTypeID *uint
 	RoomTypeID      *uint
 	BranchID        *uint
+	AdminID			*uint
 
 	Trimester     TRIMESTER
 	DormitoryType DORMITORYTYPE
 	RoomType      ROOMTYPE
 	Branch        BRANCH
 	Admin     	ADMIN
+}
+
+type SUGGESTION struct {
+	gorm.Model
+	Suggestion_Teacher        string
+	Suggestion_Student_Number string
+	Suggestion_Student_Name   string
+	Suggestion_Date           time.Time
+	Suggestion_Detail         string
+
+	PrefixID    *uint
+	InstituteID *uint
+	BranchID    *uint
+	StudentID	*uint
+
+	Prefix    PREFIX
+	Institute INSTITUTE
+	Branch    BRANCH
+	Student		STUDENT
 }
