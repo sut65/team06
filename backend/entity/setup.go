@@ -29,7 +29,7 @@ func SetupDatabase() {
 		&PREFIX{},
 		&ADMIN{},
 		&BRANCH{},
-		// &COURSE{},
+		&COURSE{},
 		&STUDENT{},
 	)
 	//////////////////////////////////////////////
