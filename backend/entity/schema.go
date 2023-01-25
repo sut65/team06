@@ -44,6 +44,7 @@ type INSTITUTE struct {
 	Course  []COURSE  `gorm:"foreignKey:InstituteID"`
 	Student []STUDENT `gorm:"foreignKey:InstituteID"`
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:InstituteID"`
+	Grade  []GRADE  `gorm:"foreignKey:InstituteID"`
 }
 
 type ADMIN struct {
@@ -65,6 +66,7 @@ type ADMIN struct {
 	Branch  []BRANCH  `gorm:"foreignKey:AdminID"`
 	Course  []COURSE  `gorm:"foreignKey:AdminID"`
 	Student []STUDENT `gorm:"foreignKey:AdminID"`
+	Grade    []GRADE    `gorm:"foreignKey:AdminID"`
 }
 
 type COURSE struct {
@@ -142,6 +144,7 @@ type BRANCH struct {
 	Course  []COURSE  `gorm:"foreignKey:BranchID"`
 	Student []STUDENT `gorm:"foreignKey:BranchID"`
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
+	Grade     []GRADE `gorm:"foreignKey:BranchID"`
 }
 
 type SCHOLARSHIPTYPE struct {
@@ -182,4 +185,21 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	ScholarshipType SCHOLARSHIPTYPE
 	Student        STUDENT
 }
+type GRADE struct {
+	gorm.Model
+	Grade_Student_Number string
+	Grade_GPA            float32
+	Grade_Supject        string
+	Grade_Code_Supject   string
+	Grade                string
+
+	InstituteID *uint
+	BranchID    *uint
+	AdminID     *uint
+
+	Institute INSTITUTE
+	Branch    BRANCH
+	Admin     ADMIN
+}
+
 
