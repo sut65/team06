@@ -26,6 +26,7 @@ type DEGREE struct {
 
 	Course  []COURSE  `gorm:"foreignKey:DegreeID"`
 	Student []STUDENT `gorm:"foreignKey:DegreeID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:DegreeID"`
 }
 type PREFIX struct {
 	gorm.Model
@@ -35,6 +36,7 @@ type PREFIX struct {
 	Branch  []BRANCH  `gorm:"foreignKey:PrefixID"`
 	Course  []COURSE  `gorm:"foreignKey:PrefixID"`
 	Student []STUDENT `gorm:"foreignKey:PrefixID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:PrefixID"`
 	Suggestion  []SUGGESTION `gorm:"foreignkey:PrefixID"`
 }
 type INSTITUTE struct {
@@ -47,6 +49,7 @@ type INSTITUTE struct {
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:InstituteID"`
 	Grade  []GRADE  `gorm:"foreignKey:InstituteID"`
 	Suggestion     []SUGGESTION `gorm:"foreignkey:InstituteID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:InstituteID"`
 }
 
 type ADMIN struct {
@@ -151,6 +154,7 @@ type BRANCH struct {
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:BranchID"`
 	Grade     []GRADE `gorm:"foreignKey:BranchID"`
 	Dormitory  []DORMITORY  `gorm:"foreignkey:BranchID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:BranchID"`
 	Suggestion []SUGGESTION `gorm:"foreignkey:BranchID"`
 }
 
@@ -220,6 +224,7 @@ type TRIMESTER struct {
 	Trimester_Name string
 
 	Activity []ACTIVITY `gorm:"foreignKey:TrimesterID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:TrimesterID"`
 	Dormitory  []DORMITORY  `gorm:"foreignkey:TrimesterID"`
 }
 type ACTIVITY struct {
@@ -289,4 +294,27 @@ type SUGGESTION struct {
 	Institute INSTITUTE
 	Branch    BRANCH
 	Student		STUDENT
+}
+
+type POSTPONEMENT struct {
+	gorm.Model
+	Postponement_Student_Number string
+	Postponement_Student_Name   string
+	Postponement_AcademicYear   string
+	Postponement_Gpax           string
+	Postponement_Credit         string
+	Postponement_Date           time.Time
+	Postponement_Reasons        string
+	PrefixID                    *uint
+	DegreeID                    *uint
+	TrimesterID                 *uint
+	InstituteID                 *uint
+	BranchID                    *uint
+	StudentID					*uint
+	Prefix    PREFIX
+	Degree    DEGREE
+	Trimester TRIMESTER
+	Institute INSTITUTE
+	Branch    BRANCH
+	Student   STUDENT
 }
