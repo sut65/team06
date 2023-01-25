@@ -85,7 +85,7 @@ func ListAdminTable(c *gin.Context) {
 // ดึงข้อมูล admin by id
 func ListAdminByID(c *gin.Context) {
 
-	var Admin []entity.ADMIN
+	var Admin entity.ADMIN
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM admins WHERE id = ?", id).Scan(&Admin).Error; err != nil {
 
