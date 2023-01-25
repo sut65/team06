@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/supakanboss/team06/controller"
-	"github.com/supakanboss/team06/entity"
+	"github.com/sut65/team06/controller"
+	"github.com/sut65/team06/entity"
 )
 
 func CORSMiddleware() gin.HandlerFunc {
