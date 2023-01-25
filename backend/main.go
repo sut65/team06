@@ -44,6 +44,12 @@ func main() {
 	r.GET("/gender", controller.ListGender)
 	//combobox Province
 	r.GET("/province", controller.ListProvince)
+	//combobox Scholarship
+	r.GET("/scholarship", controller.ListScholarship)
+	//combobox Scholarship type
+	r.GET("/scholarship_type", controller.ListScholarshipType)
+	//combobox branch
+	r.GET("/branch", controller.ListBranch)
 
 	/////////////////////////////////////////////////////////////
 
@@ -98,6 +104,17 @@ func main() {
 	r.DELETE("/delete_course/:id", controller.DeleteStudentByID)
 
 	/////////////////////////////////////////////////////////////
+	//รับข้อมูลเข้าตาราง scholarship applicant
+	r.POST("/create_scholarship_applicant", controller.CreateScholarshipAp)
+	//แสดงข้อมูลตาราง scholarship applicants
+	r.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
+	// ดึงข้อมูล scholarship applicants by id
+	r.GET("/scholarship_applicants/:id", controller.ListScholarshipApByID)
+	// แก้ไขข้อมูล scholarship applicants
+	r.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
+	// ลบข้อมูล scholarship applicants by id
+	r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
+	/////////////////////////////////////////////////////////////
 	r.Run()
 }
