@@ -35,6 +35,10 @@ func SetupDatabase() {
 		&SCHOLARSHIPAP{},
 		&SCHOLARSHIPTYPE{},
 		&GRADE{},
+		&DORMITORYTYPE{}, 
+		&ROOMTYPE{},
+		&TRIMESTER{},   
+		&DORMITORY{},  
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -799,6 +803,53 @@ func SetupDatabase() {
 		Admin:        Admin2,
 	}
 	db.Model(&ACTIVITY{}).Create(&Activity3)
+
+	Dormitory_type1 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอชายในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type1)
+
+	Dormitory_type2 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอหญิงในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type2)
+
+	Dormitory_type3 := DORMITORYTYPE{
+		Dormitory_Type_Name: "หอนอกในมหาวิทยาลัย",
+	}
+	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type3)
+
+	Room_type1 := ROOMTYPE{
+		Room_Type_Name: "หอพักห้องน้ำในตัว",
+	}
+	db.Model(&ROOMTYPE{}).Create(&Room_type1)
+
+	Room_type2 := ROOMTYPE{
+		Room_Type_Name: "หอพักห้องน้ำรวม",
+	}
+	db.Model(&ROOMTYPE{}).Create(&Room_type2)
+
+	Dormitory1 := DORMITORY{
+		Dormitory_Student_Number: "B6300000",
+		Dormitory_AcademicYear:   2565,
+		Room_Number:              8210,
+		Trimester:                Trimester2,
+		DormitoryType:            Dormitory_type1,
+		RoomType:                 Room_type2,
+		Branch:                   Branch1,
+	}
+	db.Model(&DORMITORY{}).Create(&Dormitory1)
+
+	Dormitory2 := DORMITORY{
+		Dormitory_Student_Number: "B6311010",
+		Dormitory_AcademicYear:   2564,
+		Room_Number:              6241,
+		Trimester:                Trimester2,
+		DormitoryType:            Dormitory_type2,
+		RoomType:                 Room_type2,
+		Branch:                   Branch2,
+	}
+	db.Model(&DORMITORY{}).Create(&Dormitory2)
 }
 
 
