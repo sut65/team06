@@ -133,6 +133,7 @@ type STUDENT struct {
 
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:StudentID"`
 	Suggestion  []SUGGESTION `gorm:"foreignkey:StudentID"`
+	Postponement []POSTPONEMENT `gorm:"foreignKey:StudentID"`
 }
 
 type BRANCH struct {
