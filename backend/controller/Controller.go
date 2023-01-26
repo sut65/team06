@@ -105,6 +105,7 @@ func ListScholarshipType(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": ScholarshipType})
 }
+
 // GET ActivityType เตรียมข้อมูลให้ combobox
 func ListActivityType(c *gin.Context) {
 	var ActivityType []entity.ACTIVITYTYPE
@@ -130,7 +131,7 @@ func ListTrimester(c *gin.Context) {
 // 5:GET dormitorytype เตรียมข้อมูลให้ combobox
 func ListDormitoryType(c *gin.Context) {
 	var dormitorytype []entity.DORMITORYTYPE
-	
+
 	if err := entity.DB().Raw("SELECT * FROM dormitorytypes").Scan(&dormitorytype).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -141,7 +142,7 @@ func ListDormitoryType(c *gin.Context) {
 // 6:GET roomtype เตรียมข้อมูลให้ combobox
 func ListRoomType(c *gin.Context) {
 	var roomtype []entity.ROOMTYPE
-	
+
 	if err := entity.DB().Raw("SELECT * FROM roomtypes").Scan(&roomtype).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

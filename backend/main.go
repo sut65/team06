@@ -58,7 +58,6 @@ func main() {
 	//combobx roomtype
 	r.GET("/roomtype", controller.ListRoomType)
 
-
 	/////////////////////////////////////////////////////////////
 
 	//รับข้อมูลเข้าตาราง Student
@@ -84,7 +83,7 @@ func main() {
 	r.PATCH("/update_admin", controller.UpdateAdmin)
 	// ลบข้อมูล admin by id
 	r.DELETE("/delete_admin/:id", controller.DeleteAdminByID)
-	
+
 	/////////////////////////////////////////////////////////////
 
 	//รับข้อมูลเข้าตาราง Branch
@@ -170,7 +169,7 @@ func main() {
 	r.PATCH("/update_suggestion", controller.UpdateSuggestion)
 	// ลบข้อมูล Suggestion by id
 	r.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
-	
+
 	///////////////////////////////////////////////////////////
 	//รับข้อมูลเข้าตาราง Postponement
 	r.POST("/create_Postponement", controller.CreatePostponement)
@@ -182,7 +181,7 @@ func main() {
 	r.PATCH("/update_postponement", controller.UpdatePostponement)
 	// ลบข้อมูล Postponement by id
 	r.DELETE("/delete_postponementadmin/:id", controller.DeletePostponementByID)
-	
+
 	//////////////////////////////////////////////////////////////////
 	r.Run()
 }

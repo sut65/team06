@@ -16,7 +16,7 @@ func DB() *gorm.DB {
 
 func SetupDatabase() {
 	//////////////////////////////////////////////
-	database, err := gorm.Open(sqlite.Open("sut-midterm-lab.db"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("SUT-SE65-Team06"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
@@ -35,12 +35,11 @@ func SetupDatabase() {
 		&SCHOLARSHIPAP{},
 		&SCHOLARSHIPTYPE{},
 		&GRADE{},
-		&DORMITORYTYPE{}, 
+		&DORMITORYTYPE{},
 		&ROOMTYPE{},
-		&TRIMESTER{},   
+		&TRIMESTER{},
 		&DORMITORY{},
 		&POSTPONEMENT{},
-
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -637,23 +636,23 @@ func SetupDatabase() {
 	}
 	db.Model(&STUDENT{}).Create(&Student2)
 
-///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
 	ScholarshipType1 := SCHOLARSHIPTYPE{
-		Scholarship_Type_Name:    "ยืมเรียน",
+		Scholarship_Type_Name: "ยืมเรียน",
 	}
 	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType1)
 
 	ScholarshipType2 := SCHOLARSHIPTYPE{
-		Scholarship_Type_Name:    "ยากจน",
+		Scholarship_Type_Name: "ยากจน",
 	}
 	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType2)
 
 	ScholarshipType3 := SCHOLARSHIPTYPE{
-		Scholarship_Type_Name:    "เรียนดี",
+		Scholarship_Type_Name: "เรียนดี",
 	}
 	db.Model(&SCHOLARSHIPTYPE{}).Create(&ScholarshipType3)
 
-///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
+	///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
 	Scholarship1 := SCHOLARSHIP{
 		Scholarship_Name: "กยศ",
 
@@ -675,31 +674,31 @@ func SetupDatabase() {
 	}
 	db.Model(&SCHOLARSHIP{}).Create(&Scholarship3)
 
-///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
+	///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
 	ScholarshipAp1 := SCHOLARSHIPAP{
 		Student_Identity_Card: "1134900124561",
-		Reasons:				"เนื่องจากไม่มีเงิน…",
-		GPAX:	2.34,
+		Reasons:               "เนื่องจากไม่มีเงิน…",
+		GPAX:                  2.34,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship: Scholarship1,
-		Branch: Branch2,
-		Institute: Institute2,
-		Student: Student1,
+		Scholarship:     Scholarship1,
+		Branch:          Branch2,
+		Institute:       Institute2,
+		Student:         Student1,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp1)
 
 	ScholarshipAp2 := SCHOLARSHIPAP{
-		Student_Name: "",
+		Student_Name:          "",
 		Student_Identity_Card: "1134900124129",
-		Reasons:				"หนูต้องการทุนใน…",
-		GPAX:	2.33,
+		Reasons:               "หนูต้องการทุนใน…",
+		GPAX:                  2.33,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship: Scholarship1,
-		Branch: Branch2,
-		Institute: Institute2,
-		Student: Student2,
+		Scholarship:     Scholarship1,
+		Branch:          Branch2,
+		Institute:       Institute2,
+		Student:         Student2,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
 
@@ -729,7 +728,6 @@ func SetupDatabase() {
 	}
 	db.Model(&GRADE{}).Create(&Grade2)
 
-	
 	///////////////ข้อมูลใน entity ACTIVITY_TYPE  ///////////////////////////////
 
 	ActivityType1 := ACTIVITYTYPE{
@@ -885,12 +883,11 @@ func SetupDatabase() {
 		Postponement_Credit:         "22",
 		Postponement_Date:           t,
 		Postponement_Reasons:        "เนื่องจากทางบ้านมีปัญหาเรื่องการเงิน",
-		Prefix:    Prefix1,
-		Degree:    Degree1,
-		Trimester: Trimester2,
-		Institute: Institute1,
-		Branch:    Branch1,
-
+		Prefix:                      Prefix1,
+		Degree:                      Degree1,
+		Trimester:                   Trimester2,
+		Institute:                   Institute1,
+		Branch:                      Branch1,
 	}
 	db.Model(&POSTPONEMENT{}).Create(&Postponement1)
 
@@ -902,14 +899,11 @@ func SetupDatabase() {
 		Postponement_Credit:         "18",
 		Postponement_Date:           t,
 		Postponement_Reasons:        "เนื่องจากทางบ้านมีปัญหาเรื่องการเงิน",
-		Prefix:    Prefix2,
-		Degree:    Degree1,
-		Trimester: Trimester2,
-		Institute: Institute1,
-		Branch:    Branch2,
-
+		Prefix:                      Prefix2,
+		Degree:                      Degree1,
+		Trimester:                   Trimester2,
+		Institute:                   Institute1,
+		Branch:                      Branch2,
 	}
 	db.Model(&POSTPONEMENT{}).Create(&Postponement2)
 }
-
-

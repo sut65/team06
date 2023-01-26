@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/sut65/team06/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/sut65/team06/entity"
 	"golang.org/x/crypto/bcrypt"
 
 	"net/http"
@@ -108,13 +108,13 @@ func DeleteAdminByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
+
 // แก้ไขข้อมูล admin
 func UpdateAdmin(c *gin.Context) {
 	var Prefix entity.PREFIX
 	var Gender entity.GENDER
 	var Province entity.PROVINCE
 	var Admin entity.ADMIN
-	
 
 	if err := c.ShouldBindJSON(&Admin); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -130,26 +130,26 @@ func UpdateAdmin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Gender not found"})
 		return
 	}
-	//2:ค้นหา province ด้วย id	
+	//2:ค้นหา province ด้วย id
 	if tx := entity.DB().Where("id = ?", Admin.ProvinceID).First(&Province); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Province not found"})
 	}
 	//update entity admin
 	update := entity.ADMIN{
-		Admin_Name:     Admin.Admin_Name,
-		Admin_Email:    Admin.Admin_Email,
+		Admin_Name:  Admin.Admin_Name,
+		Admin_Email: Admin.Admin_Email,
 		// Admin_Password: string(hashPassword),
-		Admin_Tel:      Admin.Admin_Tel,
-		Admin_Address:  Admin.Admin_Address,
-		Prefix:         Prefix,
-		Gender:         Gender,
-		Province:       Province,
+		Admin_Tel:     Admin.Admin_Tel,
+		Admin_Address: Admin.Admin_Address,
+		Prefix:        Prefix,
+		Gender:        Gender,
+		Province:      Province,
 	}
 	//update
 	if err := entity.DB().Where("id = ?", Admin.ID).Updates(&update).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-		
+
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Admin})
 }
