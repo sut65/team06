@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
 )
+
 func CreateScholarshipAp(c *gin.Context) {
 
 	var Student entity.STUDENT
@@ -45,14 +46,13 @@ func CreateScholarshipAp(c *gin.Context) {
 
 	// : สร้าง entity Scholarship applicant
 	Data_ScholarshipAp := entity.SCHOLARSHIPAP{
-		Student_Identity_Card:   ScholarshipAp.Student_Identity_Card,
-		Reasons: ScholarshipAp.Reasons,
-		GPAX:    ScholarshipAp.GPAX,
+		Student_Identity_Card: ScholarshipAp.Student_Identity_Card,
+		Reasons:               ScholarshipAp.Reasons,
+		GPAX:                  ScholarshipAp.GPAX,
 
-		
 		Institute: Institute,
-		StudentID:   ScholarshipAp.StudentID,
-		Student: Student,
+		StudentID: ScholarshipAp.StudentID,
+		Student:   Student,
 	}
 
 	// : บันทึก
@@ -75,7 +75,6 @@ func ListScholarshipApTable(c *gin.Context) {
 		return
 
 	}
-
 
 	c.JSON(http.StatusOK, gin.H{"data": ScholarshipAp})
 }
@@ -118,7 +117,7 @@ func UpdateScholarshipAp(c *gin.Context) {
 
 	NewScholarshipAp.Student_Identity_Card = ScholarshipAp.Student_Identity_Card
 	NewScholarshipAp.Reasons = ScholarshipAp.Reasons
-	NewScholarshipAp.GPAX = ScholarshipAp.GPAX 
+	NewScholarshipAp.GPAX = ScholarshipAp.GPAX
 
 	NewScholarshipAp.Institute = ScholarshipAp.Institute
 	NewScholarshipAp.Branch = ScholarshipAp.Branch

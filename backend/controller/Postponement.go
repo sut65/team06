@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/sut65/team06/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/sut65/team06/entity"
 
 	//*	"golang.org/x/crypto/bcrypt"
 

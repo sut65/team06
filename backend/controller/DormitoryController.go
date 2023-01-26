@@ -37,16 +37,15 @@ func CreateDormitory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
-
 	//12:สร้าง entity ADMIN
 	dm := entity.DORMITORY{
 		Dormitory_Student_Number: Dormitory.Dormitory_Student_Number,
 		Dormitory_AcademicYear:   Dormitory.Dormitory_AcademicYear,
 		Room_Number:              Dormitory.Room_Number,
-		Trimester:     Trimester,
-		DormitoryType: DormitoryType,
-		RoomType:      RoomType,
-		Branch:        Branch,
+		Trimester:                Trimester,
+		DormitoryType:            DormitoryType,
+		RoomType:                 RoomType,
+		Branch:                   Branch,
 	}
 
 	//13:บันทึก
@@ -58,19 +57,19 @@ func CreateDormitory(c *gin.Context) {
 
 }
 
-// ดึงข้อมูลหอพักนักศึกษามาแสดง 
+// ดึงข้อมูลหอพักนักศึกษามาแสดง
 func ListDormitoryTable(c *gin.Context) {
 	var dormitory_table []entity.DORMITORY
 
 	if err := entity.DB().Preload("DormitoryType").Preload("RoomType").Preload("Trimester").Preload("Branch").
-	Raw("SELECT * FROM dormitories").Scan(&dormitory_table).Find(&dormitory_table).Error; err != nil {
+		Raw("SELECT * FROM dormitories").Scan(&dormitory_table).Find(&dormitory_table).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": dormitory_table})
 }
 
-// // ดึงข้อมูล Admin มาแสดง 
+// // ดึงข้อมูล Admin มาแสดง
 // func ListAdminTable(c *gin.Context) {
 // 	var admin_table []entity.ADMIN
 // 	if err := entity.DB().Preload("Prefix").Preload("Gender").Preload("Province").Raw("SELECT * FROM admins").
@@ -82,7 +81,7 @@ func ListDormitoryTable(c *gin.Context) {
 
 // }
 
-// ดึงข้อมูล Dormitory by id 
+// ดึงข้อมูล Dormitory by id
 func ListDormitoryByID(c *gin.Context) {
 
 	var dormitory_by_id []entity.DORMITORY
@@ -136,16 +135,15 @@ func UpdateDormitory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
-
 	//12:สร้าง entity DORMITORY
 	updatedm := entity.DORMITORY{
-		Dormitory_Student_Number: 	Dormitory.Dormitory_Student_Number,
-		Dormitory_AcademicYear:  	Dormitory.Dormitory_AcademicYear,
-		Room_Number:              	Dormitory.Room_Number,
-		Trimester:     				Trimester,
-		DormitoryType: 				DormitoryType,
-		RoomType:      				RoomType,
-		Branch:        				Branch,
+		Dormitory_Student_Number: Dormitory.Dormitory_Student_Number,
+		Dormitory_AcademicYear:   Dormitory.Dormitory_AcademicYear,
+		Room_Number:              Dormitory.Room_Number,
+		Trimester:                Trimester,
+		DormitoryType:            DormitoryType,
+		RoomType:                 RoomType,
+		Branch:                   Branch,
 	}
 
 	//update

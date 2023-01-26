@@ -106,8 +106,6 @@ func UpdateGrade(c *gin.Context) {
 		return
 	}
 
-	
-
 	// ค้นหา Institute  ด้วย id
 	if tx := entity.DB().Where("id = ?", Grade.InstituteID).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
