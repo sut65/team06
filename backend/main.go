@@ -103,11 +103,11 @@ func main() {
 	//แสดงข้อมูลตาราง Course
 	r.GET("/course_table", controller.ListCourseTable)
 	// ดึงข้อมูล course by id
-	r.GET("/course/:id", controller.ListStudentByID)
+	r.GET("/course/:id", controller.ListCourseByID)
 	// แก้ไขข้อมูล course
-	r.PATCH("/update_course", controller.UpdateStudent)
+	r.PATCH("/update_course", controller.UpdateCourse)
 	// ลบข้อมูล course by id
-	r.DELETE("/delete_course/:id", controller.DeleteStudentByID)
+	r.DELETE("/delete_course/:id", controller.DeleteCourseByID)
 
 	/////////////////////////////////////////////////////////////
 	//รับข้อมูลเข้าตาราง scholarship applicant
@@ -198,6 +198,6 @@ func main() {
 	r.PATCH("/UpdateDiscipline", controller.UpdateDiscipline)
 
 	//////////////////////////////////////////////////////////////////
-	
+
 	r.Run()
 }

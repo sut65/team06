@@ -68,12 +68,12 @@ type ADMIN struct {
 	Gender   GENDER
 	Province PROVINCE
 
-	Branch    []BRANCH    `gorm:"foreignKey:AdminID"`
-	Course    []COURSE    `gorm:"foreignKey:AdminID"`
-	Student   []STUDENT   `gorm:"foreignKey:AdminID"`
-	Grade     []GRADE     `gorm:"foreignKey:AdminID"`
-	Activity  []ACTIVITY  `gorm:"foreignKey:AdminID"`
-	Dormitory []DORMITORY `gorm:"foreignkey:AdminID"`
+	Branch      []BRANCH     `gorm:"foreignKey:AdminID"`
+	Course      []COURSE     `gorm:"foreignKey:AdminID"`
+	Student     []STUDENT    `gorm:"foreignKey:AdminID"`
+	Grade       []GRADE      `gorm:"foreignKey:AdminID"`
+	Activity    []ACTIVITY   `gorm:"foreignKey:AdminID"`
+	Dormitory   []DORMITORY  `gorm:"foreignkey:AdminID"`
 	Disciplines []Discipline `gorm:"foreignKey:AdminID"`
 }
 
@@ -135,7 +135,7 @@ type STUDENT struct {
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:StudentID"`
 	Suggestion    []SUGGESTION    `gorm:"foreignkey:StudentID"`
 	Postponement  []POSTPONEMENT  `gorm:"foreignKey:StudentID"`
-	Disciplines   []Discipline 	  `gorm:"foreignKey:StudentID"`
+	Disciplines   []Discipline    `gorm:"foreignKey:StudentID"`
 }
 
 type BRANCH struct {
