@@ -215,25 +215,6 @@ func ListDiscipline(c *gin.Context) {
 
 }
 
-func ListDisciplineByStudentID(c *gin.Context) {
-
-	var disciplines []entity.Discipline
-
-	id := c.Param("id")
-
-
-	if err := entity.DB().Preload("DisciplineType").Preload("Student").Raw("SELECT * FROM disciplines WHERE id = ?", id).Scan(&disciplines).Find(&disciplines).Error; err != nil {
-
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": disciplines})
-
-}
-
 // DELETE /disciplines/:id
 func DeleteDiscipline(c *gin.Context) {
 	id := c.Param("id")
