@@ -908,59 +908,58 @@ func SetupDatabase() {
 		Branch:                      Branch2,
 	}
 	db.Model(&POSTPONEMENT{}).Create(&Postponement2)
-	
+
 	DisciplineType1 := DisciplineType{
-		DisciplineType_Name:	"การแต่งกาย",
+		DisciplineType_Name: "การแต่งกาย",
 	}
 	db.Model(&DisciplineType{}).Create(&DisciplineType1)
 
 	DisciplineType2 := DisciplineType{
-		DisciplineType_Name:	"ทำผิดกฎจราจร",
+		DisciplineType_Name: "ทำผิดกฎจราจร",
 	}
 	db.Model(&DisciplineType{}).Create(&DisciplineType2)
 
 	Discipline1 := Discipline{
-		Admin:   Admin1,
-		Student:   Student1,
-		DisciplineType:   DisciplineType1,
+		Admin:                 Admin1,
+		Student:               Student1,
+		DisciplineType:        DisciplineType1,
 		Discipline_Reason:     "ไม่รู้ทำไม",
 		Discipline_Punishment: "โด๊น",
 		Discipline_Point:      1,
-		Added_Time:           t,
+		Added_Time:            t,
 	}
 	db.Model(&Discipline{}).Create(&Discipline1)
 
 	Discipline2 := Discipline{
-		Admin:   Admin1,
-		Student:   Student1,
-		DisciplineType:   DisciplineType1,
+		Admin:                 Admin1,
+		Student:               Student1,
+		DisciplineType:        DisciplineType1,
 		Discipline_Reason:     "โอ้โอ้",
 		Discipline_Punishment: "โด๊น",
 		Discipline_Point:      1,
-		Added_Time:           t,
+		Added_Time:            t,
 	}
 	db.Model(&Discipline{}).Create(&Discipline2)
 
 	Discipline3 := Discipline{
-		Admin:   Admin1,
-		Student:   Student1,
-		DisciplineType:   DisciplineType1,
+		Admin:                 Admin1,
+		Student:               Student1,
+		DisciplineType:        DisciplineType1,
 		Discipline_Reason:     "อยากให้เธอบอกให้ฟัง",
 		Discipline_Punishment: "โด๊น",
 		Discipline_Point:      1,
-		Added_Time:           t,
+		Added_Time:            t,
 	}
 	db.Model(&Discipline{}).Create(&Discipline3)
 
 	Discipline4 := Discipline{
-		Admin:   Admin1,
-		Student:   Student2,
-		DisciplineType:   DisciplineType2,
+		Admin:                 Admin1,
+		Student:               Student2,
+		DisciplineType:        DisciplineType2,
 		Discipline_Reason:     "กินอะไรดี",
 		Discipline_Punishment: "โด๊น",
 		Discipline_Point:      1,
-		Added_Time:           t,
+		Added_Time:            t,
 	}
 	db.Model(&Discipline{}).Create(&Discipline4)
 }
-
