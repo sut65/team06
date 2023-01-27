@@ -40,6 +40,8 @@ func SetupDatabase() {
 		&TRIMESTER{},
 		&DORMITORY{},
 		&POSTPONEMENT{},
+		&DisciplineType{},
+		&Discipline{},
 	)
 	//////////////////////////////////////////////
 	db = database
