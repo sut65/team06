@@ -74,6 +74,7 @@ type ADMIN struct {
 	Grade     []GRADE     `gorm:"foreignKey:AdminID"`
 	Activity  []ACTIVITY  `gorm:"foreignKey:AdminID"`
 	Dormitory []DORMITORY `gorm:"foreignkey:AdminID"`
+	Disciplines []Discipline `gorm:"foreignKey:AdminID"`
 }
 
 type COURSE struct {
@@ -134,6 +135,7 @@ type STUDENT struct {
 	ScholarshipAp []SCHOLARSHIPAP `gorm:"foreignKey:StudentID"`
 	Suggestion    []SUGGESTION    `gorm:"foreignkey:StudentID"`
 	Postponement  []POSTPONEMENT  `gorm:"foreignKey:StudentID"`
+	Disciplines   []Discipline 	  `gorm:"foreignKey:StudentID"`
 }
 
 type BRANCH struct {
@@ -320,4 +322,32 @@ type POSTPONEMENT struct {
 	Institute INSTITUTE
 	Branch    BRANCH
 	Student   STUDENT
+}
+
+type DisciplineType struct {
+	gorm.Model
+	DisciplineType_Name string
+
+	Disciplines []Discipline `gorm:"foreignKey:DisciplineTypeID"`
+}
+
+type Discipline struct {
+	gorm.Model
+
+	//Admin FK
+	AdminID *uint
+	Admin   ADMIN `gorm:"references:id"` //set fk at ADMIN
+
+	//Student FK
+	StudentID *uint
+	Student   STUDENT `gorm:"references:id"` //set fk at STUDENT
+
+	//DisciplineType FK
+	DisciplineTypeID *uint
+	DisciplineType   DisciplineType `gorm:"references:id"`
+
+	Discipline_Reason     string
+	Discipline_Punishment string
+	Discipline_Point      uint
+	Added_Time            time.Time
 }
