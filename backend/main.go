@@ -183,5 +183,22 @@ func main() {
 	r.DELETE("/delete_postponementadmin/:id", controller.DeletePostponementByID)
 
 	//////////////////////////////////////////////////////////////////
+
+	//DisciplineType
+	r.POST("/CreateDisciplineType", controller.CreateDisciplineType)
+	r.GET("/GetDisciplineType/:id", controller.GetDisciplineType)
+	r.GET("/ListDisciplineType", controller.ListDisciplineType)
+	r.DELETE("/DeleteDisciplineType/:id", controller.DeleteDisciplineType)
+	r.PATCH("/UpdateDisciplineType", controller.UpdateDisciplineType)
+
+	//Discipline
+	r.POST("/CreateDiscipline", controller.CreateDiscipline)
+	r.GET("/GetDiscipline/:id", controller.GetDiscipline)
+	r.GET("/ListDiscipline", controller.ListDiscipline)
+	r.DELETE("/DeleteDiscipline/:id", controller.DeleteDiscipline)
+	r.PATCH("/UpdateDiscipline", controller.UpdateDiscipline)
+
+	//////////////////////////////////////////////////////////////////
+	
 	r.Run()
 }
