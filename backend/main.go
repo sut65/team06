@@ -48,8 +48,7 @@ func main() {
 	r.GET("/scholarship", controller.ListScholarship)
 	//combobox Scholarship type
 	r.GET("/scholarship_type", controller.ListScholarshipType)
-	//combobox branch
-	r.GET("/branch", controller.ListBranch)
+	//combobox ActivityType
 	r.GET("/activityType", controller.ListActivityType)
 	//combobox Trimester
 	r.GET("/trimester", controller.ListTrimester)

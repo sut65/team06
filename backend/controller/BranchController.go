@@ -96,26 +96,45 @@ func DeleteBranchByID(c *gin.Context) {
 
 // แก้ไขข้อมูล branch
 func UpdateBranch(c *gin.Context) {
+	var Admin entity.ADMIN
+	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
-	var NewBranch entity.BRANCH
+	var Prefix entity.PREFIX
+
 	if err := c.ShouldBindJSON(&Branch); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Branch_error": err.Error()})
 		return
 	}
 
-	NewBranch.Branch_Name = Branch.Branch_Name
-	NewBranch.Branch_Teacher = Branch.Branch_Teacher
-	NewBranch.Branch_Info = Branch.Branch_Info
+	// 8: ค้นหา institute ด้วย id
+	if tx := entity.DB().Where("id = ?", Branch.InstituteID).First(&Institute); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
+		return
+	}
 
-	NewBranch.Institute = Branch.Institute
-	NewBranch.Prefix = Branch.Prefix
-	NewBranch.Admin = Branch.Admin
+	// 9: ค้นหา prefix ด้วย id
+	if tx := entity.DB().Where("id = ?", Branch.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
+		return
+	}
 
-	if err := entity.DB().Where("id = ?", Branch.ID).Updates(&NewBranch).Error; err != nil {
+	// 10: สร้าง entity Branch
+	update := entity.BRANCH{
+		Branch_Name:    Branch.Branch_Name,
+		Branch_Teacher: Branch.Branch_Teacher,
+		Branch_Info:    Branch.Branch_Info,
+
+		Prefix:    Prefix,
+		Institute: Institute,
+		AdminID:   Branch.AdminID,
+		Admin:     Admin,
+	}
+
+	// 9: update
+	if err := entity.DB().Where("id = ?", Branch.ID).Updates(&update).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": NewBranch})
+	c.JSON(http.StatusOK, gin.H{"data": Branch})
 }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
