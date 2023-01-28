@@ -7,6 +7,10 @@ import UpdateStudent from "./components/Student/UpdateStudent";
 import SearchStudent from "./components/Student/SearchStudent";
 import StudentLogin from "./components/Login-Student";
 import AdminLogin from "./components/Login-Admin";
+import DataCourse from "./components/Course/DataCourse";
+import CreateCourse from "./components/Course/CreateCourse";
+import UpdateCourse from "./components/Course/UpdateCourse";
+import SearchCourse from "./components/Course/SearchCourse";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -23,6 +27,10 @@ function App() {
           <Route path="/CreateStudent" element={<CreateStudent />} />
           <Route path="/DataStudent/UpdateStudent/:id" element={<UpdateStudent />} />
           <Route path="/DataStudent/SearchStudent/:id" element={<SearchStudent />} />
+          <Route path="/DataCourse" element={<DataCourse />} />
+          <Route path="/CreateCourse" element={<CreateCourse />} />
+          <Route path="/DataCourse/UpdateCourse/:id" element={<UpdateCourse />} />
+          <Route path="/DataCourse/SearchCourse/:id" element={<SearchCourse />} />
 
         </Routes>
 
