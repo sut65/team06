@@ -54,6 +54,11 @@ import CreateBranch from "./components/branches/CreateBranch";
 import UpdateBranch from "./components/branches/UpdateBranch";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AllScholarship from "./components/scholarships/AllScholarship";
+import DataScholarshipAp from "./components/scholarships/DataScholarshipAp";
+import UpdateScholarshipAp from "./components/scholarships/UpdateScholarship";
+import Details from "./components/scholarships/Detail";
+import CreateScholarshipAp from "./components/scholarships/CreateScholarshipAp";
 
 function App() {
   return (
@@ -116,6 +121,12 @@ function App() {
       <Route path="/DataBranch" element={<DataBranch />} />
       <Route path="/create_branch" element={<CreateBranch />} />
       <Route path="/DataBranch/UpdateBranch/:id" element={<UpdateBranch />} />
+
+      <Route path="/all_scholarship" element={<AllScholarship />} />
+      <Route path="/data_scholarship_applicants"  element={<DataScholarshipAp />}  />
+      <Route  path="/data_scholarship_applicants/UpdateScholarshipAp/:id"  element={<UpdateScholarshipAp />}  />
+      <Route path="/scholarship/detail/:id" element={<Details />} />
+      <Route  path="/scholarship/detail/:id/create"  element={<CreateScholarshipAp />}  />
 
 
     </Routes>
