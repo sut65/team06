@@ -34,6 +34,12 @@ import DataPetition from "./components/Petition/DataPetition";
 import UpdatePetition from "./components/Petition/UpdatePetition";
 import CreatePetition from "./components/Petition/CreatePetition";
 
+import DataDiscipline from "./components/Discipline/DataDiscipline";
+import CreateDiscipline from "./components/Discipline/CreateDiscipline";
+import UpdateDiscipline from "./components/Discipline/UpdateDiscipline";
+import SearchDiscipline from "./components/Discipline/SearchDiscipline";
+
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -77,6 +83,11 @@ function App() {
       <Route path="/CreatePetition" element={<CreatePetition />} />
       <Route path="/DataPetition" element={<DataPetition />} />
       <Route path="/DataPetition/UpdatePetition/:id" element={<UpdatePetition />} />
+
+      <Route path="/DataDiscipline" element={<DataDiscipline />} />
+      <Route path="/CreateDiscipline" element={<CreateDiscipline />} />
+      <Route path="/DataDiscipline/UpdateDiscipline/:id" element={<UpdateDiscipline />} />
+      <Route path="/SearchDiscipline" element={<SearchDiscipline />} />
 
     </Routes>
 
