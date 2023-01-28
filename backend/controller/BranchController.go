@@ -70,7 +70,7 @@ func ListBranchTable(c *gin.Context) {
 // ดึงข้อมูล branch by id
 func ListBranchByID(c *gin.Context) {
 
-	var Branch []entity.BRANCH
+	var Branch entity.BRANCH
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM branches WHERE id = ?", id).Scan(&Branch).Error; err != nil {
 
@@ -118,7 +118,7 @@ func UpdateBranch(c *gin.Context) {
 		return
 	}
 
-	// 10: สร้าง entity Branch
+	
 	update := entity.BRANCH{
 		Branch_Name:    Branch.Branch_Name,
 		Branch_Teacher: Branch.Branch_Teacher,
@@ -130,7 +130,7 @@ func UpdateBranch(c *gin.Context) {
 		Admin:     Admin,
 	}
 
-	// 9: update
+	// : update
 	if err := entity.DB().Where("id = ?", Branch.ID).Updates(&update).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
