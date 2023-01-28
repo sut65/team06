@@ -16,6 +16,11 @@ import CreateAdmin from "./components/Admin/CreateAdmin";
 import DataAdmin from "./components/Admin/DataAdmin";
 import UpdateAdmin from "./components/Admin/UpdateAdmin";
 
+import CreatePostponement from "./components/Postponement/CreatePostponement";
+import DataPostponement from "./components/Postponement/DataPostponement";
+import UpdatePostponement from "./components/Postponement/UpdatePostponement";
+import SearchPostponement from "./components/Postponement/SearchPostponement";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -41,7 +46,11 @@ function App() {
           <Route path="/CreateAdmin" element={<CreateAdmin />} />         
           <Route path="/DataAdmin" element={<DataAdmin />} />
           <Route path="/DataAdmin/UpdateAdmin/:id" element={<UpdateAdmin/>} />
-          
+         
+          <Route path="/CreatePostponement" element={<CreatePostponement />} />         
+          <Route path="/DataPostponement" element={<DataPostponement />} />
+          <Route path="/DataPostponement/UpdatePosponement/:id" element={<UpdatePostponement />} />
+          <Route path="/DataPostponement/SearchPostponement/:id" element={<SearchPostponement />} />
         </Routes>
 
   );

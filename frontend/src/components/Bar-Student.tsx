@@ -29,7 +29,7 @@ export const Studentbar = ({ pageWrapId, outerContainerId }: SidemenuProps) => {
       <a className="menu-item logout" href="/HomeStudent">
         สมัครขอทุนการศึกษา
       </a>
-      <a className="menu-item" href="/HomeStudent">
+      <a className="menu-item" href="/DataPostponement">
         ยื่นคำร้องผ่อนผันค่าธรรมเนียมการศึกษา
       </a>
       <a className="menu-item" href="/HomeStudent">
