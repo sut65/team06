@@ -42,6 +42,9 @@ func SetupDatabase() {
 		&POSTPONEMENT{},
 		&DisciplineType{},
 		&Discipline{},
+		&PetitionType{},
+		&PetitionPeriod{},
+		&Petition{},
 	)
 	//////////////////////////////////////////////
 	db = database
@@ -962,4 +965,29 @@ func SetupDatabase() {
 		Added_Time:            t,
 	}
 	db.Model(&Discipline{}).Create(&Discipline4)
+
+	PetitionType1 := PetitionType{
+		PetitionType_Name: "ลาป่วย",
+	}
+	db.Model(&PetitionType{}).Create(&PetitionType1)
+
+	PetitionType2 := PetitionType{
+		PetitionType_Name: "ลากิจ",
+	}
+	db.Model(&PetitionType{}).Create(&PetitionType2)
+
+	PetitionPeriod1 := PetitionPeriod{
+		PetitionPeriod_Num: 1,
+	}
+	db.Model(&PetitionPeriod{}).Create(&PetitionPeriod1)
+
+	PetitionPeriod2 := PetitionPeriod{
+		PetitionPeriod_Num: 2,
+	}
+	db.Model(&PetitionPeriod{}).Create(&PetitionPeriod2)
+
+	PetitionPeriod3 := PetitionPeriod{
+		PetitionPeriod_Num: 3,
+	}
+	db.Model(&PetitionPeriod{}).Create(&PetitionPeriod3)
 }
