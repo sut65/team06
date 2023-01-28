@@ -58,6 +58,10 @@ func main() {
 	r.GET("/dormitorytype", controller.ListDormitoryType)
 	//combobx roomtype
 	r.GET("/roomtype", controller.ListRoomType)
+	//list all Scholarship ให้ all_sholarship
+	r.GET("/scholarship", controller.ListScholarship)
+	//combobox Scholarship type
+	r.GET("/scholarship_type", controller.ListScholarshipType)
 
 	/////////////////////////////////////////////////////////////
 
