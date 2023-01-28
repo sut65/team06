@@ -34,6 +34,7 @@ func SetupDatabase() {
 		&SCHOLARSHIP{},
 		&SCHOLARSHIPAP{},
 		&SCHOLARSHIPTYPE{},
+		&SUGGESTION{},
 		&GRADE{},
 		&DORMITORYTYPE{},
 		&ROOMTYPE{},
