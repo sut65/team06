@@ -3,9 +3,6 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
-
-	//*	"golang.org/x/crypto/bcrypt"
-
 	"net/http"
 )
 
@@ -17,6 +14,7 @@ func CreatePostponement(c *gin.Context) {
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Postponement entity.POSTPONEMENT
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&Postponement); err != nil {
 
@@ -47,12 +45,6 @@ func CreatePostponement(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
-	//เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	/*hashPassword, err := bcrypt.GenerateFromPassword([]byte(Admin.Admin_Password), 14)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "eror hashing password"})
-	}*/
-
 	//16:สร้าง entity POSTPONEMENT
 	Data_Postponement := entity.POSTPONEMENT{
 		Postponement_Student_Number: Postponement.Postponement_Student_Number,
@@ -67,6 +59,8 @@ func CreatePostponement(c *gin.Context) {
 		Trimester:                   Trimester,
 		Institute:                   Institute,
 		Branch:                      Branch,
+		StudentID:                     Postponement.StudentID,
+		Student:					Student,
 	}
 
 	//17:บันทึก
@@ -99,9 +93,9 @@ func ListPostponementTable(c *gin.Context) {
 
 // ดึงข้อมูล Postponement by id
 func ListPostponementByID(c *gin.Context) {
-
 	var Postponement entity.POSTPONEMENT
 	id := c.Param("id")
+
 	if err := entity.DB().Raw("SELECT * FROM postponements WHERE id = ?", id).Scan(&Postponement).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"ListPostponementByID_error": err.Error()})
@@ -132,6 +126,7 @@ func UpdatePostponement(c *gin.Context) {
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Postponement entity.POSTPONEMENT
+	var Student entity.STUDENT
 	if err := c.ShouldBindJSON(&Postponement); err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -143,7 +138,6 @@ func UpdatePostponement(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
 		return
 	}
-
 	//12: ค้นหาด้วย id ของ Degree
 	if tx := entity.DB().Where("id = ?", Postponement.DegreeID).First(&Degree); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Degree not found"})
@@ -176,6 +170,8 @@ func UpdatePostponement(c *gin.Context) {
 		Trimester: Trimester,
 		Institute: Institute,
 		Branch:    Branch,
+		StudentID: Postponement.StudentID,
+		Student:	Student,
 	}
 	// 9: update
 	if err := entity.DB().Where("id = ?", Postponement.ID).Updates(&update).Error; err != nil {
