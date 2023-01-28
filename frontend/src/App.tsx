@@ -30,48 +30,55 @@ import DataSuggestion from "./components/Suggestion/DataSuggestion";
 import CreateSuggestion from "./components/Suggestion/CreateSuggestion";
 import UpdateSuggestion from "./components/Suggestion/UpdateSuggestion";
 
+import DataPetition from "./components/Petition/DataPetition";
+import UpdatePetition from "./components/Petition/UpdatePetition";
+import CreatePetition from "./components/Petition/CreatePetition";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-        <Routes>
-          
-          <Route path="/" element={<Home />} />
-          <Route path="/StudentLogin" element={<StudentLogin />} />
-          <Route path="/AdminLogin" element={<AdminLogin />} />
+    <Routes>
 
-          <Route path="/HomeStudent" element={<HomeStudent />} />
-          <Route path="/HomeAdmin" element={<HomeAdmin />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/StudentLogin" element={<StudentLogin />} />
+      <Route path="/AdminLogin" element={<AdminLogin />} />
 
-          <Route path="/DataStudent" element={<DataStudent />} />
-          <Route path="/CreateStudent" element={<CreateStudent />} />
-          <Route path="/DataStudent/UpdateStudent/:id" element={<UpdateStudent />} />
-          <Route path="/DataStudent/SearchStudent/:id" element={<SearchStudent />} />
-          <Route path="/DataCourse" element={<DataCourse />} />
-          <Route path="/CreateCourse" element={<CreateCourse />} />
-          <Route path="/DataCourse/UpdateCourse/:id" element={<UpdateCourse />} />
-          <Route path="/DataCourse/SearchCourse/:id" element={<SearchCourse />} />
+      <Route path="/HomeStudent" element={<HomeStudent />} />
+      <Route path="/HomeAdmin" element={<HomeAdmin />} />
 
-          <Route path="/CreateAdmin" element={<CreateAdmin />} />         
-          <Route path="/DataAdmin" element={<DataAdmin />} />
-          <Route path="/DataAdmin/UpdateAdmin/:id" element={<UpdateAdmin/>} />
-         
-          <Route path="/CreatePostponement" element={<CreatePostponement />} />         
-          <Route path="/DataPostponement" element={<DataPostponement />} />
-          <Route path="/DataPostponement/UpdatePosponement/:id" element={<UpdatePostponement />} />
-          <Route path="/DataPostponement/SearchPostponement/:id" element={<SearchPostponement />} />
-        
-          <Route path="/DataDormitory" element={<DataDormitory />} />
-          <Route path="/CreateDormitory" element={<CreateDormitory />} />
-          <Route path="/DataDormitory/UpdateDormitory/:id" element={<UpdateDormitory />}/>
-          <Route path="/DataDormitory/SearchDormitory/:id" element={<SearchDormitory />} />
-          
-          <Route path="/DataSuggestion" element={<DataSuggestion />} />
-          <Route path="/CreateSuggestion" element={<CreateSuggestion />} />
-          <Route path="/DataSuggestion/UpdateSuggestion/:id" element={<UpdateSuggestion />}/>
+      <Route path="/DataStudent" element={<DataStudent />} />
+      <Route path="/CreateStudent" element={<CreateStudent />} />
+      <Route path="/DataStudent/UpdateStudent/:id" element={<UpdateStudent />} />
+      <Route path="/DataStudent/SearchStudent/:id" element={<SearchStudent />} />
+      <Route path="/DataCourse" element={<DataCourse />} />
+      <Route path="/CreateCourse" element={<CreateCourse />} />
+      <Route path="/DataCourse/UpdateCourse/:id" element={<UpdateCourse />} />
+      <Route path="/DataCourse/SearchCourse/:id" element={<SearchCourse />} />
 
-        </Routes>
+      <Route path="/CreateAdmin" element={<CreateAdmin />} />
+      <Route path="/DataAdmin" element={<DataAdmin />} />
+      <Route path="/DataAdmin/UpdateAdmin/:id" element={<UpdateAdmin />} />
+
+      <Route path="/CreatePostponement" element={<CreatePostponement />} />
+      <Route path="/DataPostponement" element={<DataPostponement />} />
+      <Route path="/DataPostponement/UpdatePosponement/:id" element={<UpdatePostponement />} />
+      <Route path="/DataPostponement/SearchPostponement/:id" element={<SearchPostponement />} />
+
+      <Route path="/DataDormitory" element={<DataDormitory />} />
+      <Route path="/CreateDormitory" element={<CreateDormitory />} />
+      <Route path="/DataDormitory/UpdateDormitory/:id" element={<UpdateDormitory />} />
+      <Route path="/DataDormitory/SearchDormitory/:id" element={<SearchDormitory />} />
+
+      <Route path="/DataSuggestion" element={<DataSuggestion />} />
+      <Route path="/CreateSuggestion" element={<CreateSuggestion />} />
+      <Route path="/DataSuggestion/UpdateSuggestion/:id" element={<UpdateSuggestion />} />
+
+      <Route path="/CreatePetition" element={<CreatePetition />} />
+      <Route path="/DataPetition" element={<DataPetition />} />
+      <Route path="/DataPetition/UpdatePetition/:id" element={<UpdatePetition />} />
+
+    </Routes>
 
   );
 }
