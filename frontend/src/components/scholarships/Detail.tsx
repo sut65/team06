@@ -10,9 +10,26 @@ import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography/Typography";
+
 import { ScholarshipInterface } from "../../models/IScholarship";
 import { ScholarshipTypeInterface } from "../../models/IScholarshipType";
-import Typography from "@mui/material/Typography/Typography";
+import { Studentbar } from "../Bar-Student";
+
+const Theme = createTheme({
+  palette: {
+    primary: {
+      main: "#B3E5FC",
+    },
+    secondary: {
+      main: "#C70039",
+    },
+    info: {
+      main: "#164DC9",
+    },
+  },
+});
 
 function Details() {
   let { id } = useParams()
@@ -54,7 +71,14 @@ function Details() {
   }, [])
   
   return (
-    <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
+    <div className="AllScholarship" id="outer-container">
+      <ThemeProvider theme={Theme}>
+        <Studentbar
+          pageWrapId={"page-AllScholarship"}
+          outerContainerId={"outer-container"}
+        />
+        <div id="page-AllScholarship">
+    <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
     <Container maxWidth="lg">
       
       <Paper elevation={2} sx={{ paddingLeft: 5 }}>
@@ -93,13 +117,16 @@ function Details() {
         onClick={() => navigate("create")}
         sx={{ marginTop: 2, float: "right",fontFamily:"cursive" }}
         variant="contained"
-        color="success"
+        color="primary"
       >
         APPLY
       </Button>
       
     </Container>
     </Box>
+    </div>
+      </ThemeProvider>
+    </div>
     
   );
 }
