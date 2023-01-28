@@ -39,6 +39,10 @@ import CreateDiscipline from "./components/Discipline/CreateDiscipline";
 import UpdateDiscipline from "./components/Discipline/UpdateDiscipline";
 import SearchDiscipline from "./components/Discipline/SearchDiscipline";
 
+import DataGrade from "./components/Grade/DataGrade";
+import CreateGrade from "./components/Grade/CreateGrade";
+import UpdateGrade from "./components/Grade/UpdateGrade";
+import SearchGrade from "./components/Grade/SearchGrade"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -88,6 +92,11 @@ function App() {
       <Route path="/CreateDiscipline" element={<CreateDiscipline />} />
       <Route path="/DataDiscipline/UpdateDiscipline/:id" element={<UpdateDiscipline />} />
       <Route path="/SearchDiscipline" element={<SearchDiscipline />} />
+
+      <Route path="/DataGrade" element={<DataGrade />} />
+      <Route path="/CreateGrade" element={<CreateGrade />} />
+      <Route path="/DataGrade/UpdateGrade/:id" element={<UpdateGrade />} />
+      <Route path="/DataGrade/SearchGrade/:id" element={<SearchGrade />} />
 
     </Routes>
 
