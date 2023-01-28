@@ -12,6 +12,10 @@ import CreateCourse from "./components/Course/CreateCourse";
 import UpdateCourse from "./components/Course/UpdateCourse";
 import SearchCourse from "./components/Course/SearchCourse";
 
+import CreateAdmin from "./components/Admin/CreateAdmin";
+import DataAdmin from "./components/Admin/DataAdmin";
+import UpdateAdmin from "./components/Admin/UpdateAdmin";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -21,8 +25,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/StudentLogin" element={<StudentLogin />} />
           <Route path="/AdminLogin" element={<AdminLogin />} />
+
           <Route path="/HomeStudent" element={<HomeStudent />} />
           <Route path="/HomeAdmin" element={<HomeAdmin />} />
+
           <Route path="/DataStudent" element={<DataStudent />} />
           <Route path="/CreateStudent" element={<CreateStudent />} />
           <Route path="/DataStudent/UpdateStudent/:id" element={<UpdateStudent />} />
@@ -32,6 +38,10 @@ function App() {
           <Route path="/DataCourse/UpdateCourse/:id" element={<UpdateCourse />} />
           <Route path="/DataCourse/SearchCourse/:id" element={<SearchCourse />} />
 
+          <Route path="/CreateAdmin" element={<CreateAdmin />} />         
+          <Route path="/DataAdmin" element={<DataAdmin />} />
+          <Route path="/DataAdmin/UpdateAdmin/:id" element={<UpdateAdmin/>} />
+          
         </Routes>
 
   );
