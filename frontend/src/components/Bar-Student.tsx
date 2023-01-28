@@ -36,7 +36,7 @@ export const Studentbar = ({ pageWrapId, outerContainerId }: SidemenuProps) => {
         ยื่นคำร้องลาหยุด
       </a>
       <a className="menu-item"></a>
-      <a className="menu-item" href="/HomeStudent">
+      <a className="menu-item" href="/DataSuggestion">
         เสนอความคิดเห็น
       </a>
       <a className="menu-item logout" href="/">

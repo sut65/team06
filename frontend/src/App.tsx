@@ -26,6 +26,11 @@ import CreateDormitory from "./components/Dormitory/CreateDormitory";
 import UpdateDormitory from "./components/Dormitory/UpdateDormitory";
 import SearchDormitory from "./components/Dormitory/SearchDormitory";
 
+import DataSuggestion from "./components/Suggestion/DataSuggestion";
+import CreateSuggestion from "./components/Suggestion/CreateSuggestion";
+import UpdateSuggestion from "./components/Suggestion/UpdateSuggestion";
+
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -62,6 +67,10 @@ function App() {
           <Route path="/DataDormitory/UpdateDormitory/:id" element={<UpdateDormitory />}/>
           <Route path="/DataDormitory/SearchDormitory/:id" element={<SearchDormitory />} />
           
+          <Route path="/DataSuggestion" element={<DataSuggestion />} />
+          <Route path="/CreateSuggestion" element={<CreateSuggestion />} />
+          <Route path="/DataSuggestion/UpdateSuggestion/:id" element={<UpdateSuggestion />}/>
+
         </Routes>
 
   );
