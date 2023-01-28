@@ -70,7 +70,7 @@ func ListGradeTable(c *gin.Context) {
 // ดึงข้อมูล Grade by id
 func ListGradeByID(c *gin.Context) {
 
-	var GradeByID []entity.GRADE
+	var GradeByID entity.GRADE
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM grades WHERE id = ?", id).Scan(&GradeByID).Error; err != nil {
 
@@ -105,6 +105,8 @@ func UpdateGrade(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Grade_error": err.Error()})
 		return
 	}
+
+	
 
 	// ค้นหา Institute  ด้วย id
 	if tx := entity.DB().Where("id = ?", Grade.InstituteID).First(&Institute); tx.RowsAffected == 0 {
