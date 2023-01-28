@@ -842,6 +842,7 @@ func SetupDatabase() {
 		DormitoryType:            Dormitory_type1,
 		RoomType:                 Room_type2,
 		Branch:                   Branch1,
+		Admin:					  Admin1,
 	}
 	db.Model(&DORMITORY{}).Create(&Dormitory1)
 
@@ -853,6 +854,7 @@ func SetupDatabase() {
 		DormitoryType:            Dormitory_type2,
 		RoomType:                 Room_type2,
 		Branch:                   Branch2,
+		Admin:					  Admin1,
 	}
 	db.Model(&DORMITORY{}).Create(&Dormitory2)
 
@@ -865,6 +867,7 @@ func SetupDatabase() {
 		Prefix:                    Prefix1,
 		Institute:                 Institute1,
 		Branch:                    Branch1,
+		Student:            	   Student1,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion1)
 
@@ -877,6 +880,7 @@ func SetupDatabase() {
 		Prefix:                    Prefix1,
 		Institute:                 Institute2,
 		Branch:                    Branch2,
+		Student:            	   Student1,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion2)
 

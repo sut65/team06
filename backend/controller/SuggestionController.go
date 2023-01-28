@@ -8,12 +8,13 @@ import (
 	"github.com/sut65/team06/entity"
 )
 
-func CreatSuggestion(c *gin.Context) {
-
+func CreatSuggestion(c *gin.Context)  {
+	
 	var Prefix entity.PREFIX
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Suggestion entity.SUGGESTION
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&Suggestion); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -33,16 +34,21 @@ func CreatSuggestion(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
+
 	//12:สร้าง entity ADMIN
 	sg := entity.SUGGESTION{
-		Suggestion_Teacher:        Suggestion.Suggestion_Teacher,
-		Suggestion_Student_Number: Suggestion.Suggestion_Student_Number,
-		Suggestion_Student_Name:   Suggestion.Suggestion_Student_Name,
-		Suggestion_Date:           Suggestion.Suggestion_Date,
-		Suggestion_Detail:         Suggestion.Suggestion_Detail,
-		Prefix:                    Prefix,
-		Institute:                 Institute,
-		Branch:                    Branch,
+		Suggestion_Teacher:       	Suggestion.Suggestion_Teacher,
+		Suggestion_Student_Number:	Suggestion.Suggestion_Student_Number,
+		Suggestion_Student_Name:  	Suggestion.Suggestion_Student_Name,
+		Suggestion_Date:         	Suggestion.Suggestion_Date,
+		Suggestion_Detail:       	Suggestion.Suggestion_Detail,
+
+		Prefix:    					Prefix,
+		Institute: 					Institute,
+		Branch:    					Branch,
+		
+		StudentID: 					Suggestion.StudentID,
+		Student:					Student,
 	}
 
 	//13:บันทึก
@@ -58,14 +64,14 @@ func ListSuggestionTable(c *gin.Context) {
 	var suggestion_table []entity.SUGGESTION
 
 	if err := entity.DB().Preload("Prefix").Preload("Institute").Preload("Branch").
-		Raw("SELECT * FROM suggestions").Scan(&suggestion_table).Find(&suggestion_table).Error; err != nil {
+	Preload("Student").Raw("SELECT * FROM suggestions").Scan(&suggestion_table).Find(&suggestion_table).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": suggestion_table})
 }
 
-// // ดึงข้อมูล Student มาแสดง
+// ดึงข้อมูล Student มาแสดง 
 // func ListStudentTable(c *gin.Context) {
 
 // 	var student_table []entity.STUDENT
@@ -78,10 +84,10 @@ func ListSuggestionTable(c *gin.Context) {
 // 	c.JSON(http.StatusOK, gin.H{"data": student_table})
 // }
 
-// ดึงข้อมูล Course by id
+// ดึงข้อมูล Course by id 
 func ListSuggestionByID(c *gin.Context) {
 
-	var suggestion_by_id []entity.SUGGESTION
+	var suggestion_by_id entity.SUGGESTION
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM suggestions WHERE id = ?", id).Scan(&suggestion_by_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ListSuggestionByID_error": err.Error()})
@@ -101,7 +107,6 @@ func DeleteSuggestionByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
-
 // แก้ไขข้อมูล Dormitory
 func UpdateSuggestion(c *gin.Context) {
 
@@ -109,6 +114,7 @@ func UpdateSuggestion(c *gin.Context) {
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Suggestion entity.SUGGESTION
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&Suggestion); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -128,16 +134,21 @@ func UpdateSuggestion(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
+
 	//12:สร้าง entity ADMIN
 	updatesg := entity.SUGGESTION{
-		Suggestion_Teacher:        Suggestion.Suggestion_Teacher,
-		Suggestion_Student_Number: Suggestion.Suggestion_Student_Number,
-		Suggestion_Student_Name:   Suggestion.Suggestion_Student_Name,
-		Suggestion_Date:           Suggestion.Suggestion_Date,
-		Suggestion_Detail:         Suggestion.Suggestion_Detail,
-		Prefix:                    Prefix,
-		Institute:                 Institute,
-		Branch:                    Branch,
+		Suggestion_Teacher:       	Suggestion.Suggestion_Teacher,
+		Suggestion_Student_Number:	Suggestion.Suggestion_Student_Number,
+		Suggestion_Student_Name:  	Suggestion.Suggestion_Student_Name,
+		Suggestion_Date:         	Suggestion.Suggestion_Date,
+		Suggestion_Detail:       	Suggestion.Suggestion_Detail,
+
+		Prefix:    					Prefix,
+		Institute: 					Institute,
+		Branch:    					Branch,
+
+		StudentID: 					Suggestion.StudentID,
+		Student: 					Student,					
 	}
 
 	//update
