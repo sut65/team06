@@ -21,6 +21,11 @@ import DataPostponement from "./components/Postponement/DataPostponement";
 import UpdatePostponement from "./components/Postponement/UpdatePostponement";
 import SearchPostponement from "./components/Postponement/SearchPostponement";
 
+import DataDormitory from "./components/Dormitory/DataDormitory";
+import CreateDormitory from "./components/Dormitory/CreateDormitory";
+import UpdateDormitory from "./components/Dormitory/UpdateDormitory";
+import SearchDormitory from "./components/Dormitory/SearchDormitory";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -51,6 +56,12 @@ function App() {
           <Route path="/DataPostponement" element={<DataPostponement />} />
           <Route path="/DataPostponement/UpdatePosponement/:id" element={<UpdatePostponement />} />
           <Route path="/DataPostponement/SearchPostponement/:id" element={<SearchPostponement />} />
+        
+          <Route path="/DataDormitory" element={<DataDormitory />} />
+          <Route path="/CreateDormitory" element={<CreateDormitory />} />
+          <Route path="/DataDormitory/UpdateDormitory/:id" element={<UpdateDormitory />}/>
+          <Route path="/DataDormitory/SearchDormitory/:id" element={<SearchDormitory />} />
+          
         </Routes>
 
   );
