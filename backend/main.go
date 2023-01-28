@@ -117,7 +117,7 @@ func main() {
 
 	/////////////////////////////////////////////////////////////
 	//รับข้อมูลเข้าตาราง scholarship applicant
-	r.POST("/create_scholarship_applicant", controller.CreateScholarshipAp)
+	r.POST("/create", controller.CreateScholarshipAp)
 	//แสดงข้อมูลตาราง scholarship applicants
 	r.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
 	// ดึงข้อมูล scholarship applicants by id

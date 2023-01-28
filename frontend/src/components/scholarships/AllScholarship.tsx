@@ -84,7 +84,7 @@ function AllScholarship() {
           outerContainerId={"outer-container"}
         />
         <div id="page-AllScholarship">
-        <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
+        <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
           <Container maxWidth="lg">
             <Paper sx={{ padding: 2, mb: 2,}}>
               <Box display={"flex"}>
