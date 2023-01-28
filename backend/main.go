@@ -30,6 +30,12 @@ func main() {
 
 	/////////////////////////////////////////////////////////////
 
+	r.POST("/admin_Login", controller.Admin_Login)
+
+	r.POST("/Student_Login", controller.Student_Login)
+	
+	/////////////////////////////////////////////////////////////
+
 	//combobox Institute
 	r.GET("/institute", controller.ListInstitute)
 	//combobox Branch
@@ -205,7 +211,7 @@ func main() {
 	r.GET("/GetPetitionType/:id", controller.GetPetitionType)
 	r.PATCH("/UpdatePetitionType", controller.UpdatePetitionType)
 	r.DELETE("/DeletePetitionType/:id", controller.DeletePetitionType)
-	
+
 	//PetitionPeriod
 	r.POST("/CreatePetitionPeriod", controller.CreatePetitionPeriod)
 	r.GET("/ListPetitionPeriod", controller.ListPetitionPeriod)
