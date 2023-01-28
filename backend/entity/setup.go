@@ -16,7 +16,7 @@ func DB() *gorm.DB {
 
 func SetupDatabase() {
 	//////////////////////////////////////////////
-	database, err := gorm.Open(sqlite.Open("SUT-SE65-Team06"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("SUT-SE65-Team06.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
