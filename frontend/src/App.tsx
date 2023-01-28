@@ -44,6 +44,11 @@ import CreateGrade from "./components/Grade/CreateGrade";
 import UpdateGrade from "./components/Grade/UpdateGrade";
 import SearchGrade from "./components/Grade/SearchGrade"
 
+import DataActivity from "./components/Activity/DataActivity";
+import CreateActivity from "./components/Activity/CreateActivity";
+import UpdateActivity from "./components/Activity/UpdateActivity";
+import SearchActivity from "./components/Activity/SearchActivity";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -98,6 +103,11 @@ function App() {
       <Route path="/DataGrade/UpdateGrade/:id" element={<UpdateGrade />} />
       <Route path="/DataGrade/SearchGrade/:id" element={<SearchGrade />} />
 
+
+      <Route path="/DataActivity" element={<DataActivity />} />
+      <Route path="/CreateActivity" element={<CreateActivity />} />
+      <Route path="/DataActivity/UpdateActivity/:id" element={<UpdateActivity />} />
+      <Route path="/DataActivity/SearchActivity/:id" element={<SearchActivity />} />
     </Routes>
 
   );
