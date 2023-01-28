@@ -49,6 +49,10 @@ import CreateActivity from "./components/Activity/CreateActivity";
 import UpdateActivity from "./components/Activity/UpdateActivity";
 import SearchActivity from "./components/Activity/SearchActivity";
 
+import DataBranch from "./components/branches/DataBranch";
+import CreateBranch from "./components/branches/CreateBranch";
+import UpdateBranch from "./components/branches/UpdateBranch";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -108,6 +112,12 @@ function App() {
       <Route path="/CreateActivity" element={<CreateActivity />} />
       <Route path="/DataActivity/UpdateActivity/:id" element={<UpdateActivity />} />
       <Route path="/DataActivity/SearchActivity/:id" element={<SearchActivity />} />
+
+      <Route path="/DataBranch" element={<DataBranch />} />
+      <Route path="/create_branch" element={<CreateBranch />} />
+      <Route path="/DataBranch/UpdateBranch/:id" element={<UpdateBranch />} />
+
+
     </Routes>
 
   );
