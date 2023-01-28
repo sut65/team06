@@ -73,7 +73,7 @@ func ListActivityTable(c *gin.Context) {
 // ดึงข้อมูล Activity by id
 func ListActivityByID(c *gin.Context) {
 
-	var ActivityByID []entity.ACTIVITY
+	var ActivityByID entity.ACTIVITY
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM activities WHERE id = ?", id).Scan(&ActivityByID).Error; err != nil {
 
@@ -144,3 +144,6 @@ func UpdateActivity(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Activity})
 }
+
+
+
