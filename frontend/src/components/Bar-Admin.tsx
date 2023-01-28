@@ -23,7 +23,7 @@ export const Adminbar = ({ pageWrapId, outerContainerId }: SidemenuProps) => {
       <a className="menu-item" href="/HomeAdmin">
       บันทึก-กิจกรรม
       </a>
-      <a className="menu-item" href="/HomeAdmin">
+      <a className="menu-item" href="/DataDiscipline">
       บันทึก-ข้อมูลวินัย
       </a>
       <a className="menu-item logout" href="/HomeAdmin">

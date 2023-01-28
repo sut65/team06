@@ -20,7 +20,7 @@ export const Studentbar = ({ pageWrapId, outerContainerId }: SidemenuProps) => {
       <a className="menu-item" href="/HomeStudent">
         *ระเบียนประวัติ
       </a>
-      <a className="menu-item" href="/HomeStudent">
+      <a className="menu-item" href="/SearchDiscipline">
         *ข้อมูลวินัย
       </a>
       <a className="menu-item" href="/HomeStudent">
