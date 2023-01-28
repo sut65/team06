@@ -199,5 +199,28 @@ func main() {
 
 	//////////////////////////////////////////////////////////////////
 
+	//PetitionType
+	r.POST("/CreatePetitionType", controller.CreatePetitionType)
+	r.GET("/ListPetitionType", controller.ListPetitionType)
+	r.GET("/GetPetitionType/:id", controller.GetPetitionType)
+	r.PATCH("/UpdatePetitionType", controller.UpdatePetitionType)
+	r.DELETE("/DeletePetitionType/:id", controller.DeletePetitionType)
+	
+	//PetitionPeriod
+	r.POST("/CreatePetitionPeriod", controller.CreatePetitionPeriod)
+	r.GET("/ListPetitionPeriod", controller.ListPetitionPeriod)
+	r.GET("/GetPetitionPeriod/:id", controller.GetPetitionPeriod)
+	r.PATCH("/UpdatePetitionPeriod", controller.UpdatePetitionPeriod)
+	r.DELETE("/DeletePetitionPeriod/:id", controller.DeletePetitionPeriod)
+
+	//Petition
+	r.POST("/CreatePetition", controller.CreatePetition)
+	r.GET("/ListPetition", controller.ListPetition)
+	r.GET("/GetPetition/:id", controller.GetPetition)
+	r.PATCH("/UpdatePetition", controller.UpdatePetition)
+	r.DELETE("/DeletePetition/:id", controller.DeletePetition)
+
+	/////////////////////////////////////////////////////////////
+
 	r.Run()
 }
