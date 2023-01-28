@@ -136,6 +136,7 @@ type STUDENT struct {
 	Suggestion    []SUGGESTION    `gorm:"foreignkey:StudentID"`
 	Postponement  []POSTPONEMENT  `gorm:"foreignKey:StudentID"`
 	Disciplines   []Discipline    `gorm:"foreignKey:StudentID"`
+	Petitions     []Petition      `gorm:"foreignKey:StudentID"`
 }
 
 type BRANCH struct {
@@ -350,4 +351,39 @@ type Discipline struct {
 	Discipline_Punishment string
 	Discipline_Point      uint
 	Added_Time            time.Time
+}
+
+type PetitionType struct {
+	gorm.Model
+	PetitionType_Name string
+
+	Petitions []Petition `gorm:"foreignKey:PetitionTypeID"`
+}
+
+type PetitionPeriod struct {
+	gorm.Model
+	PetitionPeriod_Num uint
+
+	Petitions []Petition `gorm:"foreignKey:PetitionPeriodID"`
+}
+
+type Petition struct {
+	gorm.Model
+
+	//Student FK
+	StudentID *uint
+	Student   STUDENT `gorm:"references:id"`
+
+	//PetitionType FK
+	PetitionTypeID *uint
+	PetitionType   PetitionType `gorm:"references:id"`
+
+	//PetitionPeriod FK
+	PetitionPeriodID *uint
+	PetitionPeriod   PetitionPeriod `gorm:"references:id"`
+
+	Petition_Reason    string
+	Petition_Startdate time.Time
+	Petition_Enddate   time.Time
+	Added_Time         time.Time
 }
