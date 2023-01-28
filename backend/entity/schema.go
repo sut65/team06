@@ -172,7 +172,9 @@ type SCHOLARSHIPTYPE struct {
 
 type SCHOLARSHIP struct {
 	gorm.Model
-	Scholarship_Name string
+	Scholarship_Name  string
+	Scholarship_Info  string
+	Scholarship_Close string
 
 	ScholarshipTypeID *uint
 	ScholarshipType   SCHOLARSHIPTYPE
@@ -183,9 +185,8 @@ type SCHOLARSHIP struct {
 type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
-	Student_Identity_Card string
+	Identity_Card string
 	Reasons               string
-	Student_Name          string
 	GPAX                  float32
 
 	ScholarshipTypeID *uint

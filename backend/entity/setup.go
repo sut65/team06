@@ -661,6 +661,8 @@ func SetupDatabase() {
 	///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
 	Scholarship1 := SCHOLARSHIP{
 		Scholarship_Name: "กยศ",
+		Scholarship_Info: "ทุน กยศ. ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close:"ปิดรับสมัคร 29 มกราคม 2737",
 
 		ScholarshipType: ScholarshipType1,
 	}
@@ -668,6 +670,9 @@ func SetupDatabase() {
 
 	Scholarship2 := SCHOLARSHIP{
 		Scholarship_Name: "ปันสุข",
+		Scholarship_Info: "ทุนปันสุข ปันใจ แบ่งบัน ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close:"ปิดรับสมัคร 23 มิถุนายน 2737",
+
 
 		ScholarshipType: ScholarshipType2,
 	}
@@ -675,36 +680,37 @@ func SetupDatabase() {
 
 	Scholarship3 := SCHOLARSHIP{
 		Scholarship_Name: "แม่ป้าข้างบ้าน",
+		Scholarship_Info: "ทุนจากคุณ\"ป้าปาขาว\" ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close:"ปิดรับสมัคร 06 ธันวาคม 2737",
 
 		ScholarshipType: ScholarshipType3,
 	}
 	db.Model(&SCHOLARSHIP{}).Create(&Scholarship3)
 
-	///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
+///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
 	ScholarshipAp1 := SCHOLARSHIPAP{
-		Student_Identity_Card: "1134900124561",
-		Reasons:               "เนื่องจากไม่มีเงิน…",
-		GPAX:                  2.34,
+		Identity_Card: "1134900124561",
+		Reasons:				"เนื่องจากไม่มีเงิน…",
+		GPAX:	2.34,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship:     Scholarship1,
-		Branch:          Branch2,
-		Institute:       Institute2,
-		Student:         Student1,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student1,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp1)
 
 	ScholarshipAp2 := SCHOLARSHIPAP{
-		Student_Name:          "",
-		Student_Identity_Card: "1134900124129",
-		Reasons:               "หนูต้องการทุนใน…",
-		GPAX:                  2.33,
+		Identity_Card: "1134900124129",
+		Reasons:				"หนูต้องการทุนใน…",
+		GPAX:	2.33,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship:     Scholarship1,
-		Branch:          Branch2,
-		Institute:       Institute2,
-		Student:         Student2,
+		Scholarship: Scholarship1,
+		Branch: Branch2,
+		Institute: Institute2,
+		Student: Student2,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
 
