@@ -46,6 +46,8 @@ func SetupDatabase() {
 		&PetitionType{},
 		&PetitionPeriod{},
 		&Petition{},
+		&ACTIVITYTYPE{},
+		&ACTIVITY{},
 	)
 	//////////////////////////////////////////////
 	db = database
