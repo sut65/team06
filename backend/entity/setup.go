@@ -48,6 +48,8 @@ func SetupDatabase() {
 		&Petition{},
 		&ACTIVITYTYPE{},
 		&ACTIVITY{},
+		&ACTIVITYTYPE{},
+		&ACTIVITY{},
 	)
 	//////////////////////////////////////////////
 	db = database
