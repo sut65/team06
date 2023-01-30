@@ -43,7 +43,6 @@ function DataScholarshipAp() {
   >([]);
 
   console.log("ScholarshipAp", ScholarshipAp);
-  
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -53,19 +52,16 @@ function DataScholarshipAp() {
   };
   /////////////////////////////////////////////////////
 
-
-  const feachStudentByID = async () => {
+  const fetchStudentByID = async () => {
     fetch(
-      `${apiUrl}/applicant/${localStorage.getItem("Student-id")}`,
+      `${apiUrl}/ListScholarshipApBySID/${localStorage.getItem("Student-id")}`,
       requestOptionsGet
     )
       .then((response) => response.json())
       .then((result) => {
-        let arr = [result.data]
-        result.data && setScholarshipAp(arr);
-        console.log("feachStudentByID", arr);
+        result.data && setScholarshipAp(result.data);
+        console.log("fetchStudentByID", result.data);
       });
-      
   };
 
   ///delete scholarship/////////////////////////////////////
@@ -81,19 +77,16 @@ function DataScholarshipAp() {
       .then((res) => {
         console.log(res);
         if (res.data) {
-          // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/data_scholarship_applicants";
           }, 500);
         } else {
-          // setError(true);
         }
       });
   };
   /////////////////////////////////////////////////////
   useEffect(() => {
-    feachStudentByID();
+    fetchStudentByID();
   }, []);
   /////////////////////////////////////////////////////
 
@@ -115,7 +108,7 @@ function DataScholarshipAp() {
                         color: "#039BE5",
                         fontFamily: "fantasy",
                         fontSize: 30,
-                        textAlign:"center"
+                        textAlign: "center",
                       }}
                     >
                       Scholarship Applicant
@@ -164,7 +157,6 @@ function DataScholarshipAp() {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        
                         <TableCell align="center">{idx + 1}</TableCell>
                         <TableCell align="center">
                           {row?.Student.Student_Name}

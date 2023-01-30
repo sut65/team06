@@ -33,7 +33,7 @@ func main() {
 	r.POST("/admin_Login", controller.Admin_Login)
 
 	r.POST("/Student_Login", controller.Student_Login)
-	
+
 	/////////////////////////////////////////////////////////////
 
 	//combobox Institute
@@ -118,24 +118,25 @@ func main() {
 	/////////////////////////////////////////////////////////////
 	//รับข้อมูลเข้าตาราง scholarship applicant
 	r.POST("/create", controller.CreateScholarshipAp)
-	//แสดงข้อมูลตาราง scholarship applicants
+	//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
 	r.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
-	// ดึงข้อมูล scholarship applicants by id
-	r.GET("/scholarship_applicants/:id", controller.ListScholarshipApByID)
+	//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
+	r.GET("/ListScholarshipApBySID/:id", controller.ListScholarshipApBySID)
+
 	// แก้ไขข้อมูล scholarship applicants
 	r.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
 	// ลบข้อมูล scholarship applicants by id
 	r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
-	/// ดึงข้อมูล scholarship by id
+	/// ดึงข้อมูล scholarships by id ใช้ในหน้า all scholarship
 	r.GET("/scholarship/:id", controller.ListScholarshipByID)
-	/// ดึงข้อมูล scholarship type by id
+	/// ดึงข้อมูล scholarship type by id ใช้ในหน้า all scholarship
 	r.GET("/scholarship_type/:id", controller.ListScholarshipTypeByID)
-	/// ดึงข้อมูล applicant by id
+	/// ดึงข้อมูล applicant by id ใช้ในหน้า update scholarship applicant
 	r.GET("/applicant/:id", controller.GetApplicantByID)
-	/// ดึงข้อมูล student by id มาใช้ในระบบ scholarship
+	/// ดึงข้อมูล student by id ใช้ในหน้า create scholarship applicant
 	r.GET("/scholarship_student/:id", controller.GetStudentByID)
-	
+
 	/////////////////////////////////////////////////////////////
 	//รับข้อมูลเข้าตาราง Grade
 	r.POST("/create_Grade", controller.CreateGrade)

@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
-	"net/http"
-
 )
 
 func CreateScholarshipAp(c *gin.Context) {
@@ -47,8 +49,8 @@ func CreateScholarshipAp(c *gin.Context) {
 	// : สร้าง entity Scholarship applicant
 	Data_ScholarshipAp := entity.SCHOLARSHIPAP{
 		Identity_Card: ScholarshipAp.Identity_Card,
-		Reasons:               ScholarshipAp.Reasons,
-		GPAX:                  ScholarshipAp.GPAX,
+		Reasons:       ScholarshipAp.Reasons,
+		GPAX:          ScholarshipAp.GPAX,
 
 		Scholarship:     Scholarship,
 		ScholarshipType: ScholarshipType,
@@ -146,10 +148,11 @@ func UpdateScholarshipAp(c *gin.Context) {
 		return
 	}
 
+
 	update := entity.SCHOLARSHIPAP{
 		Identity_Card: ScholarshipAp.Identity_Card,
-		Reasons:               ScholarshipAp.Reasons,
-		GPAX:                  ScholarshipAp.GPAX,
+		Reasons:       ScholarshipAp.Reasons,
+		GPAX:          ScholarshipAp.GPAX,
 
 		Scholarship:     Scholarship,
 		ScholarshipType: ScholarshipType,
@@ -196,7 +199,7 @@ func GetApplicantByID(c *gin.Context) {
 
 	var Applicants entity.SCHOLARSHIPAP
 	id := c.Param("id")
-	if tx := entity.DB().Preload("ScholarshipType").Preload("Scholarship").Preload("Branch").Preload("Institute").Preload("Student").Where("id = ?", id).First(&Applicants); tx.RowsAffected == 0 {
+	if tx := entity.DB().Preload("ScholarshipType").Preload("Scholarship").Preload("Branch").Preload("Institute").Preload("Student").Where("id = ?", id).Find(&Applicants); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Applicants not found"})
 		return
 	}
@@ -215,4 +218,26 @@ func GetStudentByID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": Student})
+}
+
+// ดึงข้อมูล scholarship applicants มาแสดง
+func ListScholarshipApBySID(c *gin.Context) {
+
+	var ScholarshipAp []entity.SCHOLARSHIPAP
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	if tx := entity.DB().Preload("ScholarshipType").Preload("Scholarship").Preload("Branch").Preload("Institute").Preload("Student").Where("student_id = ?", id).Find(&ScholarshipAp); tx.RowsAffected == 0 {
+
+		c.JSON(http.StatusBadRequest, gin.H{"ListScholarshipAp_error": err.Error()})
+
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": ScholarshipAp})
 }

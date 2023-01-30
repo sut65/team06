@@ -72,7 +72,7 @@ function CreateScholarshipAp() {
   };
 
   //แสดงข้อมูล scholarship ทั้งหมด
-  const feachScholarshipByID = async () => {
+  const fetchScholarshipByID = async () => {
     fetch(`${apiUrl}/scholarship/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -82,7 +82,7 @@ function CreateScholarshipAp() {
   };
 
   //แสดงข้อมูล scholarship typeทั้งหมด
-  const feachScholarshipTypeByID = async () => {
+  const fetchScholarshipTypeByID = async () => {
     fetch(`${apiUrl}/scholarship_type/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -91,7 +91,7 @@ function CreateScholarshipAp() {
       });
   };
 
-  const feachBranch = async () => {
+  const fetchBranch = async () => {
     fetch(`${apiUrl}/branch`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -100,7 +100,7 @@ function CreateScholarshipAp() {
       });
   };
 
-  const feachInstitute = async () => {
+  const fetchInstitute = async () => {
     fetch(`${apiUrl}/institute`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -109,7 +109,7 @@ function CreateScholarshipAp() {
       });
   };
 
-  const feachStudentByID = async () => {
+  const fetchStudentByID = async () => {
     fetch(
       `${apiUrl}/scholarship_student/${localStorage.getItem("Student-id")}`,
       requestOptionsGet
@@ -117,16 +117,16 @@ function CreateScholarshipAp() {
       .then((response) => response.json())
       .then((result) => {
         result.data && setScholarshipAp(result.data);
-        console.log("feachStudentByIDfromStudentEntity", result.data);
+        console.log("fetchStudentByIDfromStudentEntity", result.data);
       });
   };
 
   useEffect(() => {
-    feachBranch();
-    feachInstitute();
-    feachScholarshipByID();
-    feachScholarshipTypeByID();
-    feachStudentByID();
+    fetchBranch();
+    fetchInstitute();
+    fetchScholarshipByID();
+    fetchScholarshipTypeByID();
+    fetchStudentByID();
   }, []);
 
   console.log(ScholarshipAp);
@@ -170,7 +170,7 @@ function CreateScholarshipAp() {
   ///////////////////////////submit button/////////////////////////
   function submit() {
     let data = {
-      StudentID: convertType(ScholarshipAp.StudentID),
+      StudentID: Number(localStorage.getItem("Student-id")),
       InstituteID: convertType(ScholarshipAp.InstituteID),
       BranchID: convertType(ScholarshipAp.BranchID),
       ScholarshipTypeID: convertType(ScholarshipType.ID),

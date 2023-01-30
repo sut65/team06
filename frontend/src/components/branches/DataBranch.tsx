@@ -51,7 +51,7 @@ function DataBranch() {
   /////////////////////////////////////////////////////
 
   //แสดงข้อมูล branch ทั้งหมด
-  const feachBranchstable = async () => {
+  const fetchBranchstable = async () => {
     fetch(`${apiUrl}/data_branch`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -85,7 +85,7 @@ function DataBranch() {
   };
   /////////////////////////////////////////////////////
   useEffect(() => {
-    feachBranchstable();
+    fetchBranchstable();
   }, []);
   /////////////////////////////////////////////////////
 
