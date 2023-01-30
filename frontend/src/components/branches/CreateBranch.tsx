@@ -59,7 +59,7 @@ function CreateBranch() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const feachPrefix = async () => {
+  const fetchPrefix = async () => {
     fetch(`${apiUrl}/prefix`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -68,7 +68,7 @@ function CreateBranch() {
       });
   };
 
-  const feachInstitute = async () => {
+  const fetchInstitute = async () => {
     fetch(`${apiUrl}/institute`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -98,8 +98,8 @@ function CreateBranch() {
     };
 
   useEffect(() => {
-    feachPrefix();
-    feachInstitute();
+    fetchPrefix();
+    fetchInstitute();
     fetchAdminByID();
   }, []);
 

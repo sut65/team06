@@ -45,7 +45,7 @@ const Theme = createTheme({
 
 function UpdateScholarshipAp() {
   ////////////////////variables////////////////////////
-  let { id } = useParams();
+  let { id } = useParams(); // id ของ row ที่เลือกหน้า data scholarship applicant
   console.log("id", id);
 
   const [Student, setStudent] = useState<StudentInterface[]>([]);
@@ -74,52 +74,23 @@ function UpdateScholarshipAp() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const feachStudentByID = async () => {
-    fetch(
-      `${apiUrl}/applicant/${localStorage.getItem("Student-id")}`,
-      requestOptionsGet
-    )
+  const fetchStudentByID = async () => {
+    fetch(`${apiUrl}/applicant/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setScholarshipAp(result.data);
-        console.log("feachStudentByIDfromScholarshipApplicantEntity", result.data);
-      });
-  };
-
-  const feachBranch = async () => {
-    fetch(`${apiUrl}/branch`, requestOptionsGet)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result.data);
-        setBranch(result.data);
-      });
-  };
-
-  const feachInstitute = async () => {
-    fetch(`${apiUrl}/institute`, requestOptionsGet)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result.data);
-        setInstitute(result.data);
+        console.log(
+          "fetchStudentByIDfromScholarshipApplicantEntity",
+          result.data
+        );
       });
   };
 
   useEffect(() => {
-    feachBranch();
-    feachInstitute();
-    feachStudentByID();
+    fetchStudentByID();
   }, []);
 
   console.log(ScholarshipAp);
-
-  ///////////////////handle change ของ combobox////////////////////////
-  const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof ScholarshipAp;
-    setScholarshipAp({
-      ...ScholarshipAp,
-      [name]: event.target.value,
-    });
-  };
 
   //////////////////handle change ของ input field///////////////////////
   const handleInputChange = (
@@ -155,14 +126,19 @@ function UpdateScholarshipAp() {
       StudentID: convertType(ScholarshipAp.StudentID),
       InstituteID: convertType(ScholarshipAp.InstituteID),
       BranchID: convertType(ScholarshipAp.BranchID),
-      ScholarshipTypeID: convertType(ScholarshipType.ID),
-      ScholarshipID: convertType(Scholarship.ID),
+      ScholarshipTypeID: convertType(ScholarshipAp.ScholarshipTypeID),
+      ScholarshipID: convertType(ScholarshipAp.ScholarshipID),
       Identity_Card: ScholarshipAp.Identity_Card,
       GPAX: convertType(ScholarshipAp.GPAX),
       Reasons: ScholarshipAp.Reasons,
     };
 
     console.log("data", data);
+    console.log("ScholarshipAp.StudentID", ScholarshipAp.StudentID);
+    console.log("ScholarshipAp.InstituteID", ScholarshipAp.InstituteID);
+    console.log("ScholarshipAp.BranchID", ScholarshipAp.BranchID);
+    console.log("ScholarshipType.ID", ScholarshipAp.ID);
+    console.log("Scholarship.ID", ScholarshipAp.ID);
 
     const requestOptions = {
       method: "PATCH",
@@ -304,44 +280,24 @@ function UpdateScholarshipAp() {
 
                         <Grid item xs={12}>
                           <h3>สาขา</h3>
-                          <Select
+                          <TextField
                             fullWidth
                             id="Branch"
-                            onChange={handleChange}
-                            native
-                            value={ScholarshipAp.BranchID + ""}
+                            disabled
+                            value={ScholarshipAp.Branch?.Branch_Name}
                             inputProps={{ name: "BranchID" }}
-                          >
-                            <option aria-label="None" value="">
-                              กรุณาเลือกสาขา
-                            </option>
-                            {Branch.map((item) => (
-                              <option key={item.ID} value={item.ID}>
-                                {item.Branch_Name}
-                              </option>
-                            ))}
-                          </Select>
+                          ></TextField>
                         </Grid>
 
                         <Grid item xs={12}>
                           <h3>สำนักวิชา</h3>
-                          <Select
+                          <TextField
                             fullWidth
                             id="Institute"
-                            onChange={handleChange}
-                            native
-                            value={ScholarshipAp.InstituteID + ""}
+                            disabled
+                            value={ScholarshipAp.Institute?.Institute_Name}
                             inputProps={{ name: "InstituteID" }}
-                          >
-                            <option aria-label="None" value="">
-                              กรุณาเลือกสำนักวิชา
-                            </option>
-                            {Institute.map((item) => (
-                              <option key={item.ID} value={item.ID}>
-                                {item.Institute_Name}
-                              </option>
-                            ))}
-                          </Select>
+                          ></TextField>
                         </Grid>
 
                         <Grid item xs={12}>

@@ -51,7 +51,7 @@ function AllScholarship() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const feachScholarship = async () => {
+  const fetchScholarship = async () => {
     fetch(`${apiUrl}/scholarship`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -60,7 +60,7 @@ function AllScholarship() {
       });
   };
 
-  const feachScholarshipType = async () => {
+  const fetchScholarshipType = async () => {
     fetch(`${apiUrl}/scholarship_type`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -70,8 +70,8 @@ function AllScholarship() {
   };
 
   useEffect(() => {
-    feachScholarship();
-    feachScholarshipType();
+    fetchScholarship();
+    fetchScholarshipType();
   }, []);
 
   console.log(ScholarshipAp);
@@ -85,7 +85,7 @@ function AllScholarship() {
         />
         <div id="page-AllScholarship">
         <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
-          <Container maxWidth="lg">
+          <Container maxWidth="lg" sx={{ padding: 2 }}>
             <Paper sx={{ padding: 2, mb: 2,}}>
               <Box display={"flex"}>
                 <Box sx={{ flexGrow: 1 }}>

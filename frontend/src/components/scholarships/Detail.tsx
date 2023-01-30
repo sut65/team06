@@ -46,7 +46,7 @@ function Details() {
   /////////////////////////////////////////////////////
 
   //แสดงข้อมูล scholarship ทั้งหมด
-  const feachScholarship = async () => {
+  const fetchScholarship = async () => {
     fetch(`${apiUrl}/scholarship/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -56,7 +56,7 @@ function Details() {
   };
 
     //แสดงข้อมูล scholarship typeทั้งหมด
-    const feachScholarshipType = async () => {
+    const fetchScholarshipType = async () => {
       fetch(`${apiUrl}/scholarship_type/${id}`, requestOptionsGet)
         .then((response) => response.json())
         .then((result) => {
@@ -66,8 +66,8 @@ function Details() {
     };
 
   useEffect(() => {
-    feachScholarship();
-    feachScholarshipType();
+    fetchScholarship();
+    fetchScholarshipType();
   }, [])
   
   return (
@@ -79,7 +79,7 @@ function Details() {
         />
         <div id="page-AllScholarship">
     <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ padding: 2 }}>
       
       <Paper elevation={2} sx={{ paddingLeft: 5 }}>
         

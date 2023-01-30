@@ -61,7 +61,7 @@ function UpdateBranch() {
     headers: { "Content-Type": "application/json" },
   };
 
-  const feachBrachByID = async () => {
+  const fetchBrachByID = async () => {
     fetch(`${apiUrl}/branch/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -69,7 +69,7 @@ function UpdateBranch() {
       });
   };
 
-  const feachPrefix = async () => {
+  const fetchPrefix = async () => {
     fetch(`${apiUrl}/prefix`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -78,7 +78,7 @@ function UpdateBranch() {
       });
   };
 
-  const feachInstitute = async () => {
+  const fetchInstitute = async () => {
     fetch(`${apiUrl}/institute`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
@@ -108,9 +108,9 @@ function UpdateBranch() {
   };
 
   useEffect(() => {
-    feachPrefix();
-    feachInstitute();
-    feachBrachByID();
+    fetchPrefix();
+    fetchInstitute();
+    fetchBrachByID();
     fetchAdminByID();
   }, []);
 
