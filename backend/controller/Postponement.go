@@ -15,7 +15,7 @@ type CreatePostponementPayload struct{
 	Postponement_Gpax           string  `json:"Postponement_Gpax"`
 	Postponement_Credit         string  `json:"Postponement_Credit"`
 	Postponement_Date          time.Time `json:"Postponement_Date"`
-	Postponement_Reasons        string   `json:"Postponement_Reasons" `
+	Postponement_Reasons        string   `json:"Postponement_Reasons" valid:"required, minstringlength(10)~กรุณากรอกเหตุผลอย่างน้อย10ตัวอักษร"`
 	
 	Prefix                    *uint		`json:"Prefix"`
 	Degree                  *uint		`json:"Degree"`
