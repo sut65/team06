@@ -13,7 +13,7 @@ type CreateCoursePayload struct {
 	Course_Teacher string `json:"Course_Teacher"`
 	Course_Credit  uint   `json:"Course_Credit" valid:"range(120|200)~กรุณากรอกหน่วยกิตไม่ต่ำกว่า 120 หน่วยกิต และไม่เกิน 200 หน่วยกิต"`
 	Course_Detail  string `json:"Course_Detail" valid:"minstringlength(10)~กรุณากรอกข้อมูลรายละเอียดมากกว่านี้"`
-	Course_Year    uint   `json:"Course_Year"`
+	Course_Year    uint   `json:"Course_Year"  valid:"range(2560|9999)~กรุณากรอกปีการศึกษาไม่ต่ำกว่า พ.ศ.2560"`
 
 	Degree    uint `json:"Degree"`
 	Prefix    uint `json:"Prefix"`
@@ -28,7 +28,7 @@ type UpdateCoursePayload struct {
 	Course_Teacher string `json:"Course_Teacher"`
 	Course_Credit  uint   `json:"Course_Credit" valid:"range(120|200)~กรุณากรอกหน่วยกิตไม่ต่ำกว่า 120 หน่วยกิต และไม่เกิน 200 หน่วยกิต"`
 	Course_Detail  string `json:"Course_Detail" valid:"minstringlength(10)~กรุณากรอกข้อมูลรายละเอียดมากกว่านี้"`
-	Course_Year    uint   `json:"Course_Year"`
+	Course_Year    uint   `json:"Course_Year" valid:"range(2560|9999)~กรุณากรอกปีการศึกษาไม่ต่ำกว่า พ.ศ.2560"`
 
 	Degree    uint `json:"Degree"`
 	Prefix    uint `json:"Prefix"`
