@@ -15,7 +15,7 @@ type CreateStudentPayload struct {
 	Student_Name          string    `json:"Student_Name"`
 	Student_Birthday      time.Time `json:"Student_Birthday"`
 	Student_Tel           string    `json:"Student_Tel"`
-	Student_Identity_Card string    `json:"Student_Identity_Card"`
+	Student_Identity_Card string    `json:"Student_Identity_Card" valid:"required~กรุณากรอกรหัสบัตรประชาชน,matches(^\\d{13}$)~กรุณากรอกรหัสบัตรประชาชนให้พอดี 13 หลัก"`
 	Student_Nationality   string    `json:"Student_Nationality"`
 	Student_Religion      string    `json:"Student_Religion"`
 	Student_Address       string    `json:"Student_Address"`
@@ -39,7 +39,7 @@ type UpdateStudentPayload struct {
 	Student_Name          string    `json:"Student_Name"`
 	Student_Birthday      time.Time `json:"Student_Birthday"`
 	Student_Tel           string    `json:"Student_Tel"`
-	Student_Identity_Card string    `json:"Student_Identity_Card"`
+	Student_Identity_Card string    `json:"Student_Identity_Card"  valid:"required~กรุณากรอกรหัสบัตรประชาชน,matches(^\\d{13}$)~กรุณากรอกรหัสบัตรประชาชนให้พอดี 13 หลัก"`
 	Student_Nationality   string    `json:"Student_Nationality"`
 	Student_Religion      string    `json:"Student_Religion"`
 	Student_Address       string    `json:"Student_Address"`
