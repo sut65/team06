@@ -10,7 +10,6 @@ import {
   TextField,
   Snackbar,
          } from "@mui/material";
-import Home from "../Home";
 import { FiArrowLeft } from "react-icons/fi";
 import { Adminbar } from "../Bar-Admin";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -46,7 +45,7 @@ function CreateAdmin() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-
+  const [message, setAlertMessage] = React.useState("");
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -130,16 +129,15 @@ function CreateAdmin() {
   //ตัวรับข้อมูลเข้าตาราง ฟังก์ชัน submit
   function submit() {
     let data = {
-      //AdminID: admin.AdminID,
-      GenderID: convertType(admin.GenderID),
-      PrefixID: convertType(admin.PrefixID),
-      ProvinceID: convertType(admin.ProvinceID),
-
       Admin_Name:      admin.Admin_Name,
       Admin_Email:     admin.Admin_Email,
       Admin_Password:  admin.Admin_Password,
       Admin_Tel:       admin.Admin_Tel,
       Admin_Address:   admin.Admin_Address,
+
+      Prefix: convertType(admin.PrefixID),
+      Gender: convertType(admin.GenderID),
+      Province: convertType(admin.ProvinceID),
     };
 
     const requestOptions = {
@@ -153,11 +151,13 @@ function CreateAdmin() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataAdmin";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -199,23 +199,25 @@ function CreateAdmin() {
             }}
           >
             <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                บันทึกข้อมูลสำเร็จ
+              {message}
               </Alert>
             </Snackbar>
             <Snackbar
+              id="error"
               open={error}
               autoHideDuration={6000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                บันทึกข้อมูลไม่สำเร็จ
+                {message}
               </Alert>
             </Snackbar>
           </Box>
