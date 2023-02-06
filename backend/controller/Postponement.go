@@ -10,7 +10,7 @@ import (
 type CreatePostponementPayload struct{
 
 	Postponement_Student_Number string  `json:"Postponement_Student_Number" valid:"required,matches(^[BMD]\\d{7}$)~กรุณากรอกรหัสนักศึกษาให้ตรงรูปแบบ"`
-	Postponement_Student_Name   string  `json:"Postponement_Student_Name" `
+	Postponement_Student_Name   string  `json:"Postponement_Student_Name" valid:"required~name cannot be blank"`
 	Postponement_AcademicYear   string  `json:"Postponement_AcademicYear"`
 	Postponement_Gpax           string  `json:"Postponement_Gpax"`
 	Postponement_Credit         string  `json:"Postponement_Credit"`
