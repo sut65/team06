@@ -57,7 +57,7 @@ function UpdatePostponement() {
   const [error, setError] = useState(false);
   
   const studentID = parseInt(localStorage.getItem("uid") + "");
-  
+  const [message, setAlertMessage] = React.useState("");
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -185,11 +185,11 @@ function UpdatePostponement() {
     let newdata = {
       ID: convertType(id),
       // StudentID: Number(studentID),
-      DegreeID: convertType(postponement.DegreeID),
-      PrefixID: convertType(postponement.PrefixID),
-      InstituteID: convertType(postponement.InstituteID),
-      TrimesterID: convertType(postponement.TrimesterID),
-      BranchID: convertType(postponement.BranchID),
+      Degree: convertType(postponement.DegreeID),
+      Prefix: convertType(postponement.PrefixID),
+      Institute: convertType(postponement.InstituteID),
+      Trimester: convertType(postponement.TrimesterID),
+      Branch: convertType(postponement.BranchID),
 
       Postponement_Student_Number: postponement.Postponement_Student_Number,
       Postponement_Student_Name: postponement.Postponement_Student_Name,
@@ -213,11 +213,13 @@ function UpdatePostponement() {
       .then((res) => {
         console.log("update",res);
         if (res.data) {
+          setAlertMessage("อัปเดตข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataPostponement";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -256,13 +258,14 @@ function UpdatePostponement() {
         </Container>
         <Container maxWidth="lg">
         <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                อัพเดทข้อมูลสำเร็จ
+              {message}
               </Alert>
             </Snackbar>
             <Snackbar
@@ -272,7 +275,7 @@ function UpdatePostponement() {
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                อัพเดทข้อมูลไม่สำเร็จ
+              {message}
               </Alert>
             </Snackbar>          
           <Paper sx={{ padding: 2 }}>
