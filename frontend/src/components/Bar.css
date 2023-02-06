@@ -14,7 +14,7 @@
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: #CA3E47;
+  background: #ca3e47;
 }
 
 /* Position and sizing of clickable cross button */
@@ -73,7 +73,43 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 .menu-item:hover {
-  color: #CA3E47;
+  color: #ca3e47;
+}
+
+.menu-head {
+  font-size: 30px;
+  color: #000000;
+  text-align: left;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu-head:hover {
+  color: #ca3e47;
+}
+
+.menu-button-back {
+  font-size: 15px;
+  color: #ffffff;
+  text-align: left;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu-button-back:hover {
+  color: #eb989e;
+}
+
+.menu-button-submit {
+  font-size: 15px;
+  color: #ffffff;
+  text-align: left;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu-button-submit:hover {
+  color: #60c680;
 }
 
 .memu-title {

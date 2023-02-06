@@ -8,7 +8,6 @@ import Home from "./Home";
 import { Adminbar } from "./Bar-Admin";
 
 function HomeAdmin() {
-
   const [token, setToken] = useState<String>("");
   useEffect(() => {
     const token = localStorage.getItem("token");

@@ -9,10 +9,10 @@ import { AdminInterface } from './IAdmin'
 
 export interface StudentInterface {
     ID?: number
-    Student_Year_Of_Entry: Date | null,
+    Student_Year_Of_Entry?: Date | null,
     Student_Number: string,
     Student_Name: string,
-    Student_Birthday: Date | null,
+    Student_Birthday?: Date | null,
     Student_Tel: string,
     Student_Identity_Card: string,
     Student_Nationality: string,
