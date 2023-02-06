@@ -44,6 +44,7 @@ function UpdateAdmin() {
   const [admin, setAdmin] = useState<Partial<AdminInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [message, setAlertMessage] = React.useState("");
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -136,9 +137,9 @@ function UpdateAdmin() {
    function update() {
     let newdata = {
       ID: convertType(id),
-      GenderID: convertType(id),
-      PrefixID: convertType(admin.PrefixID),
-      ProvinceID:convertType(admin.ProvinceID),
+      Gender: convertType(id),
+      Prefix: convertType(admin.PrefixID),
+      Province:convertType(admin.ProvinceID),
 
       Admin_Name: admin.Admin_Name,
       Admin_Email: admin.Admin_Email,
@@ -160,12 +161,13 @@ function UpdateAdmin() {
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
-          console.log("update", res.data);
+          setAlertMessage("อัปเดตข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataAdmin";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -174,13 +176,13 @@ function UpdateAdmin() {
   /////////////////////////////////////////////////////
 
   return (
-    <div className="UpdateStudent" id="outer-container">
+    <div className="UpdateAdmin" id="outer-container">
       <ThemeProvider theme={Theme}>
       <Adminbar
-        pageWrapId={"page-UpdateStudent"}
+        pageWrapId={"page-UpdateAdmin"}
         outerContainerId={"outer-container"}
       />
-      <div id="page-UpdateStudent">
+      <div id="page-UpdateAdmin">
       <React.Fragment>
       <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
         <CssBaseline />
@@ -210,23 +212,25 @@ function UpdateAdmin() {
             }}
           >
             <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                อัพเดทข้อมูลสำเร็จ
+                {message}
               </Alert>
             </Snackbar>
             <Snackbar
+              id="error"
               open={error}
               autoHideDuration={6000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                อัพเดทข้อมูลไม่สำเร็จ
+                {message}
               </Alert>
             </Snackbar>
           </Box>
