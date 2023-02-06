@@ -11,8 +11,8 @@ type CreateAdminPayload struct{
 	Admin_Name     string	`json:"Admin_Name"`
 	Admin_Email	   string   `json:"Admin_Email"`
 	Admin_Password string   `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
-	Admin_Tel	   string   `json:"Admin_Tel"valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
-	Admin_Address  string   `json:"Admin_Address"`
+	Admin_Tel	   string   `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
+	Admin_Address  string   `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
 
 	Prefix        uint      `json:"Prefix"`
 	Gender	      uint      `json:"Gender"`
@@ -24,7 +24,7 @@ type  UpdateAdminPayload struct{
 	Admin_Email	   string   `json:"Admin_Email"`
 	Admin_Password string   `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
 	Admin_Tel	   string   `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
-	Admin_Address  string   `json:"Admin_Address"`
+	Admin_Address  string   `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
 
 	Prefix        uint      `json:"Prefix"`
 	Gender	      uint      `json:"Gender"`
