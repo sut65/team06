@@ -23,7 +23,6 @@ import { Studentbar } from "../Bar-Student";
 
 import { InstituteInterface } from "../../models/IInstitute";
 import { BranchInterface } from "../../models/IBranch";
-import { CourseInterface } from "../../models/ICourse";
 import { DegreeInterface } from "../../models/IDegree";
 import { TrimesterInterface } from "../../models/ITrimester";
 import { PrefixInterface } from "../../models/IPrefix";
@@ -62,7 +61,7 @@ function CreatePostponement() {
   
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  
+  const [message, setAlertMessage] = React.useState("");
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -173,16 +172,16 @@ function CreatePostponement() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-      StudentID: postponement.StudentID,
-      DegreeID:
+      Student: postponement.StudentID,
+      Degree:
         typeof postponement.DegreeID === "string" ? parseInt(postponement.DegreeID) : 0,
-      PrefixID:
+      Prefix:
         typeof postponement.PrefixID === "string" ? parseInt(postponement.PrefixID) : 0,
-      InstituteID:
+      Institute:
         typeof postponement.InstituteID === "string" ? parseInt(postponement.InstituteID) : 0,
-      TrimesterID:
+      Trimester:
         typeof postponement.TrimesterID === "string" ? parseInt(postponement.TrimesterID) : 0,
-      BranchID:
+      Branch:
         typeof postponement.BranchID === "string" ? parseInt(postponement.BranchID) : 0,
 
       Postponement_Student_Number: postponement.Postponement_Student_Number,
@@ -207,11 +206,13 @@ function CreatePostponement() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataPostponement";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -267,23 +268,25 @@ function CreatePostponement() {
             }}
           >
             <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                บันทึกข้อมูลสำเร็จ
+              {message}
               </Alert>
             </Snackbar>
             <Snackbar
+              id="error"
               open={error}
               autoHideDuration={6000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                บันทึกข้อมูลไม่สำเร็จ
+              {message}
               </Alert>
             </Snackbar>
           </Box>
