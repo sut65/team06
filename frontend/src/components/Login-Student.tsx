@@ -141,7 +141,7 @@ function StudentLogin() {
                 <Box
                   sx={{
                     my: 20,
-                    mx: 75,
+                    mx: 85,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",

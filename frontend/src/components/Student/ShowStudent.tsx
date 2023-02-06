@@ -18,7 +18,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Home from "../Home";
 import { GetStudentByID } from "../../services/HttpClientService";
 
-import { Adminbar } from "../Bar-Admin";
+import { Studentbar } from "../Bar-Student";
 
 import { InstituteInterface } from "../../models/IInstitute";
 import { BranchInterface } from "../../models/IBranch";
@@ -188,13 +188,13 @@ function ShowStudent() {
   /////////////////////////////////////////////////////
 
   return (
-    <div className="SearchStudent" id="outer-container">
+    <div className="ShowStudent" id="outer-container">
       <ThemeProvider theme={Theme}>
-        <Adminbar
+        <Studentbar
           pageWrapId={"page-SearchStudent"}
           outerContainerId={"outer-container"}
         />
-        <div id="page-SearchStudent">
+        <div id="page-ShowStudent">
           <React.Fragment>
             <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
               <CssBaseline />
