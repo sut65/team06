@@ -11,7 +11,7 @@ import (
 type CreateCoursePayload struct {
 	Course_Name    string `json:"Course_Name"`
 	Course_Teacher string `json:"Course_Teacher"`
-	Course_Credit  uint   `json:"Course_Credit"`
+	Course_Credit  uint   `json:"Course_Credit" valid:"range(120|200)~กรุณากรอกหน่วยกิตไม่ต่ำกว่า 120 หน่วยกิต และไม่เกิน 200 หน่วยกิต"`
 	Course_Detail  string `json:"Course_Detail" valid:"minstringlength(10)~กรุณากรอกข้อมูลรายละเอียดมากกว่านี้"`
 	Course_Year    uint   `json:"Course_Year"`
 
@@ -26,7 +26,7 @@ type UpdateCoursePayload struct {
 	ID             uint   `json:"ID"`
 	Course_Name    string `json:"Course_Name"`
 	Course_Teacher string `json:"Course_Teacher"`
-	Course_Credit  uint   `json:"Course_Credit"`
+	Course_Credit  uint   `json:"Course_Credit" valid:"range(120|200)~กรุณากรอกหน่วยกิตไม่ต่ำกว่า 120 หน่วยกิต และไม่เกิน 200 หน่วยกิต"`
 	Course_Detail  string `json:"Course_Detail" valid:"minstringlength(10)~กรุณากรอกข้อมูลรายละเอียดมากกว่านี้"`
 	Course_Year    uint   `json:"Course_Year"`
 
