@@ -47,6 +47,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 function CreateCourse() {
   /////////////////////////////////////////////////////
+  const [message, setAlertMessage] = React.useState("");
 
   const [degree, setDegree] = useState<DegreeInterface[]>([]);
   const [prefix, setPrefix] = useState<PrefixInterface[]>([]);
@@ -122,6 +123,7 @@ function CreateCourse() {
     setSuccess(false);
     setError(false);
   };
+
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof course;
     setCourse({
@@ -146,7 +148,7 @@ function CreateCourse() {
     feachBranch();
     fetchAdminByID();
   }, []);
-  console.log(course)
+  console.log(course);
 
   /////////////////////////////////////////////////////
 
@@ -158,18 +160,18 @@ function CreateCourse() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-      AdminID: course.AdminID,
-      DegreeID: convertType(course.DegreeID),
-      PrefixID: convertType(course.PrefixID),
-      InstituteID: convertType(course.InstituteID),
-      BranchID: convertType(course.BranchID),
+      Admin: course.AdminID,
+      Degree: convertType(course.DegreeID),
+      Prefix: convertType(course.PrefixID),
+      Institute: convertType(course.InstituteID),
+      Branch: convertType(course.BranchID),
       Course_Name: course.Course_Name,
       Course_Teacher: course.Course_Teacher,
       Course_Credit: convertType(course.Course_Credit),
       Course_Detail: course.Course_Detail,
       Course_Year: convertType(course.Course_Year),
     };
-    console.log(data)
+    console.log(data);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -181,11 +183,13 @@ function CreateCourse() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataCourse";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -204,7 +208,7 @@ function CreateCourse() {
   if (!token) {
     return <Home />;
   }
-  
+
   /////////////////////////////////////////////////////
 
   return (
@@ -216,240 +220,244 @@ function CreateCourse() {
         />
         <div id="page-CreateStudent">
           <React.Fragment>
-          <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
-            <CssBaseline />
-            <Container maxWidth="lg" sx={{ padding: 2 }}>
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="h4" gutterBottom>
-                      <Button
-                        color="inherit"
-                        component={RouterLink}
-                        to="/DataCourse"
-                      >
-                        <FiArrowLeft size="30" />
-                      </Button>
-                      CREATE COURSE
-                    </Typography>
-                  </Box>
-                </Box>
-              </Paper>
-            </Container>
-            <Container maxWidth="lg">
-            <Box
-            sx={{
-              mt: 2,
-            }}
-          >
-            <Snackbar
-              open={success}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                บันทึกข้อมูลสำเร็จ
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={error}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="error">
-                บันทึกข้อมูลไม่สำเร็จ
-              </Alert>
-            </Snackbar>
-          </Box>
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <h4>ข้อมูลหลักสูตร</h4>
-                        <hr />
-                      </Grid>
-                      <Grid item xs={6}>
-                      <p>ชื่อหลักสูตรการศึกษา</p>
-                        <TextField
-                          fullWidth
-                          id="Course_Name"
-                          type="string"
-                          label="หลักสูตร"
-                          variant="outlined"
-                          name="Course_Name"
-                          value={course.Course_Name}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={2}>
-                        <p>คำนำหน้า</p>
-                        <Select
-                          fullWidth
-                          id="Prefix"
-                          onChange={handleChange}
-                          native
-                          value={course.PrefixID + ""}
-                          inputProps={{ name: "PrefixID" }}
-                        >
-                          <option aria-label="None" value="">
-                            คำนำหน้า
-                          </option>
-                          {prefix.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Prefix_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <p>อาจารย์ผู้ก่อตั้ง</p>
-                        <TextField
-                          fullWidth
-                          id="Course_Teacher"
-                          type="string"
-                          label="ชื่อ-สกุล"
-                          variant="outlined"
-                          name="Course_Teacher"
-                          value={course.Course_Teacher}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={3}>
-                        <p>จำนวนหน่วยกิต</p>
-                        <TextField
-                          fullWidth
-                          id="Course_Credit"
-                          type="number"
-                          label="จำนวนหน่วยกิต"
-                          variant="outlined"
-                          name="Course_Credit"
-                          value={course.Course_Credit}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <p>ปีก่อตั้งหลักสูตรการศึกษา</p>
-                        <TextField
-                          fullWidth
-                          id="Course_Year"
-                          type="number"
-                          label="ปี"
-                          variant="outlined"
-                          name="Course_Year"
-                          value={course.Course_Year}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                      <Select
-                          fullWidth
-                          id="Degree"
-                          onChange={handleChange}
-                          native
-                          value={course.DegreeID + ""}
-                          inputProps={{ name: "DegreeID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ระดับการศึกษา
-                          </option>
-                          {degree.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Degree_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                      <Select
-                          fullWidth
-                          id="Institute"
-                          onChange={handleChange}
-                          native
-                          value={course.InstituteID + ""}
-                          inputProps={{ name: "InstituteID" }}
-                        >
-                          <option aria-label="None" value="">
-                            สำนักวิชา
-                          </option>
-                          {institute.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Institute_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                      <Select
-                          fullWidth
-                          id="Branch"
-                          onChange={handleChange}
-                          native
-                          value={course.BranchID + ""}
-                          inputProps={{ name: "BranchID" }}
-                        >
-                          <option aria-label="None" value="">
-                            สาขาวิชา
-                          </option>
-                          {branch.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Branch_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                      <p>รายละเอียดหลักสูตรการศึกษา</p>
-                        <TextField
-                          fullWidth
-                          id="Course_Detail"
-                          type="string"
-                          label="รายละเอียดหลักสูตรการศึกษา"
-                          variant="outlined"
-                          name="Course_Detail"
-                          value={course.Course_Detail}
-                          onChange={handleInputChange}
-                          multiline
-                        />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={3}>
+            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg" sx={{ padding: 2 }}>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box>
+                      <a className="menu-head">
                         <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          color="primary"
-                          onClick={submit}
-                        >
-                          submit
-                        </Button>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          color="secondary"
+                          color="inherit"
                           component={RouterLink}
                           to="/DataCourse"
                         >
-                          back
+                          <FiArrowLeft size="30" />
                         </Button>
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                    </Grid>
+                      </a>
+                    </Box>
+                    <Box sx={{ marginTop: 0.4 }}>
+                      <Typography variant="h4" gutterBottom>
+                        CREATE COURSE
+                      </Typography>
+                    </Box>
                   </Box>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  <Snackbar
+                    open={success}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    open={error}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="error">
+                      {message}
+                    </Alert>
+                  </Snackbar>
                 </Box>
-              </Paper>
-            </Container>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>ข้อมูลหลักสูตร</h4>
+                          <hr />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <p>ชื่อหลักสูตรการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Course_Name"
+                            type="string"
+                            label="หลักสูตร"
+                            variant="outlined"
+                            name="Course_Name"
+                            value={course.Course_Name}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={2}>
+                          <p>คำนำหน้า</p>
+                          <Select
+                            fullWidth
+                            id="Prefix"
+                            onChange={handleChange}
+                            native
+                            value={course.PrefixID + ""}
+                            inputProps={{ name: "PrefixID" }}
+                          >
+                            <option aria-label="None" value="">
+                              คำนำหน้า
+                            </option>
+                            {prefix.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Prefix_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>อาจารย์ผู้ก่อตั้ง</p>
+                          <TextField
+                            fullWidth
+                            id="Course_Teacher"
+                            type="string"
+                            label="ชื่อ-สกุล"
+                            variant="outlined"
+                            name="Course_Teacher"
+                            value={course.Course_Teacher}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <p>จำนวนหน่วยกิต</p>
+                          <TextField
+                            fullWidth
+                            id="Course_Credit"
+                            type="number"
+                            label="จำนวนหน่วยกิต"
+                            variant="outlined"
+                            name="Course_Credit"
+                            value={course.Course_Credit}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={3}>
+                          <p>ปีก่อตั้งหลักสูตรการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Course_Year"
+                            type="number"
+                            label="ปี"
+                            variant="outlined"
+                            name="Course_Year"
+                            value={course.Course_Year}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <Select
+                            fullWidth
+                            id="Degree"
+                            onChange={handleChange}
+                            native
+                            value={course.DegreeID + ""}
+                            inputProps={{ name: "DegreeID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ระดับการศึกษา
+                            </option>
+                            {degree.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Degree_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <Select
+                            fullWidth
+                            id="Institute"
+                            onChange={handleChange}
+                            native
+                            value={course.InstituteID + ""}
+                            inputProps={{ name: "InstituteID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สำนักวิชา
+                            </option>
+                            {institute.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Institute_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <Select
+                            fullWidth
+                            id="Branch"
+                            onChange={handleChange}
+                            native
+                            value={course.BranchID + ""}
+                            inputProps={{ name: "BranchID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สาขาวิชา
+                            </option>
+                            {branch.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Branch_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <p>รายละเอียดหลักสูตรการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Course_Detail"
+                            type="string"
+                            label="รายละเอียดหลักสูตรการศึกษา"
+                            variant="outlined"
+                            name="Course_Detail"
+                            value={course.Course_Detail}
+                            onChange={handleInputChange}
+                            multiline
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="primary"
+                            onClick={submit}
+                          >
+                            <a className="menu-button-submit">SUBMIT</a>
+                          </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="secondary"
+                            component={RouterLink}
+                            to="/DataCourse"
+                          >
+                            <a className="menu-button-back">back</a>
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
             </Box>
           </React.Fragment>
         </div>
