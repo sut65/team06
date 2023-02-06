@@ -8,7 +8,6 @@ import Home from "./Home";
 import { Studentbar } from "./Bar-Student";
 
 function HomeStudent() {
-
   const [token, setToken] = useState<String>("");
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,7 +22,10 @@ function HomeStudent() {
 
   return (
     <div className="Home" id="outer-container">
-      <Studentbar pageWrapId={"page-Home"} outerContainerId={"outer-container"} />
+      <Studentbar
+        pageWrapId={"page-Home"}
+        outerContainerId={"outer-container"}
+      />
       <div id="page-Home">
         <React.Fragment>
           <CssBaseline />
