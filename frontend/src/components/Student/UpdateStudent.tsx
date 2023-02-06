@@ -43,16 +43,19 @@ const Theme = createTheme({
     },
   },
 });
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
 function UpdateStudent() {
   /////////////////////////////////////////////////////
 
   let { id } = useParams();
+  const [message, setAlertMessage] = React.useState("");
 
   const [institute, setInstitute] = useState<InstituteInterface[]>([]);
   const [branch, setBranch] = useState<BranchInterface[]>([]);
@@ -62,11 +65,8 @@ function UpdateStudent() {
   const [gender, setGender] = useState<GenderInterface[]>([]);
   const [province, setProvince] = useState<ProvinceInterface[]>([]);
 
-  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(
-    new Date()
-  );
-  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] =
-    useState<Date | null>(new Date());
+  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(new Date());
+  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] = useState<Date | null>(new Date());
 
   const [student, setStudent] = useState<Partial<StudentInterface>>({});
 
@@ -202,13 +202,13 @@ function UpdateStudent() {
   function update() {
     let data = {
       ID: convertType(id),
-      GenderID: convertType(student.GenderID),
-      DegreeID: convertType(student.DegreeID),
-      PrefixID: convertType(student.PrefixID),
-      InstituteID: convertType(student.InstituteID),
-      ProvinceID: convertType(student.ProvinceID),
-      BranchID: convertType(student.BranchID),
-      CourseID: convertType(student.CourseID),
+      Gender: convertType(student.GenderID),
+      Degree: convertType(student.DegreeID),
+      Prefix: convertType(student.PrefixID),
+      Institute: convertType(student.InstituteID),
+      Province: convertType(student.ProvinceID),
+      Branch: convertType(student.BranchID),
+      Course: convertType(student.CourseID),
       Student_Year_Of_Entry: Student_Year_Of_Entry,
       Student_Number: student.Student_Number,
       Student_Name: student.Student_Name,
@@ -220,7 +220,6 @@ function UpdateStudent() {
       Student_Address: student.Student_Address,
       Student_Fathers_Name: student.Student_Fathers_Name,
       Student_Mothers_Name: student.Student_Mothers_Name,
-      //AdminID: student.AdminID,
     };
 
     const requestOptions = {
@@ -234,11 +233,13 @@ function UpdateStudent() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataStudent";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -274,8 +275,8 @@ function UpdateStudent() {
               <Container maxWidth="lg">
                 <Paper sx={{ padding: 1 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ marginTop: 1.6 }}>
-                      <Typography variant="h4" gutterBottom>
+                    <Box>
+                      <a className="menu-head">
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -284,6 +285,10 @@ function UpdateStudent() {
                         >
                           <FiArrowLeft size="30" />
                         </Button>
+                      </a>
+                    </Box>
+                    <Box sx={{ marginTop: 0.4 }}>
+                      <Typography variant="h4" gutterBottom>
                         UPDATE STUDENT
                       </Typography>
                     </Box>
@@ -303,7 +308,7 @@ function UpdateStudent() {
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      อัปเดตข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                   <Snackbar
@@ -313,7 +318,7 @@ function UpdateStudent() {
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      อัปเดตข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                 </Box>
@@ -383,8 +388,8 @@ function UpdateStudent() {
                             <p>วัน/เดือน/ปี เกิด</p>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                               <DatePicker
-                                renderInput={(params) => (
-                                  <TextField {...params} />
+                                renderInput={(props) => (
+                                  <TextField {...props} />
                                 )}
                                 value={Student_Birthday}
                                 onChange={setStudent_Birthday}
@@ -596,8 +601,8 @@ function UpdateStudent() {
                             <p>ปีที่เข้าศึกษา</p>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                               <DatePicker
-                                renderInput={(params) => (
-                                  <TextField {...params} />
+                                renderInput={(props) => (
+                                  <TextField {...props} />
                                 )}
                                 value={Student_Year_Of_Entry}
                                 onChange={setStudent_Year_Of_Entry}
@@ -627,7 +632,7 @@ function UpdateStudent() {
                             color="primary"
                             onClick={update}
                           >
-                            Update
+                            <a className="menu-button-submit">update</a>
                           </Button>
                         </Grid>
                         <Grid item xs={3}>
@@ -639,7 +644,7 @@ function UpdateStudent() {
                             component={RouterLink}
                             to="/DataStudent"
                           >
-                            back
+                            <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={6}></Grid>
