@@ -116,7 +116,7 @@ function DataCourse() {
   if (!token) {
     return <Home />;
   }
-  
+
   /////////////////////////////////////////////////////
 
   return (
@@ -135,18 +135,10 @@ function DataCourse() {
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        <Button
-                          color="inherit"
-                          component={RouterLink}
-                          to="/HomeAdmin"
-                          sx={{ marginBottom: 0.5 }}
-                        >
-                          <HiHome size="30" />
-                        </Button>
                         Course
                       </Typography>
                     </Box>
-                    <Box sx={{ marginLeft: 25 }}>
+                    <Box sx={{ marginLeft: 38.5 }}>
                       <Typography variant="h4" gutterBottom>
                         <TextField
                           fullWidth
@@ -163,7 +155,7 @@ function DataCourse() {
                     <Box sx={{ marginTop: 2.3 }}>
                       <BiSearchAlt size="30" />
                     </Box>
-                    <Box sx={{ marginLeft: 50, marginTop:0.9 }}>
+                    <Box sx={{ marginLeft: 45.4, marginTop: 0.9 }}>
                       <Button
                         variant="contained"
                         component={RouterLink}
@@ -171,7 +163,7 @@ function DataCourse() {
                         color="secondary"
                         size="large"
                       >
-                        create
+                        <a className="menu-button-back">create</a>
                       </Button>
                     </Box>
                   </Box>
@@ -183,7 +175,9 @@ function DataCourse() {
                         <TableCell align="center">ID</TableCell>
                         <TableCell align="center">ชื่อ หลักสูตร</TableCell>
                         <TableCell align="center">ระดับการศึกษา</TableCell>
-                        <TableCell align="center">ปีก่อตั้งหลักสูตรการศึกษา</TableCell>
+                        <TableCell align="center">
+                          ปีก่อตั้งหลักสูตรการศึกษา
+                        </TableCell>
                         <TableCell align="center">จำนวนหน่วยกิต</TableCell>
                         <TableCell align="center">ชื่อ-สกุล อาจารย์</TableCell>
                         <TableCell align="center">OPTION</TableCell>
