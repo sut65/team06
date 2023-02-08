@@ -21,7 +21,8 @@ import { Adminbar } from "../Bar-Admin";
 import { ActivityTypeInterface } from "../../models/IActivityType";
 import { TrimesterInterface } from "../../models/ITrimester";
 import { ActivityInterface } from "../../models/IActivity";
-
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 const Theme = createTheme({
   palette: {
     primary: {
@@ -36,6 +37,13 @@ const Theme = createTheme({
   },
 });
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 function UpdateActivity() {
   /////////////////////////////////////////////////////
 
@@ -47,6 +55,7 @@ function UpdateActivity() {
   const [activity_Date, setActivity_Date] = useState<Date | null>(new Date());
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [message, setAlertMessage] = React.useState("");
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -100,6 +109,17 @@ function UpdateActivity() {
     setActivity({ ...activity, [id]: value });
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccess(false);
+    setError(false);
+  };
+
   /////////////////////////////////////////////////////
   useEffect(() => {
     feachActivityType();
@@ -118,8 +138,8 @@ function UpdateActivity() {
   function update() {
     let data = {
       ID: convertType(id),
-      ActivityTypeID: convertType(activity.ActivityTypeID),
-      TrimesterID: convertType(activity.TrimesterID),
+      ActivityType: convertType(activity.ActivityTypeID),
+      Trimester: convertType(activity.TrimesterID),
 
       Activity_Student_Number: activity.Activity_Student_Number,
       Activity_Name: activity.Activity_Name,
@@ -129,6 +149,7 @@ function UpdateActivity() {
       Activity_Year: activity.Activity_Year,
       Hour: activity.Hour,
     };
+    console.log(data);
 
     const requestOptions = {
       method: "PATCH",
@@ -141,12 +162,14 @@ function UpdateActivity() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("อัพเดทข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataActivity";
           }, 500);
         } else {
           setError(true);
+          setAlertMessage(res.error);
         }
       });
   }
@@ -173,7 +196,7 @@ function UpdateActivity() {
         />
         <div id="page-CreateActivity">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+            <Box sx={{ backgroundColor: "#313131", height: "200vh" }}>
               <CssBaseline />
               <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
@@ -193,16 +216,38 @@ function UpdateActivity() {
                   </Box>
                 </Paper>
               </Container>
-              <Container maxWidth="lg"></Container>
+              <Container maxWidth="lg" sx={{ marginTop: 1 }}>
               <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
+                  <Box sx={{ mt: 2 }}>
+                    <Snackbar
+                      id="success"
+                      open={success}
+                      autoHideDuration={3000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    >
+                      <Alert onClose={handleClose} severity="success">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Snackbar
+                      id="error"
+                      open={error}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    >
+                      <Alert onClose={handleClose} severity="error">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <h4>บันทึกกิจกรรมนักศึกษา</h4>
                         <hr />
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <p>รหัสนักศึกษา</p>
                         <TextField
                           fullWidth
@@ -372,7 +417,8 @@ function UpdateActivity() {
                   </Box>
                 </Box>
               </Paper>
-            </Box>
+            </Container>
+           </Box>
           </React.Fragment>
         </div>
       </ThemeProvider>

@@ -139,7 +139,7 @@ function SearchActivity() {
       />
         <div id="page-CreatActivity">
         <React.Fragment>
-        <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+        <Box sx={{ backgroundColor: "#313131", height: "200vh" }}>
           <CssBaseline />
           <Container maxWidth="lg" sx={{ padding: 2 }}>
             <Paper sx={{ padding: 2 }}>
@@ -168,7 +168,7 @@ function SearchActivity() {
                     <h4>บันทึกกิจกรรมนักศึกษา</h4>
                     <hr />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <p>รหัสนักศึกษา</p>
                     <TextField
                       fullWidth
@@ -182,7 +182,7 @@ function SearchActivity() {
                       onChange={handleInputChange}
                     />
                   </Grid>
-                  <Grid item xs={6}></Grid>
+                  <Grid item xs={8}></Grid>
                   <Grid item xs={4}>
                     <p>ประเภทกิจกรรม</p>
                     <Select
@@ -205,7 +205,7 @@ function SearchActivity() {
                     </Select>
                   </Grid>
                   <Grid item xs={8}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <p>ชื่อกิจกรรม</p>
                     <TextField
                       fullWidth
@@ -219,8 +219,8 @@ function SearchActivity() {
                       onChange={handleInputChange}
                     />
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <p>สถานที่ทำกิจกรรม</p>
                     <TextField
                       fullWidth
@@ -234,8 +234,8 @@ function SearchActivity() {
                       onChange={handleInputChange}
                     />
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <p>ตำแหน่ง</p>
                     <TextField
                       fullWidth
@@ -249,8 +249,8 @@ function SearchActivity() {
                       onChange={handleInputChange}
                     />
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <FormControl fullWidth variant="outlined">
                      <p>วันที่ทำกิจกรรม</p>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -264,8 +264,8 @@ function SearchActivity() {
                     </LocalizationProvider>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <p>ปีการศึกษา</p>
                     <TextField
                       fullWidth
@@ -279,8 +279,8 @@ function SearchActivity() {
                       onChange={handleInputChange}
                     />
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <p>ภาคการศึกษา</p>
                     <Select
                       fullWidth
@@ -301,8 +301,8 @@ function SearchActivity() {
                       ))}
                     </Select>
                   </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}></Grid>
+                  <Grid item xs={4}>
                     <p>จำนวนชั่วโมง</p>
                     <TextField
                       fullWidth

@@ -240,7 +240,7 @@ type ACTIVITY struct {
 	Position                string
 	Activity_Date           time.Time
 	Activity_Year           string
-	Hour                    uint
+	Hour                    string
 
 	ActivityTypeID *uint
 	TrimesterID    *uint

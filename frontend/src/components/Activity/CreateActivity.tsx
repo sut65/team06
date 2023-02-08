@@ -20,6 +20,8 @@ import { FiArrowLeft } from "react-icons/fi";
 import { Adminbar } from "../Bar-Admin";
 import { AdminInterface } from "../../models/IAdmin";
 import Home from "../Home";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 import { ActivityTypeInterface } from "../../models/IActivityType";
 import { TrimesterInterface } from "../../models/ITrimester";
@@ -38,6 +40,12 @@ const Theme = createTheme({
     },
   },
 });
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function CreateActivity() {
   /////////////////////////////////////////////////////
@@ -49,7 +57,7 @@ function CreateActivity() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [admin, setAdmin] = useState<AdminInterface>();
-
+  const [message, setAlertMessage]=React.useState("");
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -94,6 +102,17 @@ function CreateActivity() {
     setActivity({ ...activity, [id]: value });
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccess(false);
+    setError(false);
+  };
+
   const fetchAdminByID = async () => {
     let res = await GetAdminByID();
     activity.AdminID = res.ID;
@@ -111,19 +130,17 @@ function CreateActivity() {
   console.log(activity);
 
   /////////////////////////////////////////////////////
-
+  const convertType = (data: string | number | undefined) => {
+    let val = typeof data === "string" ? parseInt(data) : data;
+    return val;
+  };
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-      ActivityTypeID:
-        typeof activity.ActivityTypeID === "string"
-          ? parseInt(activity.ActivityTypeID)
-          : 0,
-      TrimesterID:
-        typeof activity.TrimesterID === "string"
-          ? parseInt(activity.TrimesterID)
-          : 0,
-
+      Trimester: convertType(activity.TrimesterID),
+      ActivityType: convertType(activity.ActivityTypeID),
+      Admin: activity.AdminID,
+    
       Activity_Student_Number: activity.Activity_Student_Number,
       Activity_Name: activity.Activity_Name,
       Location: activity.Location,
@@ -133,22 +150,26 @@ function CreateActivity() {
       Hour: activity.Hour,
     };
     console.log(data);
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
+    console.log(data)
 
     fetch(`${apiUrl}/create_Activity`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ")
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataActivity";
           }, 500);
         } else {
+          setAlertMessage(res.error)
           setError(true);
         }
       });
@@ -179,12 +200,12 @@ function CreateActivity() {
         />
         <div id="page-CreateAcativity">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}></Box>
+            <Box sx={{ backgroundColor: "#313131", height: "205vh" }}>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ padding: 2 }}>
-              <Paper sx={{ padding: 2 }}>
+            <Container maxWidth="lg">
+              <Paper sx={{ padding: 1 }}>
                 <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
+                  <Box>
                     <Typography variant="h4" gutterBottom>
                       <Button
                         color="inherit"
@@ -202,13 +223,35 @@ function CreateActivity() {
             <Container maxWidth="lg">
               <Paper sx={{ padding: 2 }}>
                 <Box display={"flex"}>
+                <Snackbar
+                    id="success"
+                    open={success}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    id="error"
+                    open={error}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="error">
+                      {message}
+                    </Alert>
+                  </Snackbar>
                   <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <h4>บันทึกกิจกรรมนักศึกษา</h4>
                         <hr />
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <p>รหัสนักศึกษา</p>
                         <TextField
                           fullWidth
@@ -221,8 +264,8 @@ function CreateActivity() {
                           onChange={handleInputChange}
                         />
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={2}>
+                      <Grid item xs={8}></Grid>
+                      <Grid item xs={4}>
                         <p>ประเภทกิจกรรม</p>
                         <Select
                           fullWidth
@@ -314,8 +357,8 @@ function CreateActivity() {
                           onChange={handleInputChange}
                         />
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={8}></Grid>
+                      <Grid item xs={4}>
                         <p>ภาคการศึกษา</p>
                         <Select
                           fullWidth
@@ -335,8 +378,8 @@ function CreateActivity() {
                           ))}
                         </Select>
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={8}></Grid>
+                      <Grid item xs={4}>
                         <p>จำนวนชั่วโมง</p>
                         <TextField
                           fullWidth
@@ -349,7 +392,7 @@ function CreateActivity() {
                           onChange={handleInputChange}
                         />
                       </Grid>
-                      <Grid item xs={8}></Grid>
+                      <Grid item xs={6}></Grid>
                       <Grid item xs={3}>
                         <Button
                           variant="contained"
@@ -364,6 +407,7 @@ function CreateActivity() {
                         <Button
                           variant="contained"
                           size="large"
+                          color="secondary"
                           fullWidth
                           component={RouterLink}
                           to="/DataActivity"
@@ -371,12 +415,13 @@ function CreateActivity() {
                           back
                         </Button>
                       </Grid>
-                      <Grid item xs={6}></Grid>
+                      <Grid item xs={5}></Grid>
                     </Grid>
                   </Box>
                 </Box>
               </Paper>
             </Container>
+            </Box>
           </React.Fragment>
         </div>
       </ThemeProvider>
