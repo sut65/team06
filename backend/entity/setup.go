@@ -780,7 +780,7 @@ func SetupDatabase() {
 		Position:                "เข้าร่วมกิจกรรม",
 		Activity_Date:           t,
 		Activity_Year:           "2565",
-		Hour:                    12,
+		Hour:                    "12",
 
 		ActivityType: ActivityType2,
 		Trimester:    Trimester2,
@@ -795,7 +795,7 @@ func SetupDatabase() {
 		Position:                "ช่วยขนของ",
 		Activity_Date:           t,
 		Activity_Year:           "2565",
-		Hour:                    7,
+		Hour:                    "7",
 
 		ActivityType: ActivityType1,
 		Trimester:    Trimester1,
@@ -810,7 +810,7 @@ func SetupDatabase() {
 		Position:                "คณะทำงาน",
 		Activity_Date:           t,
 		Activity_Year:           "2564",
-		Hour:                    15,
+		Hour:                    "15",
 
 		ActivityType: ActivityType1,
 		Trimester:    Trimester3,
