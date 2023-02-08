@@ -56,8 +56,8 @@ type ADMIN struct {
 	gorm.Model
 	Admin_Name     string
 	Admin_Email    string `gorm:"uniqueIndex"`
-	Admin_Password string  `valid:"minstringlength(8)"`
-	Admin_Tel      string  `valid:"matches(^\\d{10}$)"`
+	Admin_Password string `valid:"minstringlength(8)"`
+	Admin_Tel      string `valid:"matches(^\\d{10}$)"`
 	Admin_Address  string `gorm:"uniqueIndex" valid:"minstringlength(20)"`
 
 	PrefixID   *uint
@@ -81,9 +81,9 @@ type COURSE struct {
 	gorm.Model
 	Course_Name    string
 	Course_Teacher string
-	Course_Credit  uint `valid:"range(120|200)"`
+	Course_Credit  uint   `valid:"range(120|200)"`
 	Course_Detail  string `valid:"minstringlength(10)"`
-	Course_Year    uint `valid:"range(2560|9999)"`
+	Course_Year    uint   `valid:"range(2560|9999)"`
 
 	DegreeID    *uint
 	PrefixID    *uint
@@ -186,8 +186,8 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
 	Identity_Card string
-	Reasons               string
-	GPAX                  float32
+	Reasons       string
+	GPAX          float32
 
 	ScholarshipTypeID *uint
 	ScholarshipID     *uint
@@ -203,9 +203,9 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 }
 type GRADE struct {
 	gorm.Model
-	Grade_Student_Number string  `valid:"required, matches(^[BMD]\\d{7}$)"`
-	Grade_Supject        string  `valid:"required, maxstringlength(20)"`
-	Grade_Code_Supject   string  `valid:"required, matches(^\\d{6}$)"`
+	Grade_Student_Number string `valid:"required, matches(^[BMD]\\d{7}$)"`
+	Grade_Supject        string `valid:"required, maxstringlength(20)"`
+	Grade_Code_Supject   string `valid:"required, matches(^\\d{6}$)"`
 	Grade                string
 
 	InstituteID *uint
@@ -233,12 +233,12 @@ type TRIMESTER struct {
 }
 type ACTIVITY struct {
 	gorm.Model
-	Activity_Student_Number string
-	Activity_Name           string
+	Activity_Student_Number string `valid:"required, matches(^[BMD]\\d{7}$)"`
+	Activity_Name           string `valid:"required"`
 	Location                string
 	Position                string
 	Activity_Date           time.Time
-	Activity_Year           string
+	Activity_Year           string `valid:"required"`
 	Hour                    string
 
 	ActivityTypeID *uint
@@ -264,7 +264,7 @@ type ROOMTYPE struct {
 
 type DORMITORY struct {
 	gorm.Model
-	Dormitory_Student_Number string 
+	Dormitory_Student_Number string
 	Dormitory_AcademicYear   uint
 	Room_Number              uint
 
