@@ -828,11 +828,6 @@ func SetupDatabase() {
 	}
 	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type2)
 
-	Dormitory_type3 := DORMITORYTYPE{
-		Dormitory_Type_Name: "หอนอกในมหาวิทยาลัย",
-	}
-	db.Model(&DORMITORYTYPE{}).Create(&Dormitory_type3)
-
 	Room_type1 := ROOMTYPE{
 		Room_Type_Name: "หอพักห้องน้ำในตัว",
 	}
