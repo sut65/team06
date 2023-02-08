@@ -1,54 +1,90 @@
 package controller
 
 import (
-	"net/http"
-
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
+	"net/http"
 )
 
-func CreateGrade(c *gin.Context) {
+type CreateGradePayload struct {
+	Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
+	// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
+	Grade_Supject      string `json:"Grade_Supject" `
+	Grade_Code_Supject string `json:"Grade_Code_Supject" `
+	Grade              string `json:"Grade"`
 
+	Institute uint `json:"Institute"`
+	Branch    uint `json:"Branch"`
+	Admin     uint `json:"Admin"`
+}
+
+type UpdateGradePayload struct {
+	ID                   uint   `json:"ID"`
+	Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
+	// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
+	Grade_Supject      string `json:"Grade_Supject" `
+	Grade_Code_Supject string `json:"Grade_Code_Supject" `
+	Grade              string `json:"Grade"`
+
+	Institute uint `json:"Institute"`
+	Branch    uint `json:"Branch"`
+}
+
+func CreateGrade(c *gin.Context) {
+	var payload CreateGradePayload
 	var Admin entity.ADMIN
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Grade entity.GRADE
 
-	if err := c.ShouldBindJSON(&Grade); err != nil {
+	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Grade_error": err.Error()})
 		return
 	}
+
+	if _, err := govalidator.ValidateStruct(payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	// 8: ค้นหา Institute ด้วย id
-	if tx := entity.DB().Where("id = ?", Grade.InstituteID).First(&Institute); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload.Institute).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
 		return
 	}
 
 	// 9: ค้นหา Branch ด้วย id
-	if tx := entity.DB().Where("id = ?", Grade.BranchID).First(&Branch); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload.Branch).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 		return
 	}
 
-	// 14: สร้าง entity Grade
-	Data_Grade := entity.GRADE{
-		Grade_Student_Number: Grade.Grade_Student_Number,
-		Grade_GPA:            Grade.Grade_GPA,
-		Grade_Supject:        Grade.Grade_Supject,
-		Grade_Code_Supject:   Grade.Grade_Code_Supject,
-		Grade:                Grade.Grade,
-
-		Institute: Institute,
-		Branch:    Branch,
-		AdminID:   Grade.AdminID,
-		Admin:     Admin,
+	//  ค้นหา Admin ด้วย id
+	if tx := entity.DB().Where("id = ?", payload.Admin).First(&Admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin not found"})
+		return
 	}
+
+	// 14: สร้าง entity Grade
+
+	Grade.Grade_Student_Number = payload.Grade_Student_Number
+	// Grade.Grade_GPA = payload.Grade_GPA
+	Grade.Grade_Supject = payload.Grade_Supject
+	Grade.Grade_Code_Supject = payload.Grade_Code_Supject
+	Grade.Grade = payload.Grade
+
+	Grade.Institute = Institute
+	Grade.Branch = Branch
+	//Grade.AdminID = Grade.AdminID
+	Grade.Admin = Admin
+
 	// 11: บันทึก
-	if err := entity.DB().Create(&Data_Grade).Error; err != nil {
+	if err := entity.DB().Create(&Grade).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"Data_Grade_error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": Data_Grade})
+	c.JSON(http.StatusOK, gin.H{"data": Grade})
 }
 
 // ดึงข้อมูล Grade มาแสดง
@@ -96,43 +132,46 @@ func DeleteGradeByID(c *gin.Context) {
 
 // แก้ไขข้อมูล Grade
 func UpdateGrade(c *gin.Context) {
-	var Admin entity.ADMIN
+
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Grade entity.GRADE
+	var payload UpdateGradePayload
 
-	if err := c.ShouldBindJSON(&Grade); err != nil {
+	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Grade_error": err.Error()})
 		return
 	}
 
-	
+	if _, err := govalidator.ValidateStruct(payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// ค้นหา Institute  ด้วย id
-	if tx := entity.DB().Where("id = ?", Grade.InstituteID).First(&Institute); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload.Institute).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", Grade.BranchID).First(&Branch); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload.Branch).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 		return
 	}
 	// update
-	update := entity.GRADE{
-		Grade_Student_Number: Grade.Grade_Student_Number,
-		Grade_GPA:            Grade.Grade_GPA,
-		Grade_Supject:        Grade.Grade_Supject,
-		Grade_Code_Supject:   Grade.Grade_Code_Supject,
-		Grade:                Grade.Grade,
+	Grade.ID = payload.ID
+	Grade.Grade_Student_Number = payload.Grade_Student_Number
+	// Grade.Grade_GPA = payload.Grade_GPA
+	Grade.Grade_Supject = payload.Grade_Supject
+	Grade.Grade_Code_Supject = payload.Grade_Code_Supject
+	Grade.Grade = payload.Grade
 
-		Institute: Institute,
-		Branch:    Branch,
-		AdminID:   Grade.AdminID,
-		Admin:     Admin,
-	}
+	Grade.Institute = Institute
+	Grade.Branch = Branch
+	//Grade.AdminID = Grade.AdminID
+
 	// update
-	if err := entity.DB().Where("id = ?", Grade.ID).Updates(&update).Error; err != nil {
+	if err := entity.DB().Where("id = ?", Grade.ID).Updates(&Grade).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
