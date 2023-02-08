@@ -57,6 +57,8 @@ function UpdateDormitory() {
   const [roomtype, setRoomType] = useState<RoomTypeInterface[]>([]);
   const [trimester, setTrimester] = useState<TrimesterInterface[]>([]);
 
+  const [message, setAlertMessage] = React.useState("");
+
   const [dormitory, setDormitory] = useState<Partial<DormitoryInterface>>({});
 
   const [success, setSuccess] = useState(false);
@@ -188,11 +190,13 @@ function UpdateDormitory() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
-            window.location.href = "/DataDormitory";
+            // window.location.href = "/DataDormitory";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -249,23 +253,25 @@ function UpdateDormitory() {
               }}
             >
               <Snackbar
+                id="success"
                 open={success}
                 autoHideDuration={3000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
                 <Alert onClose={handleClose} severity="success">
-                  อัปเดตข้อมูลสำเร็จ
+                  {message}
                 </Alert>
               </Snackbar>
               <Snackbar
+                id="error"
                 open={error}
                 autoHideDuration={6000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
                 <Alert onClose={handleClose} severity="error">
-                  อัปเดตข้อมูลไม่สำเร็จ
+                  {message}
                 </Alert>
               </Snackbar>
             </Box>

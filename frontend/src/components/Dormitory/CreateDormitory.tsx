@@ -56,6 +56,8 @@ function CreateDormitory() {
   const [trimester, setTrimester] = useState<TrimesterInterface[]>([]);
   const [admin, setAdmin] = useState<AdminInterface>();
 
+  const [message, setAlertMessage] = React.useState("");
+
   const [dormitory, setDormitory] = useState<Partial<DormitoryInterface>>({});
 
   const [success, setSuccess] = useState(false);
@@ -183,16 +185,20 @@ function CreateDormitory() {
       body: JSON.stringify(data),
     };
 
+    console.log(data)
+
     fetch(`${apiUrl}/dormitory`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
-            window.location.href = "/DataDormitory";
+            // window.location.href = "/DataDormitory";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -237,23 +243,25 @@ function CreateDormitory() {
             }}
           >
             <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                บันทึกข้อมูลสำเร็จ
+                {message}
               </Alert>
             </Snackbar>
             <Snackbar
+              id="error"
               open={error}
               autoHideDuration={6000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                บันทึกข้อมูลไม่สำเร็จ
+                {message}
               </Alert>
             </Snackbar>
           </Box>
