@@ -3,12 +3,29 @@ package controller
 import (
 	// "fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
+	"github.com/asaskevich/govalidator"
 )
 
+type CreateSuggestionPayload struct {
+	Suggestion_Teacher        string	`json:"Suggestion_Teacher"`
+	Suggestion_Student_Number string	`json:"Suggestion_Student_Number"`
+	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
+	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
+	Suggestion_Detail         string	`json:"Suggestion_Detail"`
+
+	PrefixID    uint	`json:"PrefixID"`
+	InstituteID uint	`json:"InstituteID"`
+	BranchID    uint	`json:"BranchID"`
+	StudentID   uint	`json:"StudentID"`
+}
+
 func CreatSuggestion(c *gin.Context)  {
+
+	var payload_suggestion CreateSuggestionPayload
 	
 	var Prefix entity.PREFIX
 	var Institute entity.INSTITUTE
@@ -16,47 +33,51 @@ func CreatSuggestion(c *gin.Context)  {
 	var Suggestion entity.SUGGESTION
 	var Student entity.STUDENT
 
-	if err := c.ShouldBindJSON(&Suggestion); err != nil {
+	if err := c.ShouldBindJSON(&payload_suggestion); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(payload_suggestion); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	//9: ค้นหาด้วย id ของ Prefix
-	if tx := entity.DB().Where("id = ?", Suggestion.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_suggestion.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
 	}
 	//10: ค้นหาด้วย id ของ Institute
-	if tx := entity.DB().Where("id = ?", Suggestion.InstituteID).First(&Institute); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_suggestion.InstituteID).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
 	}
 	//11: ค้นหาด้วย id ของ Branch
-	if tx := entity.DB().Where("id = ?", Suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
 
 	//12:สร้าง entity ADMIN
-	sg := entity.SUGGESTION{
-		Suggestion_Teacher:       	Suggestion.Suggestion_Teacher,
-		Suggestion_Student_Number:	Suggestion.Suggestion_Student_Number,
-		Suggestion_Student_Name:  	Suggestion.Suggestion_Student_Name,
-		Suggestion_Date:         	Suggestion.Suggestion_Date,
-		Suggestion_Detail:       	Suggestion.Suggestion_Detail,
+	
+	Suggestion.Suggestion_Teacher =       	payload_suggestion.Suggestion_Teacher
+	Suggestion.Suggestion_Student_Number =	payload_suggestion.Suggestion_Student_Number
+	Suggestion.Suggestion_Student_Name =  	payload_suggestion.Suggestion_Student_Name
+	Suggestion.Suggestion_Date =         	payload_suggestion.Suggestion_Date
+	Suggestion.Suggestion_Detail =      	payload_suggestion.Suggestion_Detail
 
-		Prefix:    					Prefix,
-		Institute: 					Institute,
-		Branch:    					Branch,
+	Suggestion.Prefix =   					Prefix
+	Suggestion.Institute = 					Institute
+	Suggestion.Branch =   					Branch
 		
-		StudentID: 					Suggestion.StudentID,
-		Student:					Student,
-	}
+	// StudentID: 					Suggestion.StudentID,
+	Suggestion.Student =					Student
 
 	//13:บันทึก
-	if err := entity.DB().Create(&sg).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := entity.DB().Create(&Suggestion).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListSuggestion_error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": sg})
+	c.JSON(http.StatusOK, gin.H{"data": Suggestion})
 }
 
 // ดึงข้อมูลการเสนอความคิดเห็นมาแสดง
@@ -71,18 +92,6 @@ func ListSuggestionTable(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": suggestion_table})
 }
 
-// ดึงข้อมูล Student มาแสดง 
-// func ListStudentTable(c *gin.Context) {
-
-// 	var student_table []entity.STUDENT
-
-// 	if err := entity.DB().Preload("Gender").Preload("Degree").Preload("Prefix").Preload("Institute").Preload("Province").Preload("Branch").
-// 	Preload("Course").Preload("Admin").Raw("SELECT * FROM students").Scan(&student_table).Find(&student_table).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"ListStudent_error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"data": student_table})
-// }
 
 // ดึงข้อมูล Course by id 
 func ListSuggestionByID(c *gin.Context) {
@@ -107,52 +116,69 @@ func DeleteSuggestionByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
+
+type UpdateSuggestionPayload struct {
+	ID 						  uint 		`json:"ID"`
+	Suggestion_Teacher        string	`json:"Suggestion_Teacher"`
+	Suggestion_Student_Number string	`json:"Suggestion_Student_Number"`
+	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~name cannot be blank"`
+	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
+	Suggestion_Detail         string	`json:"Suggestion_Detail"`
+
+	PrefixID    uint	`json:"PrefixID"`
+	InstituteID uint	`json:"InstituteID"`
+	BranchID    uint	`json:"BranchID"`
+	StudentID   uint	`json:"StudentID"`
+}
+
+
 // แก้ไขข้อมูล Dormitory
 func UpdateSuggestion(c *gin.Context) {
 
+	var payload_update_suggestion UpdateSuggestionPayload
 	var Prefix entity.PREFIX
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Suggestion entity.SUGGESTION
-	var Student entity.STUDENT
+	// var Student entity.STUDENT
 
-	if err := c.ShouldBindJSON(&Suggestion); err != nil {
+	if err := c.ShouldBindJSON(&payload_update_suggestion); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(payload_update_suggestion); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	//9: ค้นหาด้วย id ของ Prefix
-	if tx := entity.DB().Where("id = ?", Suggestion.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_update_suggestion.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
 	}
 	//10: ค้นหาด้วย id ของ Institute
-	if tx := entity.DB().Where("id = ?", Suggestion.InstituteID).First(&Institute); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_update_suggestion.InstituteID).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
 	}
 	//11: ค้นหาด้วย id ของ Branch
-	if tx := entity.DB().Where("id = ?", Suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payload_update_suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
 
 	//12:สร้าง entity ADMIN
-	updatesg := entity.SUGGESTION{
-		Suggestion_Teacher:       	Suggestion.Suggestion_Teacher,
-		Suggestion_Student_Number:	Suggestion.Suggestion_Student_Number,
-		Suggestion_Student_Name:  	Suggestion.Suggestion_Student_Name,
-		Suggestion_Date:         	Suggestion.Suggestion_Date,
-		Suggestion_Detail:       	Suggestion.Suggestion_Detail,
+	Suggestion.ID = payload_update_suggestion.ID
+	Suggestion.Suggestion_Teacher =       	payload_update_suggestion.Suggestion_Teacher
+	Suggestion.Suggestion_Student_Number =	payload_update_suggestion.Suggestion_Student_Number
+	Suggestion.Suggestion_Student_Name =  	payload_update_suggestion.Suggestion_Student_Name
+	Suggestion.Suggestion_Date =         	payload_update_suggestion.Suggestion_Date
+	Suggestion.Suggestion_Detail =      	payload_update_suggestion.Suggestion_Detail
 
-		Prefix:    					Prefix,
-		Institute: 					Institute,
-		Branch:    					Branch,
-
-		StudentID: 					Suggestion.StudentID,
-		Student: 					Student,					
-	}
-
+	Suggestion.Prefix =   					Prefix
+	Suggestion.Institute = 					Institute
+	Suggestion.Branch =   					Branch
 	//update
-	if err := entity.DB().Where("id = ?", Suggestion.ID).Updates(&updatesg).Error; err != nil {
+	if err := entity.DB().Where("id = ?", Suggestion.ID).Updates(&Suggestion).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
