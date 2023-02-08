@@ -11,7 +11,7 @@ import (
 )
 
 type CreateSuggestionPayload struct {
-	Suggestion_Teacher        string	`json:"Suggestion_Teacher"`
+	Suggestion_Teacher        string	`json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
 	Suggestion_Student_Number string	`json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
 	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
 	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
@@ -119,7 +119,7 @@ func DeleteSuggestionByID(c *gin.Context) {
 
 type UpdateSuggestionPayload struct {
 	ID 						  uint 		`json:"ID"`
-	Suggestion_Teacher        string	`json:"Suggestion_Teacher"`
+	Suggestion_Teacher        string	`json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
 	Suggestion_Student_Number string	`json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
 	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~name cannot be blank"`
 	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
