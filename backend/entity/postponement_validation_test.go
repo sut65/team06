@@ -30,7 +30,7 @@ func Test_Validate_Postponement_Student_Number(t *testing.T) {
 	g.Expect(err).NotTo(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Postponement_Student_Number: F63000 does not validate as matches(^[BMD]\\d{7}$)"))
+	g.Expect(err.Error()).To(Equal("Postponement_Student_Number: F63000 does not validate as matches(^[BMD]\\d{7}$);Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required"))
 }
 func Test_Validate_Postponement_Student_Name(t *testing.T) {
 	g := NewGomegaWithT(t)
@@ -54,7 +54,7 @@ func Test_Validate_Postponement_Student_Name(t *testing.T) {
 	g.Expect(err).NotTo(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("name cannot be blank"))
+	g.Expect(err.Error()).To(Equal("Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required;name cannot be blank"))
 }
 
 func Test_Validate_Postponement_Reasons(t *testing.T) {
@@ -79,5 +79,5 @@ func Test_Validate_Postponement_Reasons(t *testing.T) {
 	g.Expect(err).NotTo(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Postponement_Reasons: เน does not validate as minstringlength(10)"))
+	g.Expect(err.Error()).To(Equal("Postponement_Reasons: เน does not validate as minstringlength(10);Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required"))
 }
