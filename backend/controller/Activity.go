@@ -10,7 +10,7 @@ import (
 
 type CreateActivityPayload struct {
 	Activity_Student_Number string    `json:"Activity_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
-	Activity_Name           string    `json:"Activity_Name"`
+	Activity_Name           string    `json:"Activity_Name" valid:"required~กรุณากรอกชื่อกิจกรรม"`
 	Location                string    `json:"Location"`
 	Activity_Date           time.Time `json:"Activity_Date"`
 	Activity_Year           string    `json:"Activity_Year"`
@@ -25,7 +25,7 @@ type CreateActivityPayload struct {
 type UpdateActivityPayload struct {
 	ID                      uint      `json:"ID"`
 	Activity_Student_Number string    `json:"Activity_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
-	Activity_Name           string    `json:"Activity_Name"`
+	Activity_Name           string    `json:"Activity_Name" valid:"required~กรุณากรอกชื่อกิจกรรม"`
 	Location                string    `json:"Location"`
 	Position                string    `json:"Position"`
 	Activity_Date           time.Time `json:"Activity_Date"`
