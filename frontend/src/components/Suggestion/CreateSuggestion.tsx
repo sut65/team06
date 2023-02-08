@@ -62,6 +62,8 @@ function CreateSuggestion() {
   const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>({});
   const [student, setStudent] = useState<StudentInterface>();
 
+  const [message, setAlertMessage] = React.useState("");
+
   const [suggestion_date, setSuggestion_Date] = useState<Date | null>(
     new Date()
   );
@@ -160,6 +162,7 @@ function CreateSuggestion() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
+
       StudentID: suggestion.StudentID,
       BranchID: convertType(suggestion.BranchID),
       PrefixID: convertType(suggestion.PrefixID),
@@ -185,12 +188,13 @@ function CreateSuggestion() {
       .then((res) => {
         console.log(res);
         if (res.data) {
-          console.log(res.data);
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
-            window.location.href = "/DataSuggestion";
+            // window.location.href = "/DataSuggestion";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -248,23 +252,25 @@ function CreateSuggestion() {
             }}
           >
             <Snackbar
+              id="success"
               open={success}
               autoHideDuration={3000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                บันทึกข้อมูลสำเร็จ
+                {message}
               </Alert>
             </Snackbar>
             <Snackbar
+              id="success"
               open={error}
               autoHideDuration={6000}
               onClose={handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="error">
-                บันทึกข้อมูลไม่สำเร็จ
+                {message}
               </Alert>
             </Snackbar>
         </Box>

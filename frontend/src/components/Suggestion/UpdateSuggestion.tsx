@@ -59,6 +59,8 @@ function UpdateSuggestion() {
   const [institute, setInstitute] = useState<InstituteInterface[]>([]);
   const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>({});
 
+  const [message, setAlertMessage] = React.useState("");
+
   const [suggestion_date, setSuggestion_Date] = useState<Date | null>(
     new Date()
   );
@@ -184,11 +186,13 @@ function UpdateSuggestion() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
-            window.location.href = "/DataSuggestion";
+            // window.location.href = "/DataSuggestion";
           }, 500);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -246,23 +250,25 @@ function UpdateSuggestion() {
                   }}
                 >
                   <Snackbar
+                    id="success"
                     open={success}
                     autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      อัปเดตข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                   <Snackbar
+                    id="success"
                     open={error}
                     autoHideDuration={6000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      อัปเดตข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                 </Box>
@@ -435,6 +441,7 @@ function UpdateSuggestion() {
                             variant="contained"
                             size="large"
                             fullWidth
+                            color="secondary"
                             component={RouterLink}
                             to="/DataSuggestion"
                           >
