@@ -203,10 +203,9 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 }
 type GRADE struct {
 	gorm.Model
-	Grade_Student_Number string
-	Grade_GPA            float32
-	Grade_Supject        string
-	Grade_Code_Supject   string
+	Grade_Student_Number string  `valid:"required, matches(^[BMD]\\d{7}$)"`
+	Grade_Supject        string  `valid:"required, maxstringlength(20)"`
+	Grade_Code_Supject   string  `valid:"required, matches(^\\d{6}$)"`
 	Grade                string
 
 	InstituteID *uint
