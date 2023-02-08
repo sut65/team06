@@ -309,7 +309,7 @@ type POSTPONEMENT struct {
 	Postponement_Gpax           string
 	Postponement_Credit         string
 	Postponement_Date           time.Time
-	Postponement_Reasons        string `valid:"required, minstringlength(10)~กรุณากรอกเหตุผลอย่างน้อย10ตัวอักษร"`
+	Postponement_Reasons        string `valid:"required, minstringlength(10)"`
 
 	PrefixID    *uint
 	DegreeID    *uint
