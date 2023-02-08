@@ -81,9 +81,9 @@ type COURSE struct {
 	gorm.Model
 	Course_Name    string
 	Course_Teacher string
-	Course_Credit  uint
-	Course_Detail  string
-	Course_Year    uint
+	Course_Credit  uint `valid:"range(120|200)"`
+	Course_Detail  string `valid:"minstringlength(10)"`
+	Course_Year    uint `valid:"range(2560|9999)"`
 
 	DegreeID    *uint
 	PrefixID    *uint
