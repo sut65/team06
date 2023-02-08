@@ -720,7 +720,6 @@ func SetupDatabase() {
 
 	Grade1 := GRADE{
 		Grade_Student_Number: "B6428531",
-		Grade_GPA:            3.50,
 		Grade_Code_Supject:   "SOFTWARE ENGINEERING",
 		Grade_Supject:        "523332",
 		Grade:                "A",
@@ -732,7 +731,6 @@ func SetupDatabase() {
 
 	Grade2 := GRADE{
 		Grade_Student_Number: "B6175324",
-		Grade_GPA:            3.66,
 		Grade_Code_Supject:   "MATH",
 		Grade_Supject:        "235661",
 		Grade:                "B",
