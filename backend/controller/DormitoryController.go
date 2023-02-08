@@ -11,7 +11,7 @@ import (
 
 type CreateDormitoryPayload struct {
 	Dormitory_Student_Number string `json:"Dormitory_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
-	Dormitory_AcademicYear   uint   `json:"Dormitory_AcademicYear"`
+	Dormitory_AcademicYear   uint   `json:"Dormitory_AcademicYear" valid:"required~กรุณากรอกปีการศึกษา4หลัก, matches(^\\d{4}$)"`
 	Room_Number              uint   `json:"Room_Number"`
 
 	TrimesterID     uint `json:"TrimesterID"`
