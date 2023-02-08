@@ -265,7 +265,7 @@ type ROOMTYPE struct {
 
 type DORMITORY struct {
 	gorm.Model
-	Dormitory_Student_Number string `gorm:"uniqueIndex"`
+	Dormitory_Student_Number string 
 	Dormitory_AcademicYear   uint
 	Room_Number              uint
 
