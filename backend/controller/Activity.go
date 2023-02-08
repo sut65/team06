@@ -13,7 +13,7 @@ type CreateActivityPayload struct {
 	Activity_Name           string    `json:"Activity_Name" valid:"required~กรุณากรอกชื่อกิจกรรม"`
 	Location                string    `json:"Location"`
 	Activity_Date           time.Time `json:"Activity_Date"`
-	Activity_Year           string    `json:"Activity_Year"`
+	Activity_Year           string    `json:"Activity_Year" valid:"required~กรุณากรอกปีการศึกษา"`
 	Position                string    `json:"Position"`
 	Hour                    string    `json:"Hour"`
 
@@ -29,7 +29,7 @@ type UpdateActivityPayload struct {
 	Location                string    `json:"Location"`
 	Position                string    `json:"Position"`
 	Activity_Date           time.Time `json:"Activity_Date"`
-	Activity_Year           string    `json:"Activity_Year"`
+	Activity_Year           string    `json:"Activity_Year" valid:"required~กรุณากรอกปีการศึกษา"`
 	Hour                    string    `json:"Hour"`
 
 	ActivityType uint
