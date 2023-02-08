@@ -23,6 +23,9 @@ import { BranchInterface } from "../../models/IBranch";
 import { InstituteInterface } from "../../models/IInstitute";
 import { GradeInterface } from "../../models/IGrade";
 import { AdminInterface } from "../../models/IAdmin";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
 const Theme = createTheme({
   palette: {
     primary: {
@@ -36,13 +39,23 @@ const Theme = createTheme({
     },
   },
 });
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 function CreateGrade() {
   /////////////////////////////////////////////////////
   const [admin, setAdmin] = useState<AdminInterface>();
+  const [message, setAlertMessage]=React.useState("");
 
   const [institute, setInstitute] = useState< InstituteInterface[]>([]);
   const [branch, setBranch] = useState<BranchInterface[]>([]);
   const [grade, setGrade] = useState<Partial<GradeInterface>>({});
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
@@ -91,6 +104,17 @@ function CreateGrade() {
     });
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccess(false);
+    setError(false);
+  };
+
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
   ) => {
@@ -115,10 +139,9 @@ function CreateGrade() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-        InstituteID:
-        typeof grade.InstituteID === "string" ? parseInt(grade.InstituteID) : 0,
-        BranchID:
-        typeof grade.BranchID === "string" ? parseInt(grade.BranchID) : 0,
+        Institute: convertType(grade.InstituteID),
+        Branch: convertType(grade.BranchID),
+        Admin: grade.AdminID,
     
         Grade_Student_Number: grade.Grade_Student_Number,
         Grade_GPA: grade.Grade_GPA,
@@ -133,17 +156,20 @@ function CreateGrade() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
+    console.log(data)
 
     fetch(`${apiUrl}/create_Grade`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ")
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataGrade";
           }, 500);
         } else {
+          setAlertMessage(res.error)
           setError(true);
         }
       });
@@ -189,7 +215,7 @@ function CreateGrade() {
                         >
                           <FiArrowLeft size="30" />
                         </Button>
-                        CREATE STUDENT
+                        CREATE GRADE
                       </Typography>
                   </Box>
                </Box>
@@ -198,6 +224,28 @@ function CreateGrade() {
         <Container maxWidth="lg">
           <Paper sx={{ padding: 2 }}>
             <Box display={"flex"}>
+            <Snackbar
+                    id="success"
+                    open={success}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    id="error"
+                    open={error}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="error">
+                      {message}
+                    </Alert>
+                  </Snackbar>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>

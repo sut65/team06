@@ -142,7 +142,7 @@ function SearchGrade() {
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <h4>บันทึกผลการเรียน</h4>
+                    <h4>ข้อมูลผลการเรียน</h4>
                     <hr />
                   </Grid>
                   <Grid item xs={4}>
@@ -151,7 +151,7 @@ function SearchGrade() {
                       fullWidth
                       id="Grade_Student_Number"
                       type="string"
-                      label="รหัสนักศึกษา"
+                      //label="รหัสนักศึกษา"
                       variant="outlined"
                       name="Grade_Student_Number"
                       value={grade.Grade_Student_Number}
@@ -207,7 +207,7 @@ function SearchGrade() {
                       fullWidth
                       id="Grade_Code_Supject"
                       type="string"
-                      label="รหัสวิชา"
+                      //label="รหัสวิชา"
                       variant="outlined"
                       name="Grade_Code_Supject"
                       value={grade.Grade_Code_Supject}
@@ -221,7 +221,7 @@ function SearchGrade() {
                       fullWidth
                       id="Grade_Supject"
                       type="string"
-                      label="ชื่อวิชา"
+                      //label="ชื่อวิชา"
                       variant="outlined"
                       name="Grade_Supject"
                       value={grade.Grade_Supject}
@@ -235,7 +235,7 @@ function SearchGrade() {
                       fullWidth
                       id="Grade"
                       type="string"
-                      label="ผลการเรียน"
+                      //label="ผลการเรียน"
                       variant="outlined"
                       name="Grade"
                       value={grade.Grade}
@@ -243,21 +243,8 @@ function SearchGrade() {
                     />
                   </Grid>
                   <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
-                    <p>รหัสนักศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Grade_Student_Number"
-                      type="string"
-                      variant="outlined"
-                      name="Grade_Student_Number"
-                      disabled
-                      value={grade.Grade_Student_Number}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
+                  
+                  <Grid item xs={3}>
                     <Button
                       variant="contained"
                       size="large"
@@ -269,7 +256,7 @@ function SearchGrade() {
                       back
                     </Button>
                   </Grid>
-                  <Grid item xs={6}></Grid>
+                  <Grid item xs={8}></Grid>
                 </Grid>
               </Box>
             </Box>
