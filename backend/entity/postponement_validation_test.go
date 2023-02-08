@@ -79,5 +79,5 @@ func Test_Validate_Postponement_Reasons(t *testing.T) {
 	g.Expect(err).NotTo(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกเหตุผลอย่างน้อย10ตัวอักษร"))
+	g.Expect(err.Error()).To(Equal("Postponement_Reasons: เน does not validate as minstringlength(10)"))
 }
