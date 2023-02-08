@@ -303,13 +303,13 @@ type SUGGESTION struct {
 
 type POSTPONEMENT struct {
 	gorm.Model
-	Postponement_Student_Number string
-	Postponement_Student_Name   string
+	Postponement_Student_Number string `gorm:"uniqueIndex" valid:"required,matches(^[BMD]\\d{7}$)"`
+	Postponement_Student_Name   string `valid:"required~name cannot be blank"`
 	Postponement_AcademicYear   string
 	Postponement_Gpax           string
 	Postponement_Credit         string
 	Postponement_Date           time.Time
-	Postponement_Reasons        string
+	Postponement_Reasons        string `valid:"required, minstringlength(10)~กรุณากรอกเหตุผลอย่างน้อย10ตัวอักษร"`
 
 	PrefixID    *uint
 	DegreeID    *uint
