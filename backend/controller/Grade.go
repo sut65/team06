@@ -10,7 +10,7 @@ import (
 type CreateGradePayload struct {
 	Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
 	// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
-	Grade_Supject      string `json:"Grade_Supject" `
+	Grade_Supject      string `json:"Grade_Supject" valid:"required~กรุณากรอกชื่อวิชา,maxstringlength(20)~โปรดกรอกชื่อวิชาให้ถูกต้อง"`
 	Grade_Code_Supject string `json:"Grade_Code_Supject" `
 	Grade              string `json:"Grade"`
 
@@ -23,7 +23,7 @@ type UpdateGradePayload struct {
 	ID                   uint   `json:"ID"`
 	Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
 	// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
-	Grade_Supject      string `json:"Grade_Supject" `
+	Grade_Supject      string `json:"Grade_Supject" valid:"required~กรุณากรอกชื่อวิชา,maxstringlength(20)~โปรดกรอกชื่อวิชาให้ถูกต้อง"`
 	Grade_Code_Supject string `json:"Grade_Code_Supject" `
 	Grade              string `json:"Grade"`
 
