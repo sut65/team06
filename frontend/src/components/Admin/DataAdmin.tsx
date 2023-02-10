@@ -12,7 +12,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import {
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { AdminInterface } from "../../models/IAdmin";
 import TextField from "@mui/material/TextField";
@@ -20,6 +27,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiHome } from "react-icons/hi";
 import { Adminbar } from "../Bar-Admin";
 import { BiSearchAlt } from "react-icons/bi";
+import Home from "../Home";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+
 const Theme = createTheme({
   palette: {
     primary: {
@@ -41,6 +51,17 @@ function DataAdmin() {
   const [Admintable, setAdmintable] = useState<AdminInterface[]>([]);
   const [filter, setFilter] = useState(Admintable);
   const [name, setname] = useState<string>("");
+
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+  
+  const handleClickOpenPopup = (id: string) => {
+    console.log('click');
+    
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -78,7 +99,7 @@ function DataAdmin() {
       .then((res) => {
         console.log(res);
         if (res.data) {
-          alert(`Are you sure delete id: ${id}`);
+          // alert(`Are you sure delete id: ${id}`);
           if (localStorage.getItem("Admin-id") === id) {
             console.log(id);
             localStorage.clear();
@@ -104,6 +125,17 @@ function DataAdmin() {
     setFilter(NewFilter);
   }, [Admintable, name]);
 
+  const [token, setToken] = useState<String>("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
   /////////////////////////////////////////////////////
 
   return (
@@ -201,7 +233,8 @@ function DataAdmin() {
                                 update
                               </Button>
                               <Button
-                                onClick={() => deleteAdmin(row.ID + "")}
+                                onClick={() =>
+                                  handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -214,6 +247,35 @@ function DataAdmin() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => deleteAdmin(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>
