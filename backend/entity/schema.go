@@ -186,7 +186,7 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
 	Identity_Card string `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
-	Reasons       string
+	Reasons       string `valid:"required~ลืมกรอกเหตุผลในการสมัครทุน,minstringlength(300)~เหตุผลในการสมัครทุนความยาวไม่น้อยกว่า 300 ตัวอักษร"`
 	GPAX          float32 `valid:"required~ลืมกรอกเกรดเฉลี่ย,range(0|4)~เกรดเฉลี่ยไม่ถูกต้อง"`
 
 	ScholarshipTypeID *uint
