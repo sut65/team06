@@ -64,6 +64,8 @@ function CreateScholarshipAp() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const [message, setAlertMessage] = useState("");
+
   ////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
@@ -131,15 +133,6 @@ function CreateScholarshipAp() {
 
   console.log(ScholarshipAp);
 
-  ///////////////////handle change ของ combobox////////////////////////
-  const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof ScholarshipAp;
-    setScholarshipAp({
-      ...ScholarshipAp,
-      [name]: event.target.value,
-    });
-  };
-
   //////////////////handle change ของ input field///////////////////////
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -194,13 +187,16 @@ function CreateScholarshipAp() {
     fetch(`${apiUrl}/create`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data) {
-          console.log("submit", res.data);
+          // console.log("submit", res.data);
           setSuccess(true);
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           window.location.href = "/data_scholarship_applicants";
         } else {
           setError(true);
+          setAlertMessage(res.error);
+          console.log(res.error);
         }
       });
   }
@@ -215,29 +211,31 @@ function CreateScholarshipAp() {
           outerContainerId={"outer-container"}
         />
         <div id="page-UpdateScholarshipApplicant">
-          <Box sx={{ bgcolor: "#CFD8DC", height: "300vh" }}>
+          <Box sx={{ bgcolor: "#CFD8DC", height: "auto" }}>
             <React.Fragment>
               <CssBaseline>
                 <Container maxWidth="lg" sx={{ padding: 2 }}>
                   <Snackbar
+                    id="success"
                     open={success}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      บันทึกข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
                   <Snackbar
+                    id="error"
                     open={error}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      บันทึกข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
@@ -249,7 +247,7 @@ function CreateScholarshipAp() {
                             color: "#039BE5",
                             fontFamily: "fantasy",
                             fontSize: 30,
-                            textAlign:"center"
+                            textAlign: "center",
                           }}
                         >
                           Apply Scholarship
@@ -268,7 +266,7 @@ function CreateScholarshipAp() {
                             id="StudentID"
                             variant="outlined"
                             value={ScholarshipAp.Student_Name}
-                            disabled
+                            inputProps={{ readOnly: true }}
                           />
                         </Grid>
 
@@ -301,9 +299,11 @@ function CreateScholarshipAp() {
                           <TextField
                             fullWidth
                             id="ScholarshipTypeID"
-                            disabled
                             value={ScholarshipType.Scholarship_Type_Name}
-                            inputProps={{ name: "ScholarshipTypeID" }}
+                            inputProps={{
+                              readOnly: true,
+                              name: "ScholarshipTypeID",
+                            }}
                           ></TextField>
                         </Grid>
 
@@ -312,9 +312,11 @@ function CreateScholarshipAp() {
                           <TextField
                             fullWidth
                             id="ScholarshipID"
-                            disabled
                             value={Scholarship.Scholarship_Name}
-                            inputProps={{ name: "ScholarshipID" }}
+                            inputProps={{
+                              readOnly: true,
+                              name: "ScholarshipID",
+                            }}
                           ></TextField>
                         </Grid>
 
@@ -322,10 +324,9 @@ function CreateScholarshipAp() {
                           <h3>สาขา</h3>
                           <Select
                             fullWidth
-                            disabled
                             id="Branch"
                             value={ScholarshipAp.BranchID + ""}
-                            inputProps={{ name: "BranchID" }}
+                            inputProps={{ readOnly: true, name: "BranchID" }}
                           >
                             {Branch.map((item) => (
                               <option key={item.ID} value={item.ID}>
@@ -339,10 +340,9 @@ function CreateScholarshipAp() {
                           <h3>สำนักวิชา</h3>
                           <Select
                             fullWidth
-                            disabled
                             id="Institute"
                             value={ScholarshipAp.InstituteID + ""}
-                            inputProps={{ name: "InstituteID" }}
+                            inputProps={{ readOnly: true, name: "InstituteID" }}
                           >
                             {Institute.map((item) => (
                               <option key={item.ID} value={item.ID}>

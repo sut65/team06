@@ -185,7 +185,7 @@ type SCHOLARSHIP struct {
 type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
-	Identity_Card string
+	Identity_Card string `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
 	Reasons       string
 	GPAX          float32
 

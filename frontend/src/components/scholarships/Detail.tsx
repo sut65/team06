@@ -78,7 +78,7 @@ function Details() {
           outerContainerId={"outer-container"}
         />
         <div id="page-AllScholarship">
-    <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
+    <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
     <Container maxWidth="lg" sx={{ padding: 2 }}>
       
       <Paper elevation={2} sx={{ paddingLeft: 5 }}>
