@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
+	"github.com/asaskevich/govalidator"
 )
 
 func CreateScholarshipAp(c *gin.Context) {
@@ -22,6 +23,7 @@ func CreateScholarshipAp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_ScholarshipAp_error": err.Error()})
 		return
 	}
+	
 
 	// : ค้นหา scholarship type ด้วย id
 	if tx := entity.DB().Where("id = ?", ScholarshipAp.ScholarshipTypeID).First(&ScholarshipType); tx.RowsAffected == 0 {
@@ -43,6 +45,12 @@ func CreateScholarshipAp(c *gin.Context) {
 	// : ค้นหา branch ด้วย id
 	if tx := entity.DB().Where("id = ?", ScholarshipAp.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
+		return
+	}
+
+	
+	if _, err := govalidator.ValidateStruct(ScholarshipAp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -84,21 +92,6 @@ func ListScholarshipApTable(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": ScholarshipAp})
 }
 
-// ดึงข้อมูล scholarship applicant by id
-func ListScholarshipApByID(c *gin.Context) {
-
-	var ScholarshipAp entity.SCHOLARSHIPAP
-	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM scholarsh_ip_aps WHERE id = ?", id).Scan(&ScholarshipAp).Error; err != nil {
-
-		c.JSON(http.StatusBadRequest, gin.H{"ListScholarshipApByID_error": err.Error()})
-
-		return
-
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": ScholarshipAp})
-}
 
 // ลบข้อมูล ScholarshipAp by id
 func DeleteScholarshipApByID(c *gin.Context) {
@@ -125,6 +118,8 @@ func UpdateScholarshipAp(c *gin.Context) {
 		return
 	}
 
+	
+	
 	// : ค้นหา scholarship type ด้วย id
 	if tx := entity.DB().Where("id = ?", ScholarshipAp.ScholarshipTypeID).First(&ScholarshipType); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ScholarshipType not found"})
@@ -145,6 +140,11 @@ func UpdateScholarshipAp(c *gin.Context) {
 	// : ค้นหา branch ด้วย id
 	if tx := entity.DB().Where("id = ?", ScholarshipAp.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(ScholarshipAp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

@@ -122,7 +122,7 @@ function UpdateScholarshipAp() {
       ScholarshipTypeID: convertType(ScholarshipAp.ScholarshipTypeID),
       ScholarshipID: convertType(ScholarshipAp.ScholarshipID),
       Identity_Card: ScholarshipAp.Identity_Card,
-      GPAX: convertType(ScholarshipAp.GPAX),
+      GPAX: parseFloat(ScholarshipAp.GPAX+""),
       Reasons: ScholarshipAp.Reasons,
     };
 
