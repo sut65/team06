@@ -142,7 +142,7 @@ type STUDENT struct {
 type BRANCH struct {
 	gorm.Model
 	Branch_Name    string `valid:"stringlength(5|50)~กรอกชื่อสาขา (ความยาวตัวอักษร 5-50 ตัวอักษร)"`
-	Branch_Teacher string
+	Branch_Teacher string `valid:"matches(^[a-zA-Z ]*$)~กรุณากรอกชื่อผู้ก่อตั้งสาขา"`
 	Branch_Info    string
 
 	PrefixID    *uint
