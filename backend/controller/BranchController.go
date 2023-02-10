@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
 )
@@ -19,6 +20,8 @@ func CreateBranch(c *gin.Context) {
 		return
 	}
 
+	
+	
 	// 8: ค้นหา institute ด้วย id
 	if tx := entity.DB().Where("id = ?", Branch.InstituteID).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
@@ -28,6 +31,15 @@ func CreateBranch(c *gin.Context) {
 	// 9: ค้นหา prefix ด้วย id
 	if tx := entity.DB().Where("id = ?", Branch.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", Branch.AdminID).First(&Admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin not found"})
+	}
+
+	if _, err := govalidator.ValidateStruct(Branch); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -105,7 +117,8 @@ func UpdateBranch(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Branch_error": err.Error()})
 		return
 	}
-
+	
+	
 	// 8: ค้นหา institute ด้วย id
 	if tx := entity.DB().Where("id = ?", Branch.InstituteID).First(&Institute); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
@@ -115,6 +128,15 @@ func UpdateBranch(c *gin.Context) {
 	// 9: ค้นหา prefix ด้วย id
 	if tx := entity.DB().Where("id = ?", Branch.PrefixID).First(&Prefix); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Prefix not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", Branch.AdminID).First(&Admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin not found"})
+	}
+	
+	if _, err := govalidator.ValidateStruct(Branch); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -137,4 +159,16 @@ func UpdateBranch(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Branch})
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// get admin by id
+func GetAdminByID(c *gin.Context) {
+
+	var Admin entity.ADMIN
+	id := c.Param("id")
+	if tx := entity.DB().Preload("Admin").Where("id = ?", id).First(&Admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Admin not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": Admin})
+}
