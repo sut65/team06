@@ -4,9 +4,9 @@ import (
 	// "fmt"
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
-	"github.com/asaskevich/govalidator"
 )
 
 type CreateDormitoryPayload struct {
@@ -65,7 +65,6 @@ func CreateDormitory(c *gin.Context) {
 		return
 	}
 
-
 	//12:สร้าง entity DORMITORY
 	Dormitory.Dormitory_Student_Number = payload_dormitory.Dormitory_Student_Number
 	Dormitory.Dormitory_AcademicYear = payload_dormitory.Dormitory_AcademicYear
@@ -100,7 +99,6 @@ func ListDormitoryTable(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": dormitory_table})
 }
 
-
 // ดึงข้อมูล Dormitory by id
 func ListDormitoryByID(c *gin.Context) {
 
@@ -126,7 +124,7 @@ func DeleteDormitoyByID(c *gin.Context) {
 }
 
 type UpdateDormitoryPayload struct {
-	ID 						 uint 	`json:"ID"`
+	ID                       uint   `json:"ID"`
 	Dormitory_Student_Number string `json:"Dormitory_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
 	Dormitory_AcademicYear   uint   `json:"Dormitory_AcademicYear" valid:"required~กรุณากรอกปีการศึกษา4หลัก, matches(^\\d{4}$)"`
 	Room_Number              uint   `json:"Room_Number" valid:"required~กรุณากรอกเลขห้องพัก4หลัก, matches(^\\d{4}$)"`

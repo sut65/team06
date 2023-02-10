@@ -662,57 +662,56 @@ func SetupDatabase() {
 
 	///////////////ข้อมูลใน entity SCHOLARSHIPTYPE///////////////////////////////
 	Scholarship1 := SCHOLARSHIP{
-		Scholarship_Name: "กยศ",
-		Scholarship_Info: "ทุน กยศ. ภาคการศึกษาที่ 2/2737",
-		Scholarship_Close:"ปิดรับสมัคร 29 มกราคม 2737",
+		Scholarship_Name:  "กยศ",
+		Scholarship_Info:  "ทุน กยศ. ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close: "ปิดรับสมัคร 29 มกราคม 2737",
 
 		ScholarshipType: ScholarshipType1,
 	}
 	db.Model(&SCHOLARSHIP{}).Create(&Scholarship1)
 
 	Scholarship2 := SCHOLARSHIP{
-		Scholarship_Name: "ปันสุข",
-		Scholarship_Info: "ทุนปันสุข ปันใจ แบ่งบัน ภาคการศึกษาที่ 2/2737",
-		Scholarship_Close:"ปิดรับสมัคร 23 มิถุนายน 2737",
-
+		Scholarship_Name:  "ปันสุข",
+		Scholarship_Info:  "ทุนปันสุข ปันใจ แบ่งบัน ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close: "ปิดรับสมัคร 23 มิถุนายน 2737",
 
 		ScholarshipType: ScholarshipType2,
 	}
 	db.Model(&SCHOLARSHIP{}).Create(&Scholarship2)
 
 	Scholarship3 := SCHOLARSHIP{
-		Scholarship_Name: "แม่ป้าข้างบ้าน",
-		Scholarship_Info: "ทุนจากคุณ\"ป้าปาขาว\" ภาคการศึกษาที่ 2/2737",
-		Scholarship_Close:"ปิดรับสมัคร 06 ธันวาคม 2737",
+		Scholarship_Name:  "แม่ป้าข้างบ้าน",
+		Scholarship_Info:  "ทุนจากคุณ\"ป้าปาขาว\" ภาคการศึกษาที่ 2/2737",
+		Scholarship_Close: "ปิดรับสมัคร 06 ธันวาคม 2737",
 
 		ScholarshipType: ScholarshipType3,
 	}
 	db.Model(&SCHOLARSHIP{}).Create(&Scholarship3)
 
-///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
+	///////////////ข้อมูลใน entity SCHOLARSHIPAP///////////////////////////////
 	ScholarshipAp1 := SCHOLARSHIPAP{
 		Identity_Card: "1134900124561",
-		Reasons:				"เนื่องจากไม่มีเงิน…",
-		GPAX:	2.34,
+		Reasons:       "เนื่องจากไม่มีเงิน…",
+		GPAX:          2.34,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship: Scholarship1,
-		Branch: Branch2,
-		Institute: Institute2,
-		Student: Student1,
+		Scholarship:     Scholarship1,
+		Branch:          Branch2,
+		Institute:       Institute2,
+		Student:         Student1,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp1)
 
 	ScholarshipAp2 := SCHOLARSHIPAP{
 		Identity_Card: "1134900124129",
-		Reasons:				"หนูต้องการทุนใน…",
-		GPAX:	2.33,
+		Reasons:       "หนูต้องการทุนใน…",
+		GPAX:          2.33,
 
 		ScholarshipType: ScholarshipType1,
-		Scholarship: Scholarship1,
-		Branch: Branch2,
-		Institute: Institute2,
-		Student: Student2,
+		Scholarship:     Scholarship1,
+		Branch:          Branch2,
+		Institute:       Institute2,
+		Student:         Student2,
 	}
 	db.Model(&SCHOLARSHIPAP{}).Create(&ScholarshipAp2)
 
@@ -844,7 +843,7 @@ func SetupDatabase() {
 		DormitoryType:            Dormitory_type1,
 		RoomType:                 Room_type2,
 		Branch:                   Branch1,
-		Admin:					  Admin1,
+		Admin:                    Admin1,
 	}
 	db.Model(&DORMITORY{}).Create(&Dormitory1)
 
@@ -856,7 +855,7 @@ func SetupDatabase() {
 		DormitoryType:            Dormitory_type2,
 		RoomType:                 Room_type2,
 		Branch:                   Branch2,
-		Admin:					  Admin1,
+		Admin:                    Admin1,
 	}
 	db.Model(&DORMITORY{}).Create(&Dormitory2)
 
@@ -869,7 +868,7 @@ func SetupDatabase() {
 		Prefix:                    Prefix1,
 		Institute:                 Institute1,
 		Branch:                    Branch1,
-		Student:            	   Student1,
+		Student:                   Student1,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion1)
 
@@ -882,7 +881,7 @@ func SetupDatabase() {
 		Prefix:                    Prefix1,
 		Institute:                 Institute2,
 		Branch:                    Branch2,
-		Student:            	   Student1,
+		Student:                   Student1,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion2)
 

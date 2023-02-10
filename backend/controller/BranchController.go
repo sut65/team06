@@ -118,7 +118,6 @@ func UpdateBranch(c *gin.Context) {
 		return
 	}
 
-	
 	update := entity.BRANCH{
 		Branch_Name:    Branch.Branch_Name,
 		Branch_Teacher: Branch.Branch_Teacher,

@@ -1,35 +1,37 @@
 package controller
 
 import (
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/asaskevich/govalidator"
 	"net/http"
 )
-type CreateAdminPayload struct{
-	Admin_Name     string	`json:"Admin_Name"`
-	Admin_Email	   string   `json:"Admin_Email"`
-	Admin_Password string   `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
-	Admin_Tel	   string   `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
-	Admin_Address  string   `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
 
-	Prefix        uint      `json:"Prefix"`
-	Gender	      uint      `json:"Gender"`
-	Province 	  uint		`json:"Province"`
-}
-type  UpdateAdminPayload struct{
-	ID uint `json:"ID"`
-	Admin_Name     string	`json:"Admin_Name"`
-	Admin_Email	   string   `json:"Admin_Email"`
-	Admin_Password string   `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
-	Admin_Tel	   string   `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
-	Admin_Address  string   `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
+type CreateAdminPayload struct {
+	Admin_Name     string `json:"Admin_Name"`
+	Admin_Email    string `json:"Admin_Email"`
+	Admin_Password string `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
+	Admin_Tel      string `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
+	Admin_Address  string `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
 
-	Prefix        uint      `json:"Prefix"`
-	Gender	      uint      `json:"Gender"`
-	Province 	  uint		`json:"Province"`
+	Prefix   uint `json:"Prefix"`
+	Gender   uint `json:"Gender"`
+	Province uint `json:"Province"`
 }
+type UpdateAdminPayload struct {
+	ID             uint   `json:"ID"`
+	Admin_Name     string `json:"Admin_Name"`
+	Admin_Email    string `json:"Admin_Email"`
+	Admin_Password string `json:"Admin_Password" valid:"minstringlength(8)~กรุณาใส่รหัสผ่านอย่างน้อย8หลัก"`
+	Admin_Tel      string `json:"Admin_Tel" valid:"matches(^\\d{10}$)~กรุณาใส่เบอร์โทรศัพท์ให้ครบ10หลัก"`
+	Admin_Address  string `json:"Admin_Address" valid:"minstringlength(20)~กรุณาใส่ที่อยู่อย่างต่ำ20ตัวอักษร"`
+
+	Prefix   uint `json:"Prefix"`
+	Gender   uint `json:"Gender"`
+	Province uint `json:"Province"`
+}
+
 // POST
 
 func CreateAdmiin(c *gin.Context) {
@@ -69,15 +71,15 @@ func CreateAdmiin(c *gin.Context) {
 	}
 
 	//12:สร้าง entity ADMIN
-	Admin.Admin_Name     =    payload.Admin_Name
-	Admin.Admin_Email    =    payload.Admin_Email
-	Admin.Admin_Password =    string(hashPassword)
-	Admin.Admin_Tel      =    payload.Admin_Tel
-	Admin.Admin_Address  =    payload.Admin_Address
+	Admin.Admin_Name = payload.Admin_Name
+	Admin.Admin_Email = payload.Admin_Email
+	Admin.Admin_Password = string(hashPassword)
+	Admin.Admin_Tel = payload.Admin_Tel
+	Admin.Admin_Address = payload.Admin_Address
 
-	Admin.Prefix   =     Prefix
-	Admin.Gender   =     Gender
-	Admin.Province =     Province
+	Admin.Prefix = Prefix
+	Admin.Gender = Gender
+	Admin.Province = Province
 
 	//13:บันทึก
 	if err := entity.DB().Create(&Admin).Error; err != nil {
@@ -168,21 +170,21 @@ func UpdateAdmin(c *gin.Context) {
 	}
 	//update entity admin
 	Admin.ID = payload.ID
-	Admin.Admin_Name     =    payload.Admin_Name
-	Admin.Admin_Email    =    payload.Admin_Email
-	Admin.Admin_Password =    string(hashPassword)
-	Admin.Admin_Tel      =    payload.Admin_Tel
-	Admin.Admin_Address  =    payload.Admin_Address
+	Admin.Admin_Name = payload.Admin_Name
+	Admin.Admin_Email = payload.Admin_Email
+	Admin.Admin_Password = string(hashPassword)
+	Admin.Admin_Tel = payload.Admin_Tel
+	Admin.Admin_Address = payload.Admin_Address
 
-	Admin.Prefix   =     Prefix
-	Admin.Gender   =     Gender
-	Admin.Province =     Province
-	
+	Admin.Prefix = Prefix
+	Admin.Gender = Gender
+	Admin.Province = Province
+
 	//update
 	if err := entity.DB().Where("id = ?", Admin.ID).Updates(&Admin).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-		
+
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Admin})
 }

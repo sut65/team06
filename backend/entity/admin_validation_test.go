@@ -11,14 +11,12 @@ import (
 func Test_Validate_Admin_Password(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	
 	admin := ADMIN{
 		Admin_Name:     "สมใจ จิตดี",
 		Admin_Email:    "Admin0001@gmail.com",
 		Admin_Password: "1234567", //ผิด
 		Admin_Tel:      "0956156705",
 		Admin_Address:  "121225fffffffffffffffffffffffffffffffff",
-
 	}
 	// ตรวจสอบด้วย govalidator
 	ok, err := govalidator.ValidateStruct(admin)
@@ -35,14 +33,12 @@ func Test_Validate_Admin_Password(t *testing.T) {
 func Test_Validate_Admin_Tel(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	
 	admin := ADMIN{
 		Admin_Name:     "สมใจ จิตดี",
 		Admin_Email:    "Admin0001@gmail.com",
 		Admin_Password: "123456789",
 		Admin_Tel:      "0956156", //ผิด
 		Admin_Address:  "121225fffffffffffffffffffffffffffffffff",
-
 	}
 	// ตรวจสอบด้วย govalidator
 	ok, err := govalidator.ValidateStruct(admin)
@@ -60,7 +56,6 @@ func Test_Validate_Admin_Tel(t *testing.T) {
 func Test_Validate_Admin_Address(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	
 	admin := ADMIN{
 		Admin_Name:     "สมใจ จิตดี",
 		Admin_Email:    "Admin0001@gmail.com",
