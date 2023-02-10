@@ -97,6 +97,8 @@ func main() {
 	r.GET("/data_branch", controller.ListBranchTable)
 	// ดึงข้อมูล Branch by id
 	r.GET("/branch/:id", controller.ListBranchByID)
+	// get admin by id
+	r.GET("/branch_admin/:id", controller.GetAdminByID)
 	// แก้ไขข้อมูล branch
 	r.PATCH("/update_branch", controller.UpdateBranch)
 	// ลบข้อมูล branch by id
