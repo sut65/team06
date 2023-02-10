@@ -8,15 +8,10 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { FormControl } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Home from "../Home";
-import DataGrade from "./DataGrade";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -62,7 +57,10 @@ function UpdateGrade() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -149,7 +147,10 @@ function UpdateGrade() {
 
     const requestOptions = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
 
@@ -158,7 +159,7 @@ function UpdateGrade() {
       .then((res) => {
         console.log(res);
         if (res.data) {
-          setAlertMessage("อัพเดทข้อมูลสำเร็จ")
+          setAlertMessage("อัพเดทข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataGrade";
@@ -217,7 +218,7 @@ function UpdateGrade() {
               </Container>
               <Container maxWidth="lg" sx={{ marginTop: 1 }}>
                 <Paper sx={{ padding: 2 }}>
-                  <Box sx = {{mt : 2 ,}}>
+                  <Box sx={{ mt: 2 }}>
                     <Snackbar
                       id="success"
                       open={success}
@@ -237,7 +238,7 @@ function UpdateGrade() {
                       anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
                       <Alert onClose={handleClose} severity="error">
-                      {message}
+                        {message}
                       </Alert>
                     </Snackbar>
                     <Box sx={{ flexGrow: 1 }}>

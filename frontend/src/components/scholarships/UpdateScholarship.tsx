@@ -61,7 +61,10 @@ function UpdateScholarshipAp() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
   const fetchStudentByID = async () => {
@@ -227,7 +230,6 @@ function UpdateScholarshipAp() {
                           <h3>เลขประจำตัวประชาชน 13 หลัก</h3>
                           <TextField
                             fullWidth
-                            
                             id="Identity_Card"
                             variant="outlined"
                             inputProps={{ maxLength: 13 }}
@@ -240,7 +242,6 @@ function UpdateScholarshipAp() {
                           <h3>เกรดเฉลี่ยสะสม (GPAX)</h3>
                           <TextField
                             fullWidth
-                            
                             id="GPAX"
                             inputProps={{ maxLength: 4 }}
                             variant="outlined"
@@ -304,7 +305,6 @@ function UpdateScholarshipAp() {
                           </h3>
                           <TextField
                             fullWidth
-                            
                             id="Reasons"
                             variant="outlined"
                             multiline

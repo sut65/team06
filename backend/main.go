@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/controller"
 	"github.com/sut65/team06/entity"
+	"github.com/sut65/team06/middlewares"
 )
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -35,208 +36,216 @@ func main() {
 	r.POST("/Student_Login", controller.Student_Login)
 
 	/////////////////////////////////////////////////////////////
+	router := r.Group("/")
+	{
+		router.Use(middlewares.Authorizes())
+		{
 
-	//combobox Institute
-	r.GET("/institute", controller.ListInstitute)
-	//combobox Branch
-	r.GET("/branch", controller.ListBranch)
-	//combobox Course
-	r.GET("/course", controller.ListCourse)
-	//combobox Degree
-	r.GET("/degree", controller.ListDegree)
-	//combobox Prefix
-	r.GET("/prefix", controller.ListPrefix)
-	//combobox Gender
-	r.GET("/gender", controller.ListGender)
-	//combobox Province
-	r.GET("/province", controller.ListProvince)
-	//combobox ActivityType
-	r.GET("/activityType", controller.ListActivityType)
-	//combobox Trimester
-	r.GET("/trimester", controller.ListTrimester)
-	//combobx dormitorytype
-	r.GET("/dormitorytype", controller.ListDormitoryType)
-	//combobx roomtype
-	r.GET("/roomtype", controller.ListRoomType)
-	//list all Scholarship ให้ all_sholarship
-	r.GET("/scholarship", controller.ListScholarship)
-	//combobox Scholarship type
-	r.GET("/scholarship_type", controller.ListScholarshipType)
+			//combobox Institute
+			router.GET("/institute", controller.ListInstitute)
+			//combobox Branch
+			router.GET("/branch", controller.ListBranch)
+			//combobox Course
+			router.GET("/course", controller.ListCourse)
+			//combobox Degree
+			router.GET("/degree", controller.ListDegree)
+			//combobox Prefix
+			router.GET("/prefix", controller.ListPrefix)
+			//combobox Gender
+			router.GET("/gender", controller.ListGender)
+			//combobox Province
+			router.GET("/province", controller.ListProvince)
+			//combobox ActivityType
+			router.GET("/activityType", controller.ListActivityType)
+			//combobox Trimester
+			router.GET("/trimester", controller.ListTrimester)
+			//combobx dormitorytype
+			router.GET("/dormitorytype", controller.ListDormitoryType)
+			//combobx roomtype
+			router.GET("/roomtype", controller.ListRoomType)
+			//list all Scholarship ให้ all_sholarship
+			router.GET("/scholarship", controller.ListScholarship)
+			//combobox Scholarship type
+			router.GET("/scholarship_type", controller.ListScholarshipType)
 
-	/////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////
 
-	//รับข้อมูลเข้าตาราง Student
-	r.POST("/create_Student", controller.CreateStudent)
-	//แสดงข้อมูลตาราง Student
-	r.GET("/student_table", controller.ListStudentTable)
-	// ดึงข้อมูล student by id
-	r.GET("/student/:id", controller.ListStudentByID)
-	// แก้ไขข้อมูล student
-	r.PATCH("/update_student", controller.UpdateStudent)
-	// ลบข้อมูล student by id
-	r.DELETE("/delete_student/:id", controller.DeleteStudentByID)
+			//รับข้อมูลเข้าตาราง Student
+			router.POST("/create_Student", controller.CreateStudent)
+			//แสดงข้อมูลตาราง Student
+			router.GET("/student_table", controller.ListStudentTable)
+			// ดึงข้อมูล student by id
+			router.GET("/student/:id", controller.ListStudentByID)
+			// แก้ไขข้อมูล student
+			router.PATCH("/update_student", controller.UpdateStudent)
+			// ลบข้อมูล student by id
+			router.DELETE("/delete_student/:id", controller.DeleteStudentByID)
 
-	/////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////
 
-	//รับข้อมูลเข้าตาราง Admin
-	r.POST("/create_Admin", controller.CreateAdmiin)
-	//แสดงข้อมูลตาราง Admin
-	r.GET("/admin_table", controller.ListAdminTable)
-	// ดึงข้อมูล admin by id
-	r.GET("/admin/:id", controller.ListAdminByID)
-	// แก้ไขข้อมูล admin
-	r.PATCH("/update_admin", controller.UpdateAdmin)
-	// ลบข้อมูล admin by id
-	r.DELETE("/delete_admin/:id", controller.DeleteAdminByID)
+			//รับข้อมูลเข้าตาราง Admin
+			router.POST("/create_Admin", controller.CreateAdmiin)
+			//แสดงข้อมูลตาราง Admin
+			router.GET("/admin_table", controller.ListAdminTable)
+			// ดึงข้อมูล admin by id
+			router.GET("/admin/:id", controller.ListAdminByID)
+			// แก้ไขข้อมูล admin
+			router.PATCH("/update_admin", controller.UpdateAdmin)
+			// ลบข้อมูล admin by id
+			router.DELETE("/delete_admin/:id", controller.DeleteAdminByID)
 
-	/////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////
 
-	//รับข้อมูลเข้าตาราง Branch
-	r.POST("/create_branch", controller.CreateBranch)
-	//แสดงข้อมูลตาราง Branch
-	r.GET("/data_branch", controller.ListBranchTable)
-	// ดึงข้อมูล Branch by id
-	r.GET("/branch/:id", controller.ListBranchByID)
-	// แก้ไขข้อมูล branch
-	r.PATCH("/update_branch", controller.UpdateBranch)
-	// ลบข้อมูล branch by id
-	r.DELETE("/delete_branch/:id", controller.DeleteBranchByID)
+			//รับข้อมูลเข้าตาราง Branch
+			router.POST("/create_branch", controller.CreateBranch)
+			//แสดงข้อมูลตาราง Branch
+			router.GET("/data_branch", controller.ListBranchTable)
+			// ดึงข้อมูล Branch by id
+			router.GET("/branch/:id", controller.ListBranchByID)
+			// แก้ไขข้อมูล branch
+			router.PATCH("/update_branch", controller.UpdateBranch)
+			// ลบข้อมูล branch by id
+			router.DELETE("/delete_branch/:id", controller.DeleteBranchByID)
+			// get admin by id
+			router.GET("/branch_admin/:id", controller.GetAdminByID)
 
-	/////////////////////////////////////////////////////////////
 
-	//รับข้อมูลเข้าตาราง Course
-	r.POST("/create_course", controller.CreateCourse)
-	//แสดงข้อมูลตาราง Course
-	r.GET("/course_table", controller.ListCourseTable)
-	// ดึงข้อมูล course by id
-	r.GET("/course/:id", controller.ListCourseByID)
-	// แก้ไขข้อมูล course
-	r.PATCH("/update_course", controller.UpdateCourse)
-	// ลบข้อมูล course by id
-	r.DELETE("/delete_course/:id", controller.DeleteCourseByID)
+			/////////////////////////////////////////////////////////////
 
-	/////////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง scholarship applicant
-	r.POST("/create", controller.CreateScholarshipAp)
-	//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
-	r.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
-	//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
-	r.GET("/ListScholarshipApBySID/:id", controller.ListScholarshipApBySID)
+			//รับข้อมูลเข้าตาราง Course
+			router.POST("/create_course", controller.CreateCourse)
+			//แสดงข้อมูลตาราง Course
+			router.GET("/course_table", controller.ListCourseTable)
+			// ดึงข้อมูล course by id
+			router.GET("/course/:id", controller.ListCourseByID)
+			// แก้ไขข้อมูล course
+			router.PATCH("/update_course", controller.UpdateCourse)
+			// ลบข้อมูล course by id
+			router.DELETE("/delete_course/:id", controller.DeleteCourseByID)
 
-	// แก้ไขข้อมูล scholarship applicants
-	r.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
-	// ลบข้อมูล scholarship applicants by id
-	r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
+			/////////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง scholarship applicant
+			router.POST("/create", controller.CreateScholarshipAp)
+			//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
+			router.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
+			//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
+			router.GET("/ListScholarshipApBySID/:id", controller.ListScholarshipApBySID)
 
-	/// ดึงข้อมูล scholarships by id ใช้ในหน้า all scholarship
-	r.GET("/scholarship/:id", controller.ListScholarshipByID)
-	/// ดึงข้อมูล scholarship type by id ใช้ในหน้า all scholarship
-	r.GET("/scholarship_type/:id", controller.ListScholarshipTypeByID)
-	/// ดึงข้อมูล applicant by id ใช้ในหน้า update scholarship applicant
-	r.GET("/applicant/:id", controller.GetApplicantByID)
-	/// ดึงข้อมูล student by id ใช้ในหน้า create scholarship applicant
-	r.GET("/scholarship_student/:id", controller.GetStudentByID)
+			// แก้ไขข้อมูล scholarship applicants
+			router.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
+			// ลบข้อมูล scholarship applicants by id
+			router.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
-	/////////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง Grade
-	r.POST("/create_Grade", controller.CreateGrade)
-	//แสดงข้อมูลตารางGrade
-	r.GET("/grade_table", controller.ListGradeTable)
-	// ดึงข้อมูล Grade by id
-	r.GET("/grade/:id", controller.ListGradeByID)
-	// แก้ไขข้อมูล Grade
-	r.PATCH("/update_grade", controller.UpdateGrade)
-	// ลบข้อมูล Grade by id
-	r.DELETE("/delete_Grade/:id", controller.DeleteGradeByID)
+			/// ดึงข้อมูล scholarships by id ใช้ในหน้า all scholarship
+			router.GET("/scholarship/:id", controller.ListScholarshipByID)
+			/// ดึงข้อมูล scholarship type by id ใช้ในหน้า all scholarship
+			router.GET("/scholarship_type/:id", controller.ListScholarshipTypeByID)
+			/// ดึงข้อมูล applicant by id ใช้ในหน้า update scholarship applicant
+			router.GET("/applicant/:id", controller.GetApplicantByID)
+			/// ดึงข้อมูล student by id ใช้ในหน้า create scholarship applicant
+			router.GET("/scholarship_student/:id", controller.GetStudentByID)
 
-	/////////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง Activity
-	r.POST("/create_Activity", controller.CreateActivity)
-	//แสดงข้อมูลตาราง Activity
-	r.GET("/activity_table", controller.ListActivityTable)
-	// ดึงข้อมูล Activity by id
-	r.GET("/activity/:id", controller.ListActivityByID)
-	// แก้ไขข้อมูล Activity
-	r.PATCH("/update_activity", controller.UpdateActivity)
-	// ลบข้อมูล Activity by id
-	r.DELETE("/delete_activity/:id", controller.DeleteActivityByID)
+			/////////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง Grade
+			router.POST("/create_Grade", controller.CreateGrade)
+			//แสดงข้อมูลตารางGrade
+			router.GET("/grade_table", controller.ListGradeTable)
+			// ดึงข้อมูล Grade by id
+			router.GET("/grade/:id", controller.ListGradeByID)
+			// แก้ไขข้อมูล Grade
+			router.PATCH("/update_grade", controller.UpdateGrade)
+			// ลบข้อมูล Grade by id
+			router.DELETE("/delete_Grade/:id", controller.DeleteGradeByID)
 
-	///////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง Dormitory
-	r.POST("/dormitory", controller.CreateDormitory)
-	//แสดงข้อมูลตาราง Dormitory
-	r.GET("/dormitory_table", controller.ListDormitoryTable)
-	// ดึงข้อมูล dormitory by id
-	r.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
-	// แก้ไขข้อมูล Dormitory
-	r.PATCH("/update_dormitory", controller.UpdateDormitory)
-	// ลบข้อมูล Dormitory by id
-	r.DELETE("/delete_dormitoty/:id", controller.DeleteDormitoyByID)
+			/////////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง Activity
+			router.POST("/create_Activity", controller.CreateActivity)
+			//แสดงข้อมูลตาราง Activity
+			router.GET("/activity_table", controller.ListActivityTable)
+			// ดึงข้อมูล Activity by id
+			router.GET("/activity/:id", controller.ListActivityByID)
+			// แก้ไขข้อมูล Activity
+			router.PATCH("/update_activity", controller.UpdateActivity)
+			// ลบข้อมูล Activity by id
+			router.DELETE("/delete_activity/:id", controller.DeleteActivityByID)
 
-	///////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง Suggestion
-	r.POST("/suggestion", controller.CreatSuggestion)
-	//แสดงข้อมูลตาราง Suggestion
-	r.GET("/suggestion_table", controller.ListSuggestionTable)
-	// ดึงข้อมูล Suggestion by id
-	r.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
-	// แก้ไขข้อมูล Suggestion
-	r.PATCH("/update_suggestion", controller.UpdateSuggestion)
-	// ลบข้อมูล Suggestion by id
-	r.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
+			///////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง Dormitory
+			router.POST("/dormitory", controller.CreateDormitory)
+			//แสดงข้อมูลตาราง Dormitory
+			router.GET("/dormitory_table", controller.ListDormitoryTable)
+			// ดึงข้อมูล dormitory by id
+			router.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
+			// แก้ไขข้อมูล Dormitory
+			router.PATCH("/update_dormitory", controller.UpdateDormitory)
+			// ลบข้อมูล Dormitory by id
+			router.DELETE("/delete_dormitoty/:id", controller.DeleteDormitoyByID)
 
-	///////////////////////////////////////////////////////////
-	//รับข้อมูลเข้าตาราง Postponement
-	r.POST("/create_Postponement", controller.CreatePostponement)
-	//แสดงข้อมูลตาราง Postponement
-	r.GET("/postponement_table", controller.ListPostponementTable)
-	// ดึงข้อมูล Postponement by id
-	r.GET("/postponement/:id", controller.ListPostponementByID)
-	// แก้ไขข้อมูล Postponement
-	r.PATCH("/update_postponement", controller.UpdatePostponement)
-	// ลบข้อมูล Postponement by id
-	r.DELETE("/delete_postponementadmin/:id", controller.DeletePostponementByID)
+			///////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง Suggestion
+			router.POST("/suggestion", controller.CreatSuggestion)
+			//แสดงข้อมูลตาราง Suggestion
+			router.GET("/suggestion_table", controller.ListSuggestionTable)
+			// ดึงข้อมูล Suggestion by id
+			router.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
+			// แก้ไขข้อมูล Suggestion
+			router.PATCH("/update_suggestion", controller.UpdateSuggestion)
+			// ลบข้อมูล Suggestion by id
+			router.DELETE("/delete_suggestion/:id", controller.DeleteSuggestionByID)
 
-	//////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////
+			//รับข้อมูลเข้าตาราง Postponement
+			router.POST("/create_Postponement", controller.CreatePostponement)
+			//แสดงข้อมูลตาราง Postponement
+			router.GET("/postponement_table", controller.ListPostponementTable)
+			// ดึงข้อมูล Postponement by id
+			router.GET("/postponement/:id", controller.ListPostponementByID)
+			// แก้ไขข้อมูล Postponement
+			router.PATCH("/update_postponement", controller.UpdatePostponement)
+			// ลบข้อมูล Postponement by id
+			router.DELETE("/delete_postponementadmin/:id", controller.DeletePostponementByID)
 
-	//DisciplineType
-	r.POST("/CreateDisciplineType", controller.CreateDisciplineType)
-	r.GET("/GetDisciplineType/:id", controller.GetDisciplineType)
-	r.GET("/ListDisciplineType", controller.ListDisciplineType)
-	r.DELETE("/DeleteDisciplineType/:id", controller.DeleteDisciplineType)
-	r.PATCH("/UpdateDisciplineType", controller.UpdateDisciplineType)
+			//////////////////////////////////////////////////////////////////
 
-	//Discipline
-	r.POST("/CreateDiscipline", controller.CreateDiscipline)
-	r.GET("/GetDiscipline/:id", controller.GetDiscipline)
-	r.GET("/ListDiscipline", controller.ListDiscipline)
-	r.DELETE("/DeleteDiscipline/:id", controller.DeleteDiscipline)
-	r.PATCH("/UpdateDiscipline", controller.UpdateDiscipline)
+			//DisciplineType
+			router.POST("/CreateDisciplineType", controller.CreateDisciplineType)
+			router.GET("/GetDisciplineType/:id", controller.GetDisciplineType)
+			router.GET("/ListDisciplineType", controller.ListDisciplineType)
+			router.DELETE("/DeleteDisciplineType/:id", controller.DeleteDisciplineType)
+			router.PATCH("/UpdateDisciplineType", controller.UpdateDisciplineType)
 
-	//////////////////////////////////////////////////////////////////
+			//Discipline
+			router.POST("/CreateDiscipline", controller.CreateDiscipline)
+			router.GET("/GetDiscipline/:id", controller.GetDiscipline)
+			router.GET("/ListDiscipline", controller.ListDiscipline)
+			router.DELETE("/DeleteDiscipline/:id", controller.DeleteDiscipline)
+			router.PATCH("/UpdateDiscipline", controller.UpdateDiscipline)
 
-	//PetitionType
-	r.POST("/CreatePetitionType", controller.CreatePetitionType)
-	r.GET("/ListPetitionType", controller.ListPetitionType)
-	r.GET("/GetPetitionType/:id", controller.GetPetitionType)
-	r.PATCH("/UpdatePetitionType", controller.UpdatePetitionType)
-	r.DELETE("/DeletePetitionType/:id", controller.DeletePetitionType)
+			//////////////////////////////////////////////////////////////////
 
-	//PetitionPeriod
-	r.POST("/CreatePetitionPeriod", controller.CreatePetitionPeriod)
-	r.GET("/ListPetitionPeriod", controller.ListPetitionPeriod)
-	r.GET("/GetPetitionPeriod/:id", controller.GetPetitionPeriod)
-	r.PATCH("/UpdatePetitionPeriod", controller.UpdatePetitionPeriod)
-	r.DELETE("/DeletePetitionPeriod/:id", controller.DeletePetitionPeriod)
+			//PetitionType
+			router.POST("/CreatePetitionType", controller.CreatePetitionType)
+			router.GET("/ListPetitionType", controller.ListPetitionType)
+			router.GET("/GetPetitionType/:id", controller.GetPetitionType)
+			router.PATCH("/UpdatePetitionType", controller.UpdatePetitionType)
+			router.DELETE("/DeletePetitionType/:id", controller.DeletePetitionType)
 
-	//Petition
-	r.POST("/CreatePetition", controller.CreatePetition)
-	r.GET("/ListPetition", controller.ListPetition)
-	r.GET("/GetPetition/:id", controller.GetPetition)
-	r.PATCH("/UpdatePetition", controller.UpdatePetition)
-	r.DELETE("/DeletePetition/:id", controller.DeletePetition)
+			//PetitionPeriod
+			router.POST("/CreatePetitionPeriod", controller.CreatePetitionPeriod)
+			router.GET("/ListPetitionPeriod", controller.ListPetitionPeriod)
+			router.GET("/GetPetitionPeriod/:id", controller.GetPetitionPeriod)
+			router.PATCH("/UpdatePetitionPeriod", controller.UpdatePetitionPeriod)
+			router.DELETE("/DeletePetitionPeriod/:id", controller.DeletePetitionPeriod)
 
-	/////////////////////////////////////////////////////////////
+			//Petition
+			router.POST("/CreatePetition", controller.CreatePetition)
+			router.GET("/ListPetition", controller.ListPetition)
+			router.GET("/GetPetition/:id", controller.GetPetition)
+			router.PATCH("/UpdatePetition", controller.UpdatePetition)
+			router.DELETE("/DeletePetition/:id", controller.DeletePetition)
 
+			/////////////////////////////////////////////////////////////
+		}
+	}
 	r.Run()
 }

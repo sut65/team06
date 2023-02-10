@@ -52,7 +52,10 @@ function DataStudent() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////////////////////////////////////////
 
@@ -70,7 +73,10 @@ function DataStudent() {
     console.log(id);
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     };
 
     fetch(`${apiUrl}/delete_student/${id}`, requestOptions)
@@ -80,9 +86,13 @@ function DataStudent() {
         if (res.data) {
           // setSuccess(true);
           alert(`Are you sure delete id: ${id}`);
-          setTimeout(() => {
-            window.location.href = "/DataStudent";
-          }, 500);
+          if (localStorage.getItem("Student-id") === id) {
+            console.log(id);
+            localStorage.clear();
+            window.location.href = "/";
+          } else {
+            window.location.reload();
+          }
         } else {
           // setError(true);
         }

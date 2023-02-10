@@ -17,7 +17,6 @@ import { ButtonGroup } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
 import Home from "../Home";
 
@@ -52,7 +51,10 @@ function DataCourse() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////////////////////////////////////////
 
@@ -70,7 +72,10 @@ function DataCourse() {
     console.log(id);
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     };
 
     fetch(`${apiUrl}/delete_course/${id}`, requestOptions)

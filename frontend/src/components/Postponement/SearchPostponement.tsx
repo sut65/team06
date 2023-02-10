@@ -57,7 +57,7 @@ function SearchPostponement() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  
+
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -68,7 +68,10 @@ function SearchPostponement() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -132,7 +135,8 @@ function SearchPostponement() {
   ) => {
     if (reason === "clickaway") {
       return;
-    }}
+    }
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof postponement;
@@ -164,55 +168,6 @@ function SearchPostponement() {
 
   /////////////////////////////////////////////////////
 
-  const convertType = (data: string | number | undefined) => {
-    let val = typeof data === "string" ? parseInt(data) : data;
-    return val;
-  };
-
-  //ตัวรับข้อมูลเข้าตาราง
-  function update() {
-    let newdata = {
-      ID: convertType(id),
-      DegreeID: convertType(postponement.DegreeID),
-      PrefixID: convertType(postponement.PrefixID),
-      InstituteID: convertType(postponement.InstituteID),
-      TrimesterID: convertType(postponement.TrimesterID),
-      BranchID: convertType(postponement.BranchID),
-
-      Postponement_Student_Number: postponement.Postponement_Student_Number,
-      Postponement_Student_Name: postponement.Postponement_Student_Name,
-      Postponement_AcademicYear: postponement.Postponement_AcademicYear,
-      Postponement_Gpax: postponement.Postponement_Gpax,
-      Postponement_Credit: postponement.Postponement_Credit,
-      Postponement_Date: Postponement_Date,
-      Postponement_Reasons: postponement.Postponement_Reasons,
-    };
-
-    console.log("newdata", newdata);
-
-    const requestOptions = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newdata),
-    };
-
-    fetch(`${apiUrl}/update_postponement`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log("update",res);
-        if (res.data) {
-          setSuccess(true);
-          setTimeout(() => {
-            // window.location.href = "/DataPostponement";
-          }, 500);
-        } else {
-          setError(true);
-        }
-      });
-  }
-
-  /////////////////////////////////////////////////////
-
   const [token, setToken] = useState<String>("");
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -227,288 +182,290 @@ function SearchPostponement() {
   ///////////////////////////////////////////////////////
   return (
     <div className="SearchPostponement" id="outer-container">
-    <ThemeProvider theme={Theme}>
+      <ThemeProvider theme={Theme}>
         <Studentbar
-      pageWrapId={"page-SearchPostponement"}
-      outerContainerId={"outer-container"}
-    />
-    <div id="page-SearchStudent">
-      <React.Fragment>
-      <Box sx={{ backgroundColor: "#313131", height: "200vh" }}>
-        <CssBaseline />
-        <Container maxWidth="lg" sx={{ padding: 2 }}>
-          <Paper sx={{ padding: 2 }}>
-            <Box display={"flex"}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h4" gutterBottom>
-                <Button
-                        color="inherit"
-                        component={RouterLink}
-                        to="/DataPostponement"
-                      >
-                        <FiArrowLeft size="30" />
-                      </Button>
-                      Search Postponement
-                </Typography>
-              </Box>
+          pageWrapId={"page-SearchPostponement"}
+          outerContainerId={"outer-container"}
+        />
+        <div id="page-SearchStudent">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "200vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg" sx={{ padding: 2 }}>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography variant="h4" gutterBottom>
+                        <Button
+                          color="inherit"
+                          component={RouterLink}
+                          to="/DataPostponement"
+                        >
+                          <FiArrowLeft size="30" />
+                        </Button>
+                        Search Postponement
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Snackbar
+                  open={success}
+                  autoHideDuration={3000}
+                  onClose={handleClose}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    อัพเดทข้อมูลสำเร็จ
+                  </Alert>
+                </Snackbar>
+                <Snackbar
+                  open={error}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert onClose={handleClose} severity="error">
+                    อัพเดทข้อมูลไม่สำเร็จ
+                  </Alert>
+                </Snackbar>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>ยื่นคำร้องขอผ่อนผันค่าธรรมเนียมการศึกษา</h4>
+                          <hr />
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>รหัสนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_Student_Number"
+                            type="string"
+                            variant="outlined"
+                            name="Postponement_Student_Number"
+                            disabled
+                            value={postponement.Postponement_Student_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={2}>
+                          <p>คำนำหน้า </p>
+                          <Select
+                            fullWidth
+                            id="Prefix"
+                            onChange={handleChange}
+                            native
+                            disabled
+                            value={postponement.PrefixID + ""}
+                            inputProps={{ name: "PrefixID" }}
+                          >
+                            <option aria-label="None" value="">
+                              คำนำหน้า
+                            </option>
+                            {prefix.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Prefix_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>ชื่อ-สกุล</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_Student_Name"
+                            type="string"
+                            variant="outlined"
+                            disabled
+                            name="Postponement_Student_Name"
+                            value={postponement.Postponement_Student_Name}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <p>ระดับการศึกษา</p>
+                          <Select
+                            fullWidth
+                            id="Degree"
+                            onChange={handleChange}
+                            native
+                            disabled
+                            value={postponement.DegreeID + ""}
+                            inputProps={{ name: "DegreeID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ระดับการศึกษา
+                            </option>
+                            {degree.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Degree_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <p>ภาคเรียน</p>
+                          <Select
+                            fullWidth
+                            id="Trimester"
+                            onChange={handleChange}
+                            native
+                            disabled
+                            value={postponement.TrimesterID + ""}
+                            inputProps={{ name: "TrimesterID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ภาคเรียน
+                            </option>
+                            {trimester.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Trimester_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <p>ปีการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_AcademicYear"
+                            type="string"
+                            variant="outlined"
+                            name="Postponement_AcademicYear"
+                            disabled
+                            value={postponement.Postponement_AcademicYear}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={9}></Grid>
+                        <Grid item xs={4}>
+                          <p>สำนักวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Institute"
+                            onChange={handleChange}
+                            native
+                            disabled
+                            value={postponement.InstituteID + ""}
+                            inputProps={{ name: "InstituteID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สำนักวิชา
+                            </option>
+                            {institute.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Institute_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>สาขาวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Branch"
+                            onChange={handleChange}
+                            native
+                            disabled
+                            value={postponement.BranchID + ""}
+                            inputProps={{ name: "BranchID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สาขาวิชา
+                            </option>
+                            {branch.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Branch_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={6}>
+                          <p>เกรดเฉลี่ยสะสม</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_Gpax"
+                            type="number"
+                            variant="outlined"
+                            name="Postponement_Gpax"
+                            disabled
+                            value={postponement.Postponement_Gpax}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <p>จำนวนหน่วยกิต</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_Credit"
+                            type="number"
+                            variant="outlined"
+                            name="Postponement_Credit"
+                            disabled
+                            value={postponement.Postponement_Credit}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <FormControl fullWidth variant="outlined">
+                            <p>เวลาที่ต้องการขอผ่อนผัน</p>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DatePicker
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
+                                disabled
+                                value={Postponement_Date}
+                                onChange={setPostponement_Date}
+                              />
+                            </LocalizationProvider>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <p>สาเหตุ</p>
+                          <TextField
+                            fullWidth
+                            id="Postponement_Reasons"
+                            type="string"
+                            variant="outlined"
+                            name="Postponement_Reasons"
+                            disabled
+                            value={postponement.Postponement_Reasons}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="secondary"
+                            component={RouterLink}
+                            to="/DataPostponement"
+                          >
+                            back
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
             </Box>
-          </Paper>
-        </Container>
-        <Container maxWidth="lg">
-        <Snackbar
-              open={success}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                อัพเดทข้อมูลสำเร็จ
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              open={error}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="error">
-                อัพเดทข้อมูลไม่สำเร็จ
-              </Alert>
-            </Snackbar>          
-          <Paper sx={{ padding: 2 }}>
-            <Box display={"flex"}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <h4>ยื่นคำร้องขอผ่อนผันค่าธรรมเนียมการศึกษา</h4>
-                    <hr />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>รหัสนักศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_Student_Number"
-                      type="string"
-                      variant="outlined"
-                      name="Postponement_Student_Number"                     
-                      disabled
-                      value={postponement.Postponement_Student_Number}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={2}>
-                    <p>คำนำหน้า </p>
-                    <Select
-                      fullWidth
-                      id="Prefix"
-                      onChange={handleChange}
-                      native
-                      disabled
-                      value={postponement.PrefixID + ""}
-                      inputProps={{ name: "PrefixID" }}
-                    >
-                      <option aria-label="None" value="">
-                        คำนำหน้า
-                      </option>
-                      {prefix.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Prefix_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>ชื่อ-สกุล</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_Student_Name"
-                      type="string"
-                      variant="outlined"
-                      disabled
-                      name="Postponement_Student_Name"
-                      value={postponement.Postponement_Student_Name}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={3}>
-                    <p>ระดับการศึกษา</p>
-                    <Select
-                      fullWidth
-                      id="Degree"
-                      onChange={handleChange}
-                      native
-                      disabled
-                      value={postponement.DegreeID + ""}
-                      inputProps={{ name: "DegreeID" }}
-                    >
-                      <option aria-label="None" value="">
-                        ระดับการศึกษา
-                      </option>
-                      {degree.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Degree_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <p>ภาคเรียน</p>
-                    <Select
-                      fullWidth
-                      id="Trimester"
-                      onChange={handleChange}
-                      native
-                      disabled
-                      value={postponement.TrimesterID + ""}
-                      inputProps={{ name: "TrimesterID" }}
-                    >
-                      <option aria-label="None" value="">
-                        ภาคเรียน
-                      </option>
-                      {trimester.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Trimester_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={3}>
-                    <p>ปีการศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_AcademicYear"
-                      type="string"
-                      variant="outlined"
-                      name="Postponement_AcademicYear"
-                      disabled
-                      value={postponement.Postponement_AcademicYear}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={9}></Grid>
-                  <Grid item xs={4}>
-                    <p>สำนักวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Institute"
-                      onChange={handleChange}
-                      native
-                      disabled
-                      value={postponement.InstituteID + ""}
-                      inputProps={{ name: "InstituteID" }}
-                    >
-                      <option aria-label="None" value="">
-                        สำนักวิชา
-                      </option>
-                      {institute.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Institute_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>สาขาวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Branch"
-                      onChange={handleChange}
-                      native
-                      disabled
-                      value={postponement.BranchID + ""}
-                      inputProps={{ name: "BranchID" }}
-                    >
-                      <option aria-label="None" value="">
-                        สาขาวิชา
-                      </option>
-                      {branch.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Branch_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={3}></Grid>
-                  <Grid item xs={6}>
-                    <p>เกรดเฉลี่ยสะสม</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_Gpax"
-                      type="number"
-                      variant="outlined"
-                      name="Postponement_Gpax"
-                      disabled
-                      value={postponement.Postponement_Gpax}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
-                    <p>จำนวนหน่วยกิต</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_Credit"
-                      type="number"
-                      variant="outlined"
-                      name="Postponement_Credit"
-                      disabled
-                      value={postponement.Postponement_Credit}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>เวลาที่ต้องการขอผ่อนผัน</p>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                          renderInput={(params) => <TextField {...params} />}
-                          disabled
-                          value={Postponement_Date}
-                          onChange={setPostponement_Date}
-                        />
-                      </LocalizationProvider>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={6}>
-                    <p>สาเหตุ</p>
-                    <TextField
-                      fullWidth
-                      id="Postponement_Reasons"
-                      type="string"
-                      variant="outlined"
-                      name="Postponement_Reasons"
-                      disabled
-                      value={postponement.Postponement_Reasons}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                  <Grid item xs={3}>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="secondary"
-                      component={RouterLink}
-                      to="/DataPostponement"
-                    >
-                      back
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                </Grid>
-              </Box>
-            </Box>
-          </Paper>
-        </Container>
-        </Box>
-      </React.Fragment>
-      </div>
+          </React.Fragment>
+        </div>
       </ThemeProvider>
     </div>
   );

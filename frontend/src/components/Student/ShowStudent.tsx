@@ -54,8 +54,11 @@ function ShowStudent() {
   const [gender, setGender] = useState<GenderInterface[]>([]);
   const [province, setProvince] = useState<ProvinceInterface[]>([]);
 
-  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(new Date());
-  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] = useState<Date | null>(new Date());
+  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(
+    new Date()
+  );
+  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] =
+    useState<Date | null>(new Date());
 
   const [student, setStudent] = useState<Partial<StudentInterface>>({});
 
@@ -66,7 +69,10 @@ function ShowStudent() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -74,7 +80,7 @@ function ShowStudent() {
     let res = await GetStudentByID();
     student.AdminID = res.ID;
     if (res) {
-        setStudent(res);
+      setStudent(res);
     }
   };
 
@@ -290,15 +296,15 @@ function ShowStudent() {
                           <FormControl fullWidth variant="outlined">
                             <p>วัน/เดือน/ปี เกิด</p>
                             <TextField
-                            fullWidth
-                            id="Student_Birthday"
-                            type="string"
-                            variant="outlined"
-                            name="Student_Birthday"
-                            disabled
-                            value={student.Student_Birthday}
-                            onChange={handleInputChange}
-                          />
+                              fullWidth
+                              id="Student_Birthday"
+                              type="string"
+                              variant="outlined"
+                              name="Student_Birthday"
+                              disabled
+                              value={student.Student_Birthday}
+                              onChange={handleInputChange}
+                            />
                           </FormControl>
                         </Grid>
                         <Grid item xs={6}></Grid>
@@ -516,15 +522,15 @@ function ShowStudent() {
                           <FormControl fullWidth variant="outlined">
                             <p>ปีที่เข้าศึกษา</p>
                             <TextField
-                            fullWidth
-                            id="Student_Year_Of_Entry"
-                            type="string"
-                            variant="outlined"
-                            name="Student_Year_Of_Entry"
-                            disabled
-                            value={student.Student_Year_Of_Entry}
-                            onChange={handleInputChange}
-                          />
+                              fullWidth
+                              id="Student_Year_Of_Entry"
+                              type="string"
+                              variant="outlined"
+                              name="Student_Year_Of_Entry"
+                              disabled
+                              value={student.Student_Year_Of_Entry}
+                              onChange={handleInputChange}
+                            />
                           </FormControl>
                         </Grid>
                         <Grid item xs={6}></Grid>

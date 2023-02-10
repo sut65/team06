@@ -32,16 +32,23 @@ const Theme = createTheme({
 });
 
 function Details() {
-  let { id } = useParams()
+  let { id } = useParams();
   let navigate = useNavigate();
 
-  const [scholarship, setScholarship] = useState<Partial<ScholarshipInterface>>({})
-  const [scholarshipType, setScholarshipType] = useState<Partial<ScholarshipTypeInterface>>({})
+  const [scholarship, setScholarship] = useState<Partial<ScholarshipInterface>>(
+    {}
+  );
+  const [scholarshipType, setScholarshipType] = useState<
+    Partial<ScholarshipTypeInterface>
+  >({});
 
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////////////////////////////////////////
 
@@ -55,21 +62,21 @@ function Details() {
       });
   };
 
-    //แสดงข้อมูล scholarship typeทั้งหมด
-    const fetchScholarshipType = async () => {
-      fetch(`${apiUrl}/scholarship_type/${id}`, requestOptionsGet)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result.data);
-          setScholarshipType(result.data);
-        });
-    };
+  //แสดงข้อมูล scholarship typeทั้งหมด
+  const fetchScholarshipType = async () => {
+    fetch(`${apiUrl}/scholarship_type/${id}`, requestOptionsGet)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.data);
+        setScholarshipType(result.data);
+      });
+  };
 
   useEffect(() => {
     fetchScholarship();
     fetchScholarshipType();
-  }, [])
-  
+  }, []);
+
   return (
     <div className="AllScholarship" id="outer-container">
       <ThemeProvider theme={Theme}>
@@ -78,56 +85,77 @@ function Details() {
           outerContainerId={"outer-container"}
         />
         <div id="page-AllScholarship">
-    <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
-    <Container maxWidth="lg" sx={{ padding: 2 }}>
-      
-      <Paper elevation={2} sx={{ paddingLeft: 5 }}>
-        
-       <Grid item xs={12} sx={{padding:2, mb:2}}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography
-                      sx={{
-                        color: "#039BE5",
-                        fontFamily: "fantasy",
-                        fontSize: 30,
-                        textAlign:"center"
-                      }}
-                    >
-                      Scholarship Details
-                    </Typography>
+          <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
+            <Container maxWidth="lg" sx={{ padding: 2 }}>
+              <Paper elevation={2} sx={{ paddingLeft: 5 }}>
+                <Grid item xs={12} sx={{ padding: 2, mb: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography
+                        sx={{
+                          color: "#039BE5",
+                          fontFamily: "fantasy",
+                          fontSize: 30,
+                          textAlign: "center",
+                        }}
+                      >
+                        Scholarship Details
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
                 </Grid>
-      </Paper>
+              </Paper>
 
-      <Paper elevation={2} sx={{ paddingLeft: 5 ,paddingBottom: 1, paddingTop:1,paddingRight:5}}>
-        <Grid item xs={12}>
-          <h2 style={{ color: "#0288D1" }}>คุณสมบัติทั่วไป ดังนี้</h2>
-          <p>(1)  มีสัญชาติไทย</p>
-          <p>(2)  ศึกษาหรือได้รับการตอบรับให้เข้าศึกษาอยู่ในสถานศึกษาที่ร่วมดำเนินงานกับกองทุน  </p>
-          <p>(3)  เป็นผู้ขอกู้ยืมเงินเพื่อการศึกษาในการเข้าศึกษาที่สถานศึกษาเพียงแห่งเดียวในคราวภาคการศึกษาเดียวกัน</p>
-          <p>(4)  มีผลการเรียนดีหรือผ่านเกณฑ์การวัดและประเมินผลของสถานศึกษา</p>
-          <h2 style={{ color: "#0288D1" }}> ลักษณะต้องห้าม ดังนี้</h2>
-          <p>(1)  เป็นผู้สำเร็จการศึกษาระดับปริญญาตรีในสาขาใดสาขาหนึ่งมาก่อน เว้นแต่จะได้กำหนดเป็นอย่างอื่นในคุณสมบัติเฉพาะสำหรับการให้เงินกู้ยืมเพื่อการศึกษาลักษณะหนึ่งลักษณะใด</p>
-          <p>(2)  เป็นผู้ปฏิบัติงานและรับเงินเดือนหรือค่าจ้างประจำในหน่วยงานของรัฐหรือเอกชนในลักษณะเต็มเวลา เว้นแต่จะได้กำหนดเป็นอย่างอื่นในคุณสมบัติเฉพาะสำหรับการให้เงินกู้ยืมเพื่อการศึกษาลักษณะหนึ่งลักษณะใด</p>
-        </Grid>
-      </Paper>
-      <Button
-        onClick={() => navigate("create")}
-        sx={{ marginTop: 2, float: "right",fontFamily:"cursive" }}
-        variant="contained"
-        color="primary"
-      >
-        APPLY
-      </Button>
-      
-    </Container>
-    </Box>
-    </div>
+              <Paper
+                elevation={2}
+                sx={{
+                  paddingLeft: 5,
+                  paddingBottom: 1,
+                  paddingTop: 1,
+                  paddingRight: 5,
+                }}
+              >
+                <Grid item xs={12}>
+                  <h2 style={{ color: "#0288D1" }}>คุณสมบัติทั่วไป ดังนี้</h2>
+                  <p>(1) มีสัญชาติไทย</p>
+                  <p>
+                    (2)
+                    ศึกษาหรือได้รับการตอบรับให้เข้าศึกษาอยู่ในสถานศึกษาที่ร่วมดำเนินงานกับกองทุน{" "}
+                  </p>
+                  <p>
+                    (3)
+                    เป็นผู้ขอกู้ยืมเงินเพื่อการศึกษาในการเข้าศึกษาที่สถานศึกษาเพียงแห่งเดียวในคราวภาคการศึกษาเดียวกัน
+                  </p>
+                  <p>
+                    (4)
+                    มีผลการเรียนดีหรือผ่านเกณฑ์การวัดและประเมินผลของสถานศึกษา
+                  </p>
+                  <h2 style={{ color: "#0288D1" }}> ลักษณะต้องห้าม ดังนี้</h2>
+                  <p>
+                    (1)
+                    เป็นผู้สำเร็จการศึกษาระดับปริญญาตรีในสาขาใดสาขาหนึ่งมาก่อน
+                    เว้นแต่จะได้กำหนดเป็นอย่างอื่นในคุณสมบัติเฉพาะสำหรับการให้เงินกู้ยืมเพื่อการศึกษาลักษณะหนึ่งลักษณะใด
+                  </p>
+                  <p>
+                    (2)
+                    เป็นผู้ปฏิบัติงานและรับเงินเดือนหรือค่าจ้างประจำในหน่วยงานของรัฐหรือเอกชนในลักษณะเต็มเวลา
+                    เว้นแต่จะได้กำหนดเป็นอย่างอื่นในคุณสมบัติเฉพาะสำหรับการให้เงินกู้ยืมเพื่อการศึกษาลักษณะหนึ่งลักษณะใด
+                  </p>
+                </Grid>
+              </Paper>
+              <Button
+                onClick={() => navigate("create")}
+                sx={{ marginTop: 2, float: "right", fontFamily: "cursive" }}
+                variant="contained"
+                color="primary"
+              >
+                APPLY
+              </Button>
+            </Container>
+          </Box>
+        </div>
       </ThemeProvider>
     </div>
-    
   );
 }
 export default Details;

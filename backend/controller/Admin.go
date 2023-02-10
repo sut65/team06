@@ -65,7 +65,7 @@ func CreateAdmiin(c *gin.Context) {
 	}
 
 	//เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(Admin.Admin_Password), 14)
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(payload.Admin_Password), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "eror hashing password"})
 	}

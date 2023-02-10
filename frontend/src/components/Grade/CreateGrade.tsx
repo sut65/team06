@@ -8,13 +8,8 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { FormControl } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Link as RouterLink } from "react-router-dom";
 import Home from "../Home";
-import DataGrade from "./DataGrade";
 import { Adminbar } from "../Bar-Admin";
 import { FiArrowLeft } from "react-icons/fi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -50,9 +45,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function CreateGrade() {
   /////////////////////////////////////////////////////
   const [admin, setAdmin] = useState<AdminInterface>();
-  const [message, setAlertMessage]=React.useState("");
+  const [message, setAlertMessage] = React.useState("");
 
-  const [institute, setInstitute] = useState< InstituteInterface[]>([]);
+  const [institute, setInstitute] = useState<InstituteInterface[]>([]);
   const [branch, setBranch] = useState<BranchInterface[]>([]);
   const [grade, setGrade] = useState<Partial<GradeInterface>>({});
 
@@ -63,7 +58,10 @@ function CreateGrade() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -92,7 +90,6 @@ function CreateGrade() {
       setAdmin(res);
     }
   };
-
 
   /////////////////////////////////////////////////////
 
@@ -139,37 +136,40 @@ function CreateGrade() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-        Institute: convertType(grade.InstituteID),
-        Branch: convertType(grade.BranchID),
-        Admin: grade.AdminID,
-    
-        Grade_Student_Number: grade.Grade_Student_Number,
-        Grade_GPA: grade.Grade_GPA,
-        Grade_Supject: grade.Grade_Supject,
-        Grade_Code_Supject: grade.Grade_Code_Supject,
-        Grade: grade.Grade,
+      Institute: convertType(grade.InstituteID),
+      Branch: convertType(grade.BranchID),
+      Admin: grade.AdminID,
+
+      Grade_Student_Number: grade.Grade_Student_Number,
+      Grade_GPA: grade.Grade_GPA,
+      Grade_Supject: grade.Grade_Supject,
+      Grade_Code_Supject: grade.Grade_Code_Supject,
+      Grade: grade.Grade,
     };
-    console.log(data)
+    console.log(data);
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
-    console.log(data)
+    console.log(data);
 
     fetch(`${apiUrl}/create_Grade`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         if (res.data) {
-          setAlertMessage("บันทึกข้อมูลสำเร็จ")
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataGrade";
           }, 500);
         } else {
-          setAlertMessage(res.error)
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -187,26 +187,25 @@ function CreateGrade() {
   if (!token) {
     return <Home />;
   }
-  
+
   /////////////////////////////////////////////////////
 
   return (
     <div className="CreateGrade" id="outer-container">
       <ThemeProvider theme={Theme}>
         <Adminbar
-        pageWrapId={"page-CreateGrade"}
-        outerContainerId={"outer-container"}
-      />
-      <div id="page-CreateGrade">
-
-      <React.Fragment>
-        <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
-            <CssBaseline />
-            <Container maxWidth="lg">
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ marginTop: 1.6 }}>
-                  <Typography variant="h4" gutterBottom>
+          pageWrapId={"page-CreateGrade"}
+          outerContainerId={"outer-container"}
+        />
+        <div id="page-CreateGrade">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ marginTop: 1.6 }}>
+                      <Typography variant="h4" gutterBottom>
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -217,170 +216,172 @@ function CreateGrade() {
                         </Button>
                         CREATE GRADE
                       </Typography>
+                    </Box>
                   </Box>
-               </Box>
-              </Paper>
-            </Container>
-        <Container maxWidth="lg">
-          <Paper sx={{ padding: 2 }}>
-            <Box display={"flex"}>
-            <Snackbar
-                    id="success"
-                    open={success}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  >
-                    <Alert onClose={handleClose} severity="success">
-                      {message}
-                    </Alert>
-                  </Snackbar>
-                  <Snackbar
-                    id="error"
-                    open={error}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  >
-                    <Alert onClose={handleClose} severity="error">
-                      {message}
-                    </Alert>
-                  </Snackbar>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <h4>บันทึกผลการเรียน</h4>
-                    <hr />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>รหัสนักศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Grade_Student_Number"
-                      type="string"
-                      label="รหัสนักศึกษา"
-                      variant="outlined"
-                      name="Grade_Student_Number"
-                      value={grade.Grade_Student_Number}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={4}>
-                    <p>สำนักวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Institute"
-                      onChange={handleChange}
-                      native
-                      value={grade.InstituteID + ""}
-                      inputProps={{ name: "InstituteID" }}
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Snackbar
+                      id="success"
+                      open={success}
+                      autoHideDuration={3000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                      <option aria-label="None" value="">
-                      สำนักวิชา
-                      </option>
-                      {institute.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Institute_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={4}>
-                    <p>สาขาวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Branch"
-                      onChange={handleChange}
-                      native
-                      value={grade.BranchID + ""}
-                      inputProps={{ name: "BranchID" }}
+                      <Alert onClose={handleClose} severity="success">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Snackbar
+                      id="error"
+                      open={error}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                      <option aria-label="None" value="">
-                      สาขาวิชา
-                      </option>
-                      {branch.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Branch_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={4}>
-                    <p>รหัสวิชา</p>
-                    <TextField
-                      fullWidth
-                      id="Grade_Code_Supject"
-                      type="string"
-                      label="รหัสวิชา"
-                      variant="outlined"
-                      name="Grade_Code_Supject"
-                      value={grade.Grade_Code_Supject}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={4}>
-                    <p>ชื่อวิชา</p>
-                    <TextField
-                      fullWidth
-                      id="Grade_Supject"
-                      type="string"
-                      label="ชื่อวิชา"
-                      variant="outlined"
-                      name="Grade_Supject"
-                      value={grade.Grade_Supject}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={4}>
-                    <p>ผลการเรียน</p>
-                    <TextField
-                      fullWidth
-                      id="Grade"
-                      type="string"
-                      label="ผลการเรียน"
-                      variant="outlined"
-                      name="Grade"
-                      value={grade.Grade}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={8}></Grid>
-                  <Grid item xs={3}>
-                    <Button variant="contained" 
-                    size="large" 
-                    fullWidth 
-                    color="primary"
-                    onClick={submit}>
-                      submit
-                    </Button>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="secondary"
-                      component={RouterLink}
-                      to="/DataGrade"
-                    >
-                      back
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                </Grid>
-              </Box>
+                      <Alert onClose={handleClose} severity="error">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>บันทึกผลการเรียน</h4>
+                          <hr />
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>รหัสนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Grade_Student_Number"
+                            type="string"
+                            label="รหัสนักศึกษา"
+                            variant="outlined"
+                            name="Grade_Student_Number"
+                            value={grade.Grade_Student_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>สำนักวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Institute"
+                            onChange={handleChange}
+                            native
+                            value={grade.InstituteID + ""}
+                            inputProps={{ name: "InstituteID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สำนักวิชา
+                            </option>
+                            {institute.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Institute_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>สาขาวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Branch"
+                            onChange={handleChange}
+                            native
+                            value={grade.BranchID + ""}
+                            inputProps={{ name: "BranchID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สาขาวิชา
+                            </option>
+                            {branch.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Branch_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>รหัสวิชา</p>
+                          <TextField
+                            fullWidth
+                            id="Grade_Code_Supject"
+                            type="string"
+                            label="รหัสวิชา"
+                            variant="outlined"
+                            name="Grade_Code_Supject"
+                            value={grade.Grade_Code_Supject}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ชื่อวิชา</p>
+                          <TextField
+                            fullWidth
+                            id="Grade_Supject"
+                            type="string"
+                            label="ชื่อวิชา"
+                            variant="outlined"
+                            name="Grade_Supject"
+                            value={grade.Grade_Supject}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ผลการเรียน</p>
+                          <TextField
+                            fullWidth
+                            id="Grade"
+                            type="string"
+                            label="ผลการเรียน"
+                            variant="outlined"
+                            name="Grade"
+                            value={grade.Grade}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="primary"
+                            onClick={submit}
+                          >
+                            submit
+                          </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="secondary"
+                            component={RouterLink}
+                            to="/DataGrade"
+                          >
+                            back
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
             </Box>
-          </Paper>
-        </Container>
-        </Box>
-      </React.Fragment>
-    </div>
-    </ThemeProvider>
+          </React.Fragment>
+        </div>
+      </ThemeProvider>
     </div>
   );
 }
