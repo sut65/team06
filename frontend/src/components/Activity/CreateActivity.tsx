@@ -57,12 +57,15 @@ function CreateActivity() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [admin, setAdmin] = useState<AdminInterface>();
-  const [message, setAlertMessage]=React.useState("");
+  const [message, setAlertMessage] = React.useState("");
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -140,7 +143,7 @@ function CreateActivity() {
       Trimester: convertType(activity.TrimesterID),
       ActivityType: convertType(activity.ActivityTypeID),
       Admin: activity.AdminID,
-    
+
       Activity_Student_Number: activity.Activity_Student_Number,
       Activity_Name: activity.Activity_Name,
       Location: activity.Location,
@@ -153,23 +156,26 @@ function CreateActivity() {
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
-    console.log(data)
+    console.log(data);
 
     fetch(`${apiUrl}/create_Activity`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         if (res.data) {
-          setAlertMessage("บันทึกข้อมูลสำเร็จ")
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
             window.location.href = "/DataActivity";
           }, 500);
         } else {
-          setAlertMessage(res.error)
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -201,226 +207,226 @@ function CreateActivity() {
         <div id="page-CreateAcativity">
           <React.Fragment>
             <Box sx={{ backgroundColor: "#313131", height: "205vh" }}>
-            <CssBaseline />
-            <Container maxWidth="lg">
-              <Paper sx={{ padding: 1 }}>
-                <Box display={"flex"}>
-                  <Box>
-                    <Typography variant="h4" gutterBottom>
-                      <Button
-                        color="inherit"
-                        component={RouterLink}
-                        to="/DataActivity"
-                      >
-                        <FiArrowLeft size="30" />
-                      </Button>
-                      CREATE ACTIVITY
-                    </Typography>
-                  </Box>
-                </Box>
-              </Paper>
-            </Container>
-            <Container maxWidth="lg">
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                <Snackbar
-                    id="success"
-                    open={success}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  >
-                    <Alert onClose={handleClose} severity="success">
-                      {message}
-                    </Alert>
-                  </Snackbar>
-                  <Snackbar
-                    id="error"
-                    open={error}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  >
-                    <Alert onClose={handleClose} severity="error">
-                      {message}
-                    </Alert>
-                  </Snackbar>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <h4>บันทึกกิจกรรมนักศึกษา</h4>
-                        <hr />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <p>รหัสนักศึกษา</p>
-                        <TextField
-                          fullWidth
-                          id="Activity_Student_Number"
-                          type="string"
-                          label="รหัสนักศึกษา"
-                          variant="outlined"
-                          name="Activity_Student_Number"
-                          value={activity.Activity_Student_Number}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>ประเภทกิจกรรม</p>
-                        <Select
-                          fullWidth
-                          id="ActivityType"
-                          onChange={handleChange}
-                          native
-                          value={activity.ActivityTypeID + ""}
-                          inputProps={{ name: "ActivityTypeID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ประเภทกิจกรรม
-                          </option>
-                          {activityType.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Activity_Type_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>ชื่อกิจกรรม</p>
-                        <TextField
-                          fullWidth
-                          id="Activity_Name"
-                          type="string"
-                          label="ชื่อกิจกรรม"
-                          variant="outlined"
-                          name="Activity_Name"
-                          value={activity.Activity_Name}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>สถานที่ทำกิจกรรม</p>
-                        <TextField
-                          fullWidth
-                          id="Location"
-                          type="string"
-                          label="สถานที่ทำกิจกรรม"
-                          variant="outlined"
-                          name="Location"
-                          value={activity.Location}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>ตำแหน่ง</p>
-                        <TextField
-                          fullWidth
-                          id="Position"
-                          type="string"
-                          label="ตำแหน่ง"
-                          variant="outlined"
-                          name="Position"
-                          value={activity.Position}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <FormControl fullWidth variant="outlined">
-                          <p>วันที่ทำกิจกรรม</p>
-                          <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                              renderInput={(params) => (
-                                <TextField {...params} />
-                              )}
-                              value={activity_Date}
-                              label="วันที่ทำกิจกรรม"
-                              onChange={setActivity_Date}
-                            />
-                          </LocalizationProvider>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>ปีการศึกษา</p>
-                        <TextField
-                          fullWidth
-                          id="Activity_Year"
-                          type="string"
-                          label="ปีการศึกษา"
-                          variant="outlined"
-                          name="Activity_Year"
-                          value={activity.Activity_Year}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>ภาคการศึกษา</p>
-                        <Select
-                          fullWidth
-                          id="Trimester"
-                          onChange={handleChange}
-                          native
-                          value={activity.TrimesterID + ""}
-                          inputProps={{ name: "TrimesterID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ภาคการศึกษา
-                          </option>
-                          {trimester.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Trimester_Name}
-                            </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={4}>
-                        <p>จำนวนชั่วโมง</p>
-                        <TextField
-                          fullWidth
-                          id="Hour"
-                          type="uint"
-                          label="จำนวนชั่วโมง"
-                          variant="outlined"
-                          name="Hour"
-                          value={activity.Hour}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={3}>
+              <CssBaseline />
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 1 }}>
+                  <Box display={"flex"}>
+                    <Box>
+                      <Typography variant="h4" gutterBottom>
                         <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          onClick={submit}
-                        >
-                          submit
-                        </Button>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          color="secondary"
-                          fullWidth
+                          color="inherit"
                           component={RouterLink}
                           to="/DataActivity"
                         >
-                          back
+                          <FiArrowLeft size="30" />
                         </Button>
-                      </Grid>
-                      <Grid item xs={5}></Grid>
-                    </Grid>
+                        CREATE ACTIVITY
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </Paper>
-            </Container>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Snackbar
+                      id="success"
+                      open={success}
+                      autoHideDuration={3000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    >
+                      <Alert onClose={handleClose} severity="success">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Snackbar
+                      id="error"
+                      open={error}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    >
+                      <Alert onClose={handleClose} severity="error">
+                        {message}
+                      </Alert>
+                    </Snackbar>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>บันทึกกิจกรรมนักศึกษา</h4>
+                          <hr />
+                        </Grid>
+                        <Grid item xs={4}>
+                          <p>รหัสนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Activity_Student_Number"
+                            type="string"
+                            label="รหัสนักศึกษา"
+                            variant="outlined"
+                            name="Activity_Student_Number"
+                            value={activity.Activity_Student_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ประเภทกิจกรรม</p>
+                          <Select
+                            fullWidth
+                            id="ActivityType"
+                            onChange={handleChange}
+                            native
+                            value={activity.ActivityTypeID + ""}
+                            inputProps={{ name: "ActivityTypeID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ประเภทกิจกรรม
+                            </option>
+                            {activityType.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Activity_Type_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ชื่อกิจกรรม</p>
+                          <TextField
+                            fullWidth
+                            id="Activity_Name"
+                            type="string"
+                            label="ชื่อกิจกรรม"
+                            variant="outlined"
+                            name="Activity_Name"
+                            value={activity.Activity_Name}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>สถานที่ทำกิจกรรม</p>
+                          <TextField
+                            fullWidth
+                            id="Location"
+                            type="string"
+                            label="สถานที่ทำกิจกรรม"
+                            variant="outlined"
+                            name="Location"
+                            value={activity.Location}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ตำแหน่ง</p>
+                          <TextField
+                            fullWidth
+                            id="Position"
+                            type="string"
+                            label="ตำแหน่ง"
+                            variant="outlined"
+                            name="Position"
+                            value={activity.Position}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <FormControl fullWidth variant="outlined">
+                            <p>วันที่ทำกิจกรรม</p>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DatePicker
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
+                                value={activity_Date}
+                                label="วันที่ทำกิจกรรม"
+                                onChange={setActivity_Date}
+                              />
+                            </LocalizationProvider>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ปีการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Activity_Year"
+                            type="string"
+                            label="ปีการศึกษา"
+                            variant="outlined"
+                            name="Activity_Year"
+                            value={activity.Activity_Year}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>ภาคการศึกษา</p>
+                          <Select
+                            fullWidth
+                            id="Trimester"
+                            onChange={handleChange}
+                            native
+                            value={activity.TrimesterID + ""}
+                            inputProps={{ name: "TrimesterID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ภาคการศึกษา
+                            </option>
+                            {trimester.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Trimester_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <p>จำนวนชั่วโมง</p>
+                          <TextField
+                            fullWidth
+                            id="Hour"
+                            type="uint"
+                            label="จำนวนชั่วโมง"
+                            variant="outlined"
+                            name="Hour"
+                            value={activity.Hour}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            onClick={submit}
+                          >
+                            submit
+                          </Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            color="secondary"
+                            fullWidth
+                            component={RouterLink}
+                            to="/DataActivity"
+                          >
+                            back
+                          </Button>
+                        </Grid>
+                        <Grid item xs={5}></Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
             </Box>
           </React.Fragment>
         </div>

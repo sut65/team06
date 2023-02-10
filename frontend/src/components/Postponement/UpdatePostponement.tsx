@@ -68,7 +68,7 @@ function UpdatePostponement() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,"Content-Type": "application/json" },
   };
   /////////////////// combobox /////////////////////////
 
@@ -204,7 +204,7 @@ function UpdatePostponement() {
 
     const requestOptions = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,"Content-Type": "application/json" },
       body: JSON.stringify(newdata),
     };
 

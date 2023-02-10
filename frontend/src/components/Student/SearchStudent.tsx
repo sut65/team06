@@ -9,9 +9,6 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -55,19 +52,16 @@ function SearchStudent() {
   const [gender, setGender] = useState<GenderInterface[]>([]);
   const [province, setProvince] = useState<ProvinceInterface[]>([]);
 
-  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(new Date());
-  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] = useState<Date | null>(new Date());
-
   const [student, setStudent] = useState<Partial<StudentInterface>>({});
-
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -291,15 +285,15 @@ function SearchStudent() {
                           <FormControl fullWidth variant="outlined">
                             <p>วัน/เดือน/ปี เกิด</p>
                             <TextField
-                            fullWidth
-                            id="Student_Birthday"
-                            type="string"
-                            variant="outlined"
-                            name="Student_Birthday"
-                            disabled
-                            value={student.Student_Birthday}
-                            onChange={handleInputChange}
-                          />
+                              fullWidth
+                              id="Student_Birthday"
+                              type="string"
+                              variant="outlined"
+                              name="Student_Birthday"
+                              disabled
+                              value={student.Student_Birthday}
+                              onChange={handleInputChange}
+                            />
                           </FormControl>
                         </Grid>
                         <Grid item xs={6}></Grid>
@@ -517,15 +511,15 @@ function SearchStudent() {
                           <FormControl fullWidth variant="outlined">
                             <p>ปีที่เข้าศึกษา</p>
                             <TextField
-                            fullWidth
-                            id="Student_Year_Of_Entry"
-                            type="string"
-                            variant="outlined"
-                            name="Student_Year_Of_Entry"
-                            disabled
-                            value={student.Student_Year_Of_Entry}
-                            onChange={handleInputChange}
-                          />
+                              fullWidth
+                              id="Student_Year_Of_Entry"
+                              type="string"
+                              variant="outlined"
+                              name="Student_Year_Of_Entry"
+                              disabled
+                              value={student.Student_Year_Of_Entry}
+                              onChange={handleInputChange}
+                            />
                           </FormControl>
                         </Grid>
                         <Grid item xs={6}></Grid>

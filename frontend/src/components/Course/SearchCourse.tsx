@@ -48,14 +48,14 @@ function SearchCourse() {
 
   const [course, setCourse] = useState<Partial<CourseInterface>>({});
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 

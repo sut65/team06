@@ -18,7 +18,6 @@ import { InstituteInterface } from "../../models/IInstitute";
 import { BranchInterface } from "../../models/IBranch";
 import { Adminbar } from "../Bar-Admin";
 
-
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -60,7 +59,10 @@ function UpdateBranch() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
   const fetchBrachByID = async () => {

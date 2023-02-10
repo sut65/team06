@@ -14,7 +14,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import { Adminbar } from "../Bar-Admin";
 
-
 import { BranchInterface } from "../../models/IBranch";
 import { DormitoryTypeInterface } from "../../models/IDormitoryType";
 import { RoomTypeInterface } from "../../models/IRoomType";
@@ -42,20 +41,22 @@ function SearchDormitory() {
   let { id } = useParams();
 
   const [branch, setBranch] = useState<BranchInterface[]>([]);
-  const [dormitorytype, setDormitoryType] = useState<DormitoryTypeInterface[]>([]);
+  const [dormitorytype, setDormitoryType] = useState<DormitoryTypeInterface[]>(
+    []
+  );
   const [roomtype, setRoomType] = useState<RoomTypeInterface[]>([]);
   const [trimester, setTrimester] = useState<TrimesterInterface[]>([]);
 
   const [dormitory, setDormitory] = useState<Partial<DormitoryInterface>>({});
 
-  // const [success, setSuccess] = useState(false);
-  // const [error, setError] = useState(false);
-
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -80,7 +81,7 @@ function SearchDormitory() {
     fetch(`${apiUrl}/dormitorytype`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
-        console.log("type",result.data);
+        console.log("type", result.data);
         setDormitoryType(result.data);
       });
   };
@@ -128,7 +129,6 @@ function SearchDormitory() {
     feachRoomType();
     feachTrimester();
     feachDormitoryByID();
-
   }, []);
 
   /////////////////////////////////////////////////////
@@ -141,193 +141,192 @@ function SearchDormitory() {
         />
         <div id="page-CreateDormitory">
           <React.Fragment>
-          <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
-            <CssBaseline />
-            <Container maxWidth="lg" sx={{ padding: 2 }}>
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="h4" gutterBottom>
-                    <Button
+            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg" sx={{ padding: 2 }}>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography variant="h4" gutterBottom>
+                        <Button
                           color="inherit"
                           component={RouterLink}
                           to="/DataDormitory"
                         >
                           <FiArrowLeft size="30" />
                         </Button>
-                      SEARCH DORMITORY
-                    </Typography>
+                        SEARCH DORMITORY
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </Paper>
-            </Container>
-            <Container maxWidth="lg">
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <h4>ข้อมูลหอพักนักศึกษา</h4>
-                        <hr />
-                      </Grid>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>ข้อมูลหอพักนักศึกษา</h4>
+                          <hr />
+                        </Grid>
 
-                      <Grid item xs={4}>
-                        <p>รหัสนักศึกษา</p>
-                        <TextField
-                          fullWidth
-                          disabled
-                          id="Dormitory_Student_Number"
-                          type="string"
-                          variant="outlined"                     
-                          name="Dormitory_Student_Number"
-                          value={dormitory.Dormitory_Student_Number}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
+                        <Grid item xs={4}>
+                          <p>รหัสนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            disabled
+                            id="Dormitory_Student_Number"
+                            type="string"
+                            variant="outlined"
+                            name="Dormitory_Student_Number"
+                            value={dormitory.Dormitory_Student_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                      <Grid item xs={8}></Grid>
+                        <Grid item xs={8}></Grid>
 
-                      <Grid item xs={4}>
-                        <p>ปีการศึกษา</p>
-                        <TextField
-                          fullWidth
-                          disabled
-                          id="Dormitory_AcademicYear"
-                          type="string"
-                          variant="outlined"
-                          name="Dormitory_AcademicYear"
-                          value={dormitory.Dormitory_AcademicYear}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-                        
-                      <Grid item xs={6}>
-                        <p>ภาคการศึกษา </p>
-                        <Select
-                          fullWidth
-                          disabled
-                          id="Trimester"
-                          onChange={handleChange}
-                          native
-                          value={dormitory.TrimesterID + ""}
-                          inputProps={{ name: "TrimesterID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ภาคการศึกษา
-                          </option>
-                          {trimester.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Trimester_Name}
+                        <Grid item xs={4}>
+                          <p>ปีการศึกษา</p>
+                          <TextField
+                            fullWidth
+                            disabled
+                            id="Dormitory_AcademicYear"
+                            type="string"
+                            variant="outlined"
+                            name="Dormitory_AcademicYear"
+                            value={dormitory.Dormitory_AcademicYear}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <p>ภาคการศึกษา </p>
+                          <Select
+                            fullWidth
+                            disabled
+                            id="Trimester"
+                            onChange={handleChange}
+                            native
+                            value={dormitory.TrimesterID + ""}
+                            inputProps={{ name: "TrimesterID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ภาคการศึกษา
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
+                            {trimester.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Trimester_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={2}></Grid>
-                      <Grid item xs={6}>
-                        <p>ประเภทหอพัก </p>
-                        <Select
-                          fullWidth
-                          disabled
-                          id="DormitoryType"
-                          onChange={handleChange}
-                          native
-                          value={dormitory.DormitoryTypeID + ""}
-                          inputProps={{ name: "DormitoryTypeID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ประเภทหอพัก
-                          </option>
-                          {dormitorytype.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Dormitory_Type_Name}
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={6}>
+                          <p>ประเภทหอพัก </p>
+                          <Select
+                            fullWidth
+                            disabled
+                            id="DormitoryType"
+                            onChange={handleChange}
+                            native
+                            value={dormitory.DormitoryTypeID + ""}
+                            inputProps={{ name: "DormitoryTypeID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ประเภทหอพัก
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
+                            {dormitorytype.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Dormitory_Type_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                        <p>ประเภทห้องพัก </p>
-                        <Select
-                          fullWidth
-                          disabled
-                          id="RoomType"
-                          onChange={handleChange}
-                          native
-                          value={dormitory.RoomTypeID + ""}
-                          inputProps={{ name: "RoomTypeID" }}
-                        >
-                          <option aria-label="None" value="">
-                            ประเภทห้องพัก
-                          </option>
-                          {roomtype.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Room_Type_Name}
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <p>ประเภทห้องพัก </p>
+                          <Select
+                            fullWidth
+                            disabled
+                            id="RoomType"
+                            onChange={handleChange}
+                            native
+                            value={dormitory.RoomTypeID + ""}
+                            inputProps={{ name: "RoomTypeID" }}
+                          >
+                            <option aria-label="None" value="">
+                              ประเภทห้องพัก
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
+                            {roomtype.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Room_Type_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
-                        <p>สาขาวิชา </p>
-                        <Select
-                          fullWidth
-                          disabled
-                          id="RoomTyBranchpe"
-                          onChange={handleChange}
-                          native
-
-                          value={dormitory.BranchID + ""}
-                          inputProps={{ name: "BranchID" }}
-                        >
-                          <option aria-label="None" value="">
-                            สาขาวิชา
-                          </option>
-                          {branch.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Branch_Name}
+                        <Grid item xs={6}></Grid>
+                        <Grid item xs={6}>
+                          <p>สาขาวิชา </p>
+                          <Select
+                            fullWidth
+                            disabled
+                            id="RoomTyBranchpe"
+                            onChange={handleChange}
+                            native
+                            value={dormitory.BranchID + ""}
+                            inputProps={{ name: "BranchID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สาขาวิชา
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
-                      
-                      {/* <Grid item xs={6}></Grid> */}
+                            {branch.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Branch_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={4}>
-                        <p>เลขห้องพัก</p>
-                        <TextField
-                          fullWidth
-                          id="Room_Number"
-                          type="number"
-                          // label="ปีการศึกษา"
-                          variant="outlined"
-                          name="Room_Number"
-                          disabled
-                          value={dormitory.Room_Number}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
+                        {/* <Grid item xs={6}></Grid> */}
 
-                      <Grid item xs={6}>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          color="primary"
-                          component={RouterLink}
-                          to="/DataDormitory"
-                        >
-                          back
-                        </Button>
+                        <Grid item xs={4}>
+                          <p>เลขห้องพัก</p>
+                          <TextField
+                            fullWidth
+                            id="Room_Number"
+                            type="number"
+                            // label="ปีการศึกษา"
+                            variant="outlined"
+                            name="Room_Number"
+                            disabled
+                            value={dormitory.Room_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="primary"
+                            component={RouterLink}
+                            to="/DataDormitory"
+                          >
+                            back
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                    </Grid>
+                    </Box>
                   </Box>
-                </Box>
-              </Paper>
-            </Container>
+                </Paper>
+              </Container>
             </Box>
           </React.Fragment>
         </div>

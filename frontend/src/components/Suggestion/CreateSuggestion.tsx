@@ -14,7 +14,7 @@ import { FormControl } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Link as RouterLink , useParams} from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -54,12 +54,12 @@ const Theme = createTheme({
 function CreateSuggestion() {
   /////////////////////////////////////////////////////
 
-  
-
   const [branch, setBranch] = useState<BranchInterface[]>([]);
   const [prefix, setPrefix] = useState<PrefixInterface[]>([]);
   const [institute, setInstitute] = useState<InstituteInterface[]>([]);
-  const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>({});
+  const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>(
+    {}
+  );
   const [student, setStudent] = useState<StudentInterface>();
 
   const [message, setAlertMessage] = React.useState("");
@@ -75,7 +75,10 @@ function CreateSuggestion() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -92,7 +95,7 @@ function CreateSuggestion() {
     fetch(`${apiUrl}/prefix`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
-        console.log("type",result.data);
+        console.log("type", result.data);
         setPrefix(result.data);
       });
   };
@@ -149,7 +152,6 @@ function CreateSuggestion() {
     feachPrefix();
     feachInstitute();
     fetchStudentByID();
-
   }, []);
 
   /////////////////////////////////////////////////////
@@ -162,27 +164,28 @@ function CreateSuggestion() {
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-
       StudentID: suggestion.StudentID,
       BranchID: convertType(suggestion.BranchID),
       PrefixID: convertType(suggestion.PrefixID),
       InstituteID: convertType(suggestion.InstituteID),
 
-      Suggestion_Teacher:	        suggestion.Suggestion_Teacher,
-      Suggestion_Student_Number:  suggestion.Suggestion_Student_Number,
-      Suggestion_Student_Name:		suggestion.Suggestion_Student_Name,
-      Suggestion_Date:		        suggestion_date,
-      Suggestion_Detail:		      suggestion.Suggestion_Detail,
-
+      Suggestion_Teacher: suggestion.Suggestion_Teacher,
+      Suggestion_Student_Number: suggestion.Suggestion_Student_Number,
+      Suggestion_Student_Name: suggestion.Suggestion_Student_Name,
+      Suggestion_Date: suggestion_date,
+      Suggestion_Detail: suggestion.Suggestion_Detail,
     };
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
 
-  console.log(data);
+    console.log(data);
     fetch(`${apiUrl}/suggestion`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
@@ -223,242 +226,244 @@ function CreateSuggestion() {
           pageWrapId={"page-CreateStudent"}
           outerContainerId={"outer-container"}
         />
-      <div id="page-CreateSuggestion">
-      <React.Fragment>
-      <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
-            <CssBaseline />
-            <Container maxWidth="lg" sx={{ padding: 2 }}>
-              <Paper sx={{ padding: 2 }}>
-                <Box display={"flex"}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="h4" gutterBottom>
-                      <Button
-                        color="inherit"
-                        component={RouterLink}
-                        to="/DataSuggestion"
-                      >
-                        <FiArrowLeft size="30" />
-                      </Button>
-                      CREATE SUGGESTION
-                    </Typography>
+        <div id="page-CreateSuggestion">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg" sx={{ padding: 2 }}>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography variant="h4" gutterBottom>
+                        <Button
+                          color="inherit"
+                          component={RouterLink}
+                          to="/DataSuggestion"
+                        >
+                          <FiArrowLeft size="30" />
+                        </Button>
+                        CREATE SUGGESTION
+                      </Typography>
+                    </Box>
                   </Box>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  <Snackbar
+                    id="success"
+                    open={success}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    id="success"
+                    open={error}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="error">
+                      {message}
+                    </Alert>
+                  </Snackbar>
                 </Box>
-              </Paper>
-            </Container>
-        <Container maxWidth="lg">
-        <Box
-            sx={{
-              mt: 2,
-            }}
-          >
-            <Snackbar
-              id="success"
-              open={success}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                {message}
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              id="success"
-              open={error}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="error">
-                {message}
-              </Alert>
-            </Snackbar>
-        </Box>
 
-          <Paper sx={{ padding: 2 }}>
-            <Box display={"flex"}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <h4>เสนอความคิดเห็น</h4>
-                    <hr />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <p>คำนำหน้า </p>
-                    <Select
-                      fullWidth
-                      id="Prefix"
-                      onChange={handleChange}
-                      native
-                      value={suggestion.PrefixID + ""}
-                      inputProps={{ name: "PrefixID" }}
-                    >
-                      <option aria-label="None" value="">
-                        คำนำหน้า
-                      </option>
-                      {prefix.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Prefix_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <h4>เสนอความคิดเห็น</h4>
+                          <hr />
+                        </Grid>
+                        <Grid item xs={2}>
+                          <p>คำนำหน้า </p>
+                          <Select
+                            fullWidth
+                            id="Prefix"
+                            onChange={handleChange}
+                            native
+                            value={suggestion.PrefixID + ""}
+                            inputProps={{ name: "PrefixID" }}
+                          >
+                            <option aria-label="None" value="">
+                              คำนำหน้า
+                            </option>
+                            {prefix.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Prefix_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                  <Grid item xs={4}>
-                    <p>ชื่อ-สกุลอาจารย์</p>
-                    <TextField
-                      fullWidth
-                      id="Suggestion_Teacher"
-                      type="string"
-                      label="ชื่อ-สกุลอาจารย์"
-                      variant="outlined"
-                      name="Suggestion_Teacher"
-                      value={suggestion.Suggestion_Teacher}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
+                        <Grid item xs={4}>
+                          <p>ชื่อ-สกุลอาจารย์</p>
+                          <TextField
+                            fullWidth
+                            id="Suggestion_Teacher"
+                            type="string"
+                            label="ชื่อ-สกุลอาจารย์"
+                            variant="outlined"
+                            name="Suggestion_Teacher"
+                            value={suggestion.Suggestion_Teacher}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                  <Grid item xs={6}></Grid>
-                  
-                  <Grid item xs={2}>
-                    <p>รหัสนักศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Suggestion_Student_Number"
-                      type="string"
-                      label="รหัสนักศึกษา"
-                      variant="outlined"
-                      name="Suggestion_Student_Number"
-                      value={suggestion.Suggestion_Student_Number}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
+                        <Grid item xs={6}></Grid>
 
-                  <Grid item xs={4}>
-                    <p>ชื่อ-สกุลนักศึกษา</p>
-                    <TextField
-                      fullWidth
-                      id="Suggestion_Student_Name"
-                      type="string"
-                      label="ชื่อ-สกุลนักศึกษา"
-                      variant="outlined"
-                      name="Suggestion_Student_Name"
-                      value={suggestion.Suggestion_Student_Name}
-                      onChange={handleInputChange}
-                    />
-                  </Grid>
+                        <Grid item xs={2}>
+                          <p>รหัสนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Suggestion_Student_Number"
+                            type="string"
+                            label="รหัสนักศึกษา"
+                            variant="outlined"
+                            name="Suggestion_Student_Number"
+                            value={suggestion.Suggestion_Student_Number}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                  <Grid item xs={6}></Grid>
+                        <Grid item xs={4}>
+                          <p>ชื่อ-สกุลนักศึกษา</p>
+                          <TextField
+                            fullWidth
+                            id="Suggestion_Student_Name"
+                            type="string"
+                            label="ชื่อ-สกุลนักศึกษา"
+                            variant="outlined"
+                            name="Suggestion_Student_Name"
+                            value={suggestion.Suggestion_Student_Name}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                  <Grid item xs={4}>
-                    <p>สำนักวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Institute"
-                      onChange={handleChange}
-                      native
-                      value={suggestion.InstituteID + ""}
-                      inputProps={{ name: "InstituteID" }}
-                    >
-                      <option aria-label="None" value="">
-                        สำนักวิชา
-                      </option>
-                      {institute.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Institute_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
+                        <Grid item xs={6}></Grid>
 
-                  <Grid item xs={6}>
-                    <p>สาขาวิชา</p>
-                    <Select
-                      fullWidth
-                      id="Branch"
-                      onChange={handleChange}
-                      native
-                      value={suggestion.BranchID + ""}
-                      inputProps={{ name: "BranchID" }}
-                    >
-                      <option aria-label="None" value="">
-                        สาขาวิชา
-                      </option>
-                      {branch.map((item) => (
-                        <option key={item.ID} value={item.ID}>
-                          {item.Branch_Name}
-                        </option>
-                      ))}
-                    </Select>
-                  </Grid>
-                  <Grid item xs={2}></Grid>
+                        <Grid item xs={4}>
+                          <p>สำนักวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Institute"
+                            onChange={handleChange}
+                            native
+                            value={suggestion.InstituteID + ""}
+                            inputProps={{ name: "InstituteID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สำนักวิชา
+                            </option>
+                            {institute.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Institute_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                  <Grid item xs={4}>
-                    <FormControl fullWidth variant="outlined">
-                     <p>วันที่ทำการเสนอความคิดเห็น</p>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      renderInput={(params) => <TextField {...params} />}
-                      value={suggestion_date}
-                      label="วันที่ทำการเสนอความคิดเห็น"
-                      onChange={setSuggestion_Date}                    
-                    />
-                    </LocalizationProvider>
-                    </FormControl>
-                  </Grid>
+                        <Grid item xs={6}>
+                          <p>สาขาวิชา</p>
+                          <Select
+                            fullWidth
+                            id="Branch"
+                            onChange={handleChange}
+                            native
+                            value={suggestion.BranchID + ""}
+                            inputProps={{ name: "BranchID" }}
+                          >
+                            <option aria-label="None" value="">
+                              สาขาวิชา
+                            </option>
+                            {branch.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Branch_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={2}></Grid>
 
-                  <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                          <FormControl fullWidth variant="outlined">
+                            <p>วันที่ทำการเสนอความคิดเห็น</p>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DatePicker
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
+                                value={suggestion_date}
+                                label="วันที่ทำการเสนอความคิดเห็น"
+                                onChange={setSuggestion_Date}
+                              />
+                            </LocalizationProvider>
+                          </FormControl>
+                        </Grid>
 
-                  <Grid item xs={8}>
-                    <p>รายละเอียดการเสนอความคิดเห็น</p>
-                    <TextField
-                      fullWidth
-                      id="Suggestion_Detail"
-                      type="string"
-                      label="รายละเอียดการเสนอความคิดเห็น"
-                      variant="outlined"
-                      name="Suggestion_Detail"
-                      value={suggestion.Suggestion_Detail}
-                      
-                      onChange={handleInputChange}
-                      multiline
-                    />
-                  </Grid>
+                        <Grid item xs={8}></Grid>
 
-                  <Grid item xs={12}></Grid>
-                  <Grid item xs={6}></Grid>   
-                      
-                  <Grid item xs={3}>
-                    <Button 
-                    variant="contained" 
-                    size="large" 
-                    fullWidth 
-                    color="primary"
-                    onClick={submit}>
-                      submit
-                    </Button>
-                  </Grid>
+                        <Grid item xs={8}>
+                          <p>รายละเอียดการเสนอความคิดเห็น</p>
+                          <TextField
+                            fullWidth
+                            id="Suggestion_Detail"
+                            type="string"
+                            label="รายละเอียดการเสนอความคิดเห็น"
+                            variant="outlined"
+                            name="Suggestion_Detail"
+                            value={suggestion.Suggestion_Detail}
+                            onChange={handleInputChange}
+                            multiline
+                          />
+                        </Grid>
 
-                  <Grid item xs={3}>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="secondary"
-                      component={RouterLink}
-                      to="/DataSuggestion"
-                    >
-                      back
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}></Grid>
-                </Grid>
-              </Box>
+                        <Grid item xs={12}></Grid>
+                        <Grid item xs={6}></Grid>
+
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="primary"
+                            onClick={submit}
+                          >
+                            submit
+                          </Button>
+                        </Grid>
+
+                        <Grid item xs={3}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            color="secondary"
+                            component={RouterLink}
+                            to="/DataSuggestion"
+                          >
+                            back
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}></Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
             </Box>
-          </Paper>
-        </Container>
-        </Box>
-        </React.Fragment>
+          </React.Fragment>
         </div>
       </ThemeProvider>
     </div>

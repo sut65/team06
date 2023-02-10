@@ -43,7 +43,9 @@ function DataSuggestion() {
   let navigate = useNavigate();
   console.log(navigate);
 
-  const [suggestiontable, setSuggestiontable] = useState<SuggestionInterface[]>([]);
+  const [suggestiontable, setSuggestiontable] = useState<SuggestionInterface[]>(
+    []
+  );
   const [filter, setFilter] = useState(suggestiontable);
   const [Suggestion_Student_Number, setStudent_Student_Number] = useState("");
 
@@ -51,7 +53,10 @@ function DataSuggestion() {
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////////////////////////////////////////
 
@@ -68,29 +73,30 @@ function DataSuggestion() {
   /////////////////////////////////////////////////////
   // ลบข้อมูล suggestion
   const deleteSuggestion = (id: string) => {
-    console.log(id)
+    console.log(id);
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-  
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     };
 
-  fetch(`${apiUrl}/delete_suggestion/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      console.log(res);
-      if (res.data) {
-        // setSuccess(true);
-        alert(`Are you sure delete id: ${id}`)
-        setTimeout(() => {
-          window.location.href = "/DataSuggestion";
-        }, 500);
-      } else {
-        // setError(true);
-      }
-    });
-
-}
+    fetch(`${apiUrl}/delete_suggestion/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          // setSuccess(true);
+          alert(`Are you sure delete id: ${id}`);
+          setTimeout(() => {
+            window.location.href = "/DataSuggestion";
+          }, 500);
+        } else {
+          // setError(true);
+        }
+      });
+  };
 
   /////////////////////////////////////////////////////
 
@@ -100,10 +106,12 @@ function DataSuggestion() {
 
   useEffect(() => {
     const NewFilter = suggestiontable.filter((suggestiontable) => {
-      return suggestiontable.Suggestion_Student_Number?.includes(Suggestion_Student_Number)
-  });
+      return suggestiontable.Suggestion_Student_Number?.includes(
+        Suggestion_Student_Number
+      );
+    });
 
-  setFilter(NewFilter);
+    setFilter(NewFilter);
   }, [suggestiontable, Suggestion_Student_Number]);
 
   /////////////////////////////////////////////////////
@@ -128,96 +136,112 @@ function DataSuggestion() {
         <Studentbar
           pageWrapId={"page-DataStudent"}
           outerContainerId={"outer-container"}
-      />
-      <div id="page-DataSuggestion">
-      <React.Fragment>
-        <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
-          <CssBaseline />
-          <Container maxWidth="lg">
-            <Paper sx={{ padding: 1 }}>
-              <Box display={"flex"}>
-                <Box sx={{ marginTop: 1.6 }}>
-                  <Typography variant="h4" gutterBottom>
-                    <Button
-                      color="inherit"
-                      component={RouterLink}
-                      to="/HomeStudent"
-                      sx={{ marginBottom: 0.5 }}
+        />
+        <div id="page-DataSuggestion">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 1 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ marginTop: 1.6 }}>
+                      <Typography variant="h4" gutterBottom>
+                        <Button
+                          color="inherit"
+                          component={RouterLink}
+                          to="/HomeStudent"
+                          sx={{ marginBottom: 0.5 }}
                         >
                           <HiHome size="30" />
                         </Button>
                         SUGGESTION
-                  </Typography>
-                </Box>
-                <Box sx={{ marginTop: 2.3 }}>
-                  <BiSearchAlt size="30" />
-                </Box>
-                <Box sx={{ marginLeft: 43.5, marginTop:0.9 }}>
-                  <Button
-                    variant="contained"
-                    component={RouterLink}
-                    to="/CreateSuggestion"
-                    color="secondary"
-                    size="large"
-                  >
-                    create
-                  </Button>
-                </Box>
-              </Box>
-            </Paper>
+                      </Typography>
+                    </Box>
+                    <Box sx={{ marginTop: 2.3 }}>
+                      <BiSearchAlt size="30" />
+                    </Box>
+                    <Box sx={{ marginLeft: 43.5, marginTop: 0.9 }}>
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to="/CreateSuggestion"
+                        color="secondary"
+                        size="large"
+                      >
+                        create
+                      </Button>
+                    </Box>
+                  </Box>
+                </Paper>
 
-          <TableContainer component={Paper} sx={{ marginTop: 1 }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">ลำดับ</TableCell>
-                  <TableCell align="center">ID</TableCell>
-                  <TableCell align="center">รหัสนักศึกษา</TableCell>
-                  <TableCell align="center">ชื่อ-สกุล</TableCell>
-                  <TableCell align="center">ชื่ออาจารย์</TableCell>
-                  <TableCell align="center">วันที่เสนอความคิดเห็น</TableCell>
-                  <TableCell align="center">รายละเอียด</TableCell>
-                  {/* <TableCell align="center">สาขา</TableCell> */}
-                  <TableCell align="center"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {suggestiontable.map((row,idx) => (
-                  <TableRow
-                    key={row.ID}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell align="center">{idx + 1}</TableCell>
-                    <TableCell align="center">{row.ID}</TableCell>
-                    <TableCell align="center">{row.Suggestion_Student_Number}</TableCell>
-                    <TableCell align="center">{row.Suggestion_Student_Name}</TableCell>
-                    <TableCell align="center">{row.Suggestion_Teacher}</TableCell>
-                    <TableCell align="center">{row.Suggestion_Date + ""}</TableCell>
-                    <TableCell align="center">{row.Suggestion_Detail}</TableCell>
-                    {/* <TableCell align="center">{row.BranchID}</TableCell> */}
-                    <TableCell align="center">
-                      <ButtonGroup>
-                        <Button onClick={() => 
-                          navigate(`UpdateSuggestion/${row.ID}`)}
-                          color="info"
-                          >
-                            update
-                        </Button>
-                        <Button onClick={() => 
-                          deleteSuggestion(row.ID+"")}
-                          color="secondary"
+                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">ลำดับ</TableCell>
+                        <TableCell align="center">ID</TableCell>
+                        <TableCell align="center">รหัสนักศึกษา</TableCell>
+                        <TableCell align="center">ชื่อ-สกุล</TableCell>
+                        <TableCell align="center">ชื่ออาจารย์</TableCell>
+                        <TableCell align="center">
+                          วันที่เสนอความคิดเห็น
+                        </TableCell>
+                        <TableCell align="center">รายละเอียด</TableCell>
+                        {/* <TableCell align="center">สาขา</TableCell> */}
+                        <TableCell align="center"></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {suggestiontable.map((row, idx) => (
+                        <TableRow
+                          key={row.ID}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
                         >
-                          <DeleteOutlineIcon/>
-                        </Button>
-                      </ButtonGroup>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Container>
-        </Box>
+                          <TableCell align="center">{idx + 1}</TableCell>
+                          <TableCell align="center">{row.ID}</TableCell>
+                          <TableCell align="center">
+                            {row.Suggestion_Student_Number}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Suggestion_Student_Name}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Suggestion_Teacher}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Suggestion_Date + ""}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Suggestion_Detail}
+                          </TableCell>
+                          {/* <TableCell align="center">{row.BranchID}</TableCell> */}
+                          <TableCell align="center">
+                            <ButtonGroup>
+                              <Button
+                                onClick={() =>
+                                  navigate(`UpdateSuggestion/${row.ID}`)
+                                }
+                                color="info"
+                              >
+                                update
+                              </Button>
+                              <Button
+                                onClick={() => deleteSuggestion(row.ID + "")}
+                                color="secondary"
+                              >
+                                <DeleteOutlineIcon />
+                              </Button>
+                            </ButtonGroup>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Container>
+            </Box>
           </React.Fragment>
         </div>
       </ThemeProvider>

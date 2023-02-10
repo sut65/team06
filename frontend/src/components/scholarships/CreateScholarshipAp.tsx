@@ -70,7 +70,10 @@ function CreateScholarshipAp() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
   //แสดงข้อมูล scholarship ทั้งหมด

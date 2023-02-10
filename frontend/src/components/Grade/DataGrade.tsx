@@ -22,7 +22,6 @@ import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
 import { Adminbar } from "../Bar-Admin";
 
-
 const Theme = createTheme({
   palette: {
     primary: {
@@ -40,19 +39,18 @@ const Theme = createTheme({
 function DataGrade() {
   /////////////////////////////////////////////////////
   let navigate = useNavigate();
-  const [message, setAlertMessage] = React.useState("");
-
   const [Gradestable, setGradestable] = useState<GradeInterface[]>([]);
   const [Filter, setFilter] = useState(Gradestable);
   const [input, setInput] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////////////////////////////////////////
 
@@ -71,7 +69,10 @@ function DataGrade() {
     console.log(id);
     const requestOptions = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     };
 
     fetch(`${apiUrl}/delete_Grade/${id}`, requestOptions)

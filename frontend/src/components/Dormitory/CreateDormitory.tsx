@@ -15,7 +15,6 @@ import { GetAdminByID } from "../../services/HttpClientService";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { FiArrowLeft } from "react-icons/fi";
 
-import Home from "../Home";
 import { Adminbar } from "../Bar-Admin";
 
 import { BranchInterface } from "../../models/IBranch";
@@ -51,7 +50,9 @@ function CreateDormitory() {
   /////////////////////////////////////////////////////
 
   const [branch, setBranch] = useState<BranchInterface[]>([]);
-  const [dormitorytype, setDormitoryType] = useState<DormitoryTypeInterface[]>([]);
+  const [dormitorytype, setDormitoryType] = useState<DormitoryTypeInterface[]>(
+    []
+  );
   const [roomtype, setRoomType] = useState<RoomTypeInterface[]>([]);
   const [trimester, setTrimester] = useState<TrimesterInterface[]>([]);
   const [admin, setAdmin] = useState<AdminInterface>();
@@ -67,7 +68,10 @@ function CreateDormitory() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -84,7 +88,7 @@ function CreateDormitory() {
     fetch(`${apiUrl}/dormitorytype`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
-        console.log("type",result.data);
+        console.log("type", result.data);
         setDormitoryType(result.data);
       });
   };
@@ -144,7 +148,6 @@ function CreateDormitory() {
     setError(false);
   };
 
-
   /////////////////////////////////////////////////////
   useEffect(() => {
     feachBranch();
@@ -152,7 +155,6 @@ function CreateDormitory() {
     feachRoomType();
     feachTrimester();
     fetchAdminByID();
-
   }, []);
 
   /////////////////////////////////////////////////////
@@ -162,30 +164,30 @@ function CreateDormitory() {
     return val;
   };
 
-
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
     let data = {
-
       AdminID: dormitory.AdminID,
       BranchID: convertType(dormitory.BranchID),
       DormitoryTypeID: convertType(dormitory.DormitoryTypeID),
-      RoomTypeID:convertType(dormitory.RoomTypeID),
+      RoomTypeID: convertType(dormitory.RoomTypeID),
       TrimesterID: convertType(dormitory.TrimesterID),
-      
-      Dormitory_Student_Number:	dormitory.Dormitory_Student_Number,
-		  Dormitory_AcademicYear:		convertType(dormitory.Dormitory_AcademicYear),
-		  Room_Number:				      convertType(dormitory.Room_Number),
 
+      Dormitory_Student_Number: dormitory.Dormitory_Student_Number,
+      Dormitory_AcademicYear: convertType(dormitory.Dormitory_AcademicYear),
+      Room_Number: convertType(dormitory.Room_Number),
     };
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
 
-    console.log(data)
+    console.log(data);
 
     fetch(`${apiUrl}/dormitory`, requestOptions)
       .then((response) => response.json())
@@ -212,59 +214,58 @@ function CreateDormitory() {
         <Adminbar
           pageWrapId={"page-CreateSuggestion"}
           outerContainerId={"outer-container"}
-      />
-      <div id="page-CreateSuggestion">
-      <React.Fragment>
-      <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
-        <CssBaseline />
-        <Container maxWidth="lg" sx={{ padding: 2 }}>
-          <Paper sx={{ padding: 2 }}>
-            <Box display={"flex"}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h5" gutterBottom>
-                  <Button
-                        color="inherit"
-                        component={RouterLink}
-                        to="/DataDormitory"
-                      >
-                        <FiArrowLeft size="30" />
-                  </Button>
-                  CREATE DORMITORY
-                </Typography>
-              </Box>
-            </Box>
-          </Paper>
-        </Container>
-      <Container maxWidth="lg">
-
-        <Box
-            sx={{
-              mt: 2,
-            }}
-          >
-            <Snackbar
-              id="success"
-              open={success}
-              autoHideDuration={3000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                {message}
-              </Alert>
-            </Snackbar>
-            <Snackbar
-              id="error"
-              open={error}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="error">
-                {message}
-              </Alert>
-            </Snackbar>
-          </Box>
+        />
+        <div id="page-CreateSuggestion">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg" sx={{ padding: 2 }}>
+                <Paper sx={{ padding: 2 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography variant="h5" gutterBottom>
+                        <Button
+                          color="inherit"
+                          component={RouterLink}
+                          to="/DataDormitory"
+                        >
+                          <FiArrowLeft size="30" />
+                        </Button>
+                        CREATE DORMITORY
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Container>
+              <Container maxWidth="lg">
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  <Snackbar
+                    id="success"
+                    open={success}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    id="error"
+                    open={error}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert onClose={handleClose} severity="error">
+                      {message}
+                    </Alert>
+                  </Snackbar>
+                </Box>
 
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
@@ -274,7 +275,7 @@ function CreateDormitory() {
                           <h4>ข้อมูลหอพักนักศึกษา</h4>
                           <hr />
                         </Grid>
-                        
+
                         <Grid item xs={4}>
                           <p>รหัสนักศึกษา</p>
                           <TextField
@@ -302,7 +303,7 @@ function CreateDormitory() {
                             onChange={handleInputChange}
                           />
                         </Grid>
-                        
+
                         <Grid item xs={6}>
                           <p>ภาคการศึกษา</p>
                           <Select
@@ -356,7 +357,7 @@ function CreateDormitory() {
                             inputProps={{ name: "RoomTypeID" }}
                           >
                             <option aria-label="None" value="">
-                            ประเภทห้องพัก
+                              ประเภทห้องพัก
                             </option>
                             {roomtype.map((item) => (
                               <option key={item.ID} value={item.ID}>
@@ -401,11 +402,16 @@ function CreateDormitory() {
                             onChange={handleInputChange}
                           />
                         </Grid>
-                        
+
                         <Grid item xs={12}></Grid>
-                        <Grid item xs={6}></Grid>        
+                        <Grid item xs={6}></Grid>
                         <Grid item xs={3}>
-                          <Button variant="contained" size="large" fullWidth onClick={submit}>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            onClick={submit}
+                          >
                             submit
                           </Button>
                         </Grid>
@@ -430,7 +436,7 @@ function CreateDormitory() {
           </React.Fragment>
         </div>
       </ThemeProvider>
-    </div >
+    </div>
   );
 }
 export default CreateDormitory;

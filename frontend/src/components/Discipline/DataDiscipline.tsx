@@ -16,7 +16,14 @@ import { ButtonGroup } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
-import { Alert, FormControl, MenuItem, Select, SelectChangeEvent, Snackbar } from '@mui/material';
+import {
+  Alert,
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Snackbar,
+} from "@mui/material";
 
 import { DisciplineInterface } from "../../models/IDiscipline";
 
@@ -25,177 +32,195 @@ import { HiHome } from "react-icons/hi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Theme = createTheme({
-    palette: {
-        primary: {
-            main: "#313131",
-        },
-        secondary: {
-            main: "#C70039",
-        },
-        info: {
-            main: "#164DC9",
-        },
+  palette: {
+    primary: {
+      main: "#313131",
     },
+    secondary: {
+      main: "#C70039",
+    },
+    info: {
+      main: "#164DC9",
+    },
+  },
 });
 
 function DataDiscipline() {
-    /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
 
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
+  const [Disciplines, ListDiscipline] = useState<DisciplineInterface[]>([]);
 
-    const [Disciplines, ListDiscipline] = useState<DisciplineInterface[]>([]);
+  /////////////////////////////////////////////////////
+  const apiUrl = "http://localhost:8080";
+  const requestOpionsGet = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
-    /////////////////////////////////////////////////////
-    const apiUrl = "http://localhost:8080";
-    const requestOpionsGet = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+  /////////////////////////////////////////////////////
+
+  //แสดงข้อมูล discipline ทั้งหมด
+  const feachDiscipline = async () => {
+    fetch(`${apiUrl}/ListDiscipline`, requestOpionsGet)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.data);
+        ListDiscipline(result.data);
+      });
+  };
+
+  const DeleteDiscipline = (id: string) => {
+    console.log(id);
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     };
 
+    fetch(`${apiUrl}/DeleteDiscipline/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          // setSuccess(true);
+          alert(`Are you sure delete id: ${id}`);
+          setTimeout(() => {
+            window.location.href = "/DataDiscipline";
+          }, 500);
+        } else {
+          // setError(true);
+        }
+      });
+  };
 
-    /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
 
-    //แสดงข้อมูล discipline ทั้งหมด
-    const feachDiscipline = async () => {
-        fetch(`${apiUrl}/ListDiscipline`, requestOpionsGet)
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result.data);
-                ListDiscipline(result.data);
-            });
-    };
+  /////////////////////////////////////////////////////
 
-    const DeleteDiscipline = (id: string) => {
-        console.log(id)
-        const requestOptions = {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
+  useEffect(() => {
+    feachDiscipline();
+  }, []);
 
-        };
+  /////////////////////////////////////////////////////
 
-        fetch(`${apiUrl}/DeleteDiscipline/${id}`, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-                console.log(res);
-                if (res.data) {
-                    // setSuccess(true);
-                    alert(`Are you sure delete id: ${id}`)
-                    setTimeout(() => {
-                        window.location.href = "/DataDiscipline";
-                    }, 500);
-                } else {
-                    // setError(true);
-                }
-            });
-
-    }
-
-    /////////////////////////////////////////////////////
-
-    /////////////////////////////////////////////////////
-
-    useEffect(() => {
-        feachDiscipline();
-    }, []);
-
-    /////////////////////////////////////////////////////
-
-    return (
-        <div className="DataDiscipline" id="outer-container">
-            <ThemeProvider theme={Theme}>
-                <Adminbar
-                    pageWrapId={"page-DataDiscipline"}
-                    outerContainerId={"outer-container"}
-                />
-                <div id="page-DataDiscipline">
-                    <React.Fragment>
-                        <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
-                            <CssBaseline />
-                            <Container maxWidth="lg">
-                                <Paper sx={{ padding: 1 }}>
-                                    <Box display={"flex"}>
-                                        <Box sx={{ marginTop: 1.6 }}>
-                                            <Typography variant="h4" gutterBottom>
-                                                <Button
-                                                    color="inherit"
-                                                    component={RouterLink}
-                                                    to="/HomeAdmin"
-                                                    sx={{ marginBottom: 0.5 }}
-                                                >
-                                                    <HiHome size="30" />
-                                                </Button>
-                                                DISCIPLINE
-                                            </Typography>
-                                        </Box>
-                                        <Box sx={{ marginLeft: 94, marginTop: 1.6 }}>
-                                            <Button
-                                                variant="contained"
-                                                component={RouterLink}
-                                                to="/CreateDiscipline"
-                                                color="secondary"
-                                                size="large"
-                                            >
-                                                create
-                                            </Button>
-                                        </Box>
-                                    </Box>
-                                </Paper>
-                                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
-                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell align="center">Student_Number</TableCell>
-                                                <TableCell align="center">Student_Name</TableCell>
-                                                <TableCell align="center">Discipline_Type</TableCell>
-                                                <TableCell align="center">Discipline_Reason</TableCell>
-                                                <TableCell align="center">Discipline_Punishment</TableCell>
-                                                <TableCell align="center">Discipline_Point</TableCell>
-                                                <TableCell align="center"></TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {Disciplines.map((row) => (
-                                                <TableRow
-                                                    key={row.ID}
-                                                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                                >
-                                                    <TableCell align="center">{row.Student.Student_Number}</TableCell>
-                                                    <TableCell align="center">{row.Student.Student_Name}</TableCell>
-                                                    <TableCell align="center">{row.DisciplineType.DisciplineType_Name}</TableCell>
-                                                    <TableCell align="center">
-                                                        {row.Discipline_Reason}
-                                                    </TableCell>
-                                                    <TableCell align="center">{row.Discipline_Punishment} </TableCell>
-                                                    <TableCell align="center">{row.Discipline_Point} </TableCell>
-                                                    <TableCell align="center">
-                                                        <ButtonGroup>
-                                                            <Button
-                                                                onClick={() => navigate(`UpdateDiscipline/${row.ID}`)}
-                                                                color="info"
-                                                            >
-                                                                update
-                                                            </Button>
-                                                            <Button
-                                                                onClick={() => DeleteDiscipline(row.ID + "")}
-                                                                color="secondary"
-                                                            >
-                                                                <DeleteOutlineIcon />
-                                                            </Button>
-                                                        </ButtonGroup>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Container>
-                        </Box>
-                    </React.Fragment>
-                </div>
-            </ThemeProvider>
+  return (
+    <div className="DataDiscipline" id="outer-container">
+      <ThemeProvider theme={Theme}>
+        <Adminbar
+          pageWrapId={"page-DataDiscipline"}
+          outerContainerId={"outer-container"}
+        />
+        <div id="page-DataDiscipline">
+          <React.Fragment>
+            <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
+              <CssBaseline />
+              <Container maxWidth="lg">
+                <Paper sx={{ padding: 1 }}>
+                  <Box display={"flex"}>
+                    <Box sx={{ marginTop: 1.6 }}>
+                      <Typography variant="h4" gutterBottom>
+                        <Button
+                          color="inherit"
+                          component={RouterLink}
+                          to="/HomeAdmin"
+                          sx={{ marginBottom: 0.5 }}
+                        >
+                          <HiHome size="30" />
+                        </Button>
+                        DISCIPLINE
+                      </Typography>
+                    </Box>
+                    <Box sx={{ marginLeft: 94, marginTop: 1.6 }}>
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to="/CreateDiscipline"
+                        color="secondary"
+                        size="large"
+                      >
+                        create
+                      </Button>
+                    </Box>
+                  </Box>
+                </Paper>
+                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Student_Number</TableCell>
+                        <TableCell align="center">Student_Name</TableCell>
+                        <TableCell align="center">Discipline_Type</TableCell>
+                        <TableCell align="center">Discipline_Reason</TableCell>
+                        <TableCell align="center">
+                          Discipline_Punishment
+                        </TableCell>
+                        <TableCell align="center">Discipline_Point</TableCell>
+                        <TableCell align="center"></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {Disciplines.map((row) => (
+                        <TableRow
+                          key={row.ID}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell align="center">
+                            {row.Student.Student_Number}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Student.Student_Name}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.DisciplineType.DisciplineType_Name}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Discipline_Reason}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Discipline_Punishment}{" "}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.Discipline_Point}{" "}
+                          </TableCell>
+                          <TableCell align="center">
+                            <ButtonGroup>
+                              <Button
+                                onClick={() =>
+                                  navigate(`UpdateDiscipline/${row.ID}`)
+                                }
+                                color="info"
+                              >
+                                update
+                              </Button>
+                              <Button
+                                onClick={() => DeleteDiscipline(row.ID + "")}
+                                color="secondary"
+                              >
+                                <DeleteOutlineIcon />
+                              </Button>
+                            </ButtonGroup>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Container>
+            </Box>
+          </React.Fragment>
         </div>
-    );
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default DataDiscipline;

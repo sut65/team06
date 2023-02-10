@@ -65,8 +65,11 @@ function UpdateStudent() {
   const [gender, setGender] = useState<GenderInterface[]>([]);
   const [province, setProvince] = useState<ProvinceInterface[]>([]);
 
-  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(new Date());
-  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] = useState<Date | null>(new Date());
+  const [Student_Birthday, setStudent_Birthday] = useState<Date | null>(
+    new Date()
+  );
+  const [Student_Year_Of_Entry, setStudent_Year_Of_Entry] =
+    useState<Date | null>(new Date());
 
   const [student, setStudent] = useState<Partial<StudentInterface>>({});
 
@@ -77,7 +80,10 @@ function UpdateStudent() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
   /////////////////// combobox /////////////////////////
 
@@ -224,7 +230,10 @@ function UpdateStudent() {
 
     const requestOptions = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
 

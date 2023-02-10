@@ -57,7 +57,9 @@ function UpdateSuggestion() {
   const [branch, setBranch] = useState<BranchInterface[]>([]);
   const [prefix, setPrefix] = useState<PrefixInterface[]>([]);
   const [institute, setInstitute] = useState<InstituteInterface[]>([]);
-  const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>({});
+  const [suggestion, setSuggestion] = useState<Partial<SuggestionInterface>>(
+    {}
+  );
 
   const [message, setAlertMessage] = React.useState("");
 
@@ -72,7 +74,10 @@ function UpdateSuggestion() {
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
   };
 
   /////////////////// combobox /////////////////////////
@@ -148,7 +153,6 @@ function UpdateSuggestion() {
     feachPrefix();
     feachInstitute();
     feachSuggestionByID();
-
   }, []);
 
   const convertType = (data: string | number | undefined) => {
@@ -161,7 +165,6 @@ function UpdateSuggestion() {
   //ตัวรับข้อมูลเข้าตาราง
   function update() {
     let data = {
-      
       ID: convertType(id),
       StudentID: suggestion.StudentID,
       BranchID: convertType(suggestion.BranchID),
@@ -172,12 +175,14 @@ function UpdateSuggestion() {
       Suggestion_Student_Name: suggestion.Suggestion_Student_Name,
       Suggestion_Date: suggestion_date,
       Suggestion_Detail: suggestion.Suggestion_Detail,
-
     };
 
     const requestOptions = {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     };
 
@@ -396,7 +401,9 @@ function UpdateSuggestion() {
                             <p>วันที่ทำการเสนอความคิดเห็น</p>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                               <DatePicker
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
                                 value={suggestion_date}
                                 //   label="วันที่ทำการเสนอความคิดเห็น"
                                 onChange={setSuggestion_Date}

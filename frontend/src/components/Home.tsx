@@ -35,7 +35,7 @@ function Home() {
                 <Container>
                   <Box>
                     <h1 style={{ textAlign: "center", color: "#ffffff" }}>
-                      Test
+                      
                     </h1>
                   </Box>
                 </Container>
