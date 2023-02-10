@@ -13,14 +13,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
 import Home from "../Home";
-
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import { StudentInterface } from "../../models/IStudent";
 
 import { Adminbar } from "../Bar-Admin";
@@ -48,6 +48,16 @@ function DataStudent() {
   const [Filter, setFilter] = useState(Studentstable);
   const [input, setInput] = useState("");
 
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log('click');
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
@@ -85,7 +95,7 @@ function DataStudent() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          // alert(`Are you sure delete id: ${id}`);
           if (localStorage.getItem("Student-id") === id) {
             console.log(id);
             localStorage.clear();
@@ -231,7 +241,7 @@ function DataStudent() {
                                 <SearchIcon />
                               </Button>
                               <Button
-                                onClick={() => DeleteStudent(row.ID + "")}
+                                onClick={() => handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -244,6 +254,35 @@ function DataStudent() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => DeleteStudent(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>
