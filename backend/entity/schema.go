@@ -143,7 +143,7 @@ type BRANCH struct {
 	gorm.Model
 	Branch_Name    string `valid:"stringlength(5|50)~กรอกชื่อสาขา (ความยาวตัวอักษร 5-50 ตัวอักษร)"`
 	Branch_Teacher string `valid:"matches(^[a-zA-Z ]*$)~กรุณากรอกชื่อผู้ก่อตั้งสาขา"`
-	Branch_Info    string
+	Branch_Info    string `valid:"maxstringlength(450)~รายละเอียดเกี่ยวกับสาขา (ความยาวไม่เกิน 450 ตัวอักษร)"`
 
 	PrefixID    *uint
 	InstituteID *uint
