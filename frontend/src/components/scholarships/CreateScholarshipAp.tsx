@@ -172,7 +172,7 @@ function CreateScholarshipAp() {
       ScholarshipTypeID: convertType(ScholarshipType.ID),
       ScholarshipID: convertType(Scholarship.ID),
       Identity_Card: ScholarshipAp.Identity_Card,
-      GPAX: convertType(ScholarshipAp.GPAX),
+      GPAX: parseFloat(ScholarshipAp.GPAX+""),
       Reasons: ScholarshipAp.Reasons,
     };
 
