@@ -12,15 +12,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import {
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { PostponementInterface } from "../../models/IPostponement";
 import SearchIcon from "@mui/icons-material/Search";
-
-import TextField from "@mui/material/TextField";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { HiHome } from "react-icons/hi";
-import { BiSearchAlt } from "react-icons/bi";
 import { Studentbar } from "../Bar-Student";
 import Home from "../Home";
 const Theme = createTheme({
@@ -40,14 +44,21 @@ const Theme = createTheme({
 function DataPostponement() {
   /////////////////////////////////////////////////////
   let navigate = useNavigate();
-  console.log(navigate);
 
   const [Postponementtable, setPostponementable] = useState<
     PostponementInterface[]
   >([]);
 
-  const [filter, setFilter] = useState(Postponementtable);
-  const [name, setname] = useState<string>("");
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    setRowID(id)
+    setIsOpenPopup(true);
+  }
+  const handleClickClosePopup = () => setIsOpenPopup(false);
+
+  const id = localStorage.getItem("Student-id");
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -61,11 +72,15 @@ function DataPostponement() {
 
   //แสดงข้อมูล postponement ทั้งหมด
   const feachPostponementtable = async () => {
-    fetch(`${apiUrl}/postponement_table`, requestOpionsGet)
+    fetch(`${apiUrl}/postponement/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.data);
-        setPostponementable(result.data);
+        if (result.data) {
+          console.log(result.data);
+          setPostponementable(result.data);
+        } else {
+          return false;
+        }
       });
   };
 
@@ -86,7 +101,7 @@ function DataPostponement() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          // alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataPostponement";
           }, 500);
@@ -101,14 +116,6 @@ function DataPostponement() {
   useEffect(() => {
     feachPostponementtable();
   }, []);
-
-  useEffect(() => {
-    const NewFilter = Postponementtable.filter((Postponementtable) => {
-      return Postponementtable.Postponement_Student_Name?.includes(name, 0);
-    });
-
-    setFilter(NewFilter);
-  }, [Postponementtable, name]);
 
   /////////////////////////////////////////////////////
   const [token, setToken] = useState<String>("");
@@ -139,35 +146,11 @@ function DataPostponement() {
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        <Button
-                          color="inherit"
-                          component={RouterLink}
-                          to="/HomeAdmin"
-                          sx={{ marginBottom: 0.5 }}
-                        >
-                          <HiHome size="30" />
-                        </Button>
                         POSTPONEMENT
                       </Typography>
                     </Box>
-                    <Box sx={{ marginLeft: 10 }}>
-                      <Typography variant="h4" gutterBottom>
-                        <TextField
-                          fullWidth
-                          id="Student_Name"
-                          type="string"
-                          label="ค้นหา ชื่อนักศึกษา"
-                          variant="standard"
-                          name="Student_Name"
-                          value={name}
-                          onChange={(event) => setname(event.target.value)}
-                        />
-                      </Typography>
-                    </Box>
-                    <Box sx={{ marginTop: 2.3 }}>
-                      <BiSearchAlt size="30" />
-                    </Box>
-                    <Box sx={{ marginLeft: 45, marginTop: 0.9 }}>
+
+                    <Box sx={{ marginLeft: 85, marginTop: 0.9 }}>
                       <Button
                         variant="contained"
                         component={RouterLink}
@@ -206,7 +189,7 @@ function DataPostponement() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {filter.map((row, idx) => (
+                      {Postponementtable.map((row, idx) => (
                         <TableRow
                           key={row.ID}
                           sx={{
@@ -251,7 +234,7 @@ function DataPostponement() {
                                 <SearchIcon />{" "}
                               </Button>
                               <Button
-                                onClick={() => deletePostponement(row.ID + "")}
+                                onClick={() => handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -264,6 +247,37 @@ function DataPostponement() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => deletePostponement(rowID + "")}>
+                    Sure
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>

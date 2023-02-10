@@ -302,7 +302,7 @@ type SUGGESTION struct {
 
 type POSTPONEMENT struct {
 	gorm.Model
-	Postponement_Student_Number string `gorm:"uniqueIndex" valid:"required,matches(^[BMD]\\d{7}$)"`
+	Postponement_Student_Number string `valid:"required,matches(^[BMD]\\d{7}$)"`
 	Postponement_Student_Name   string `valid:"required~name cannot be blank"`
 	Postponement_AcademicYear   string
 	Postponement_Gpax           string
