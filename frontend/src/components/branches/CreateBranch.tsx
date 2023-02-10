@@ -52,6 +52,8 @@ function CreateBranch() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const [message, setAlertMessage] = useState("");
+
   ////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
@@ -85,17 +87,17 @@ function CreateBranch() {
     }
   };
 
-    ////////////////////handle close alert/////////////////////////
-    const handleClose = (
-      event?: React.SyntheticEvent | Event,
-      reason?: string
-    ) => {
-      if (reason === "clickaway") {
-        return;
-      }
-      setSuccess(false);
-      setError(false);
-    };
+  ////////////////////handle close alert/////////////////////////
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSuccess(false);
+    setError(false);
+  };
 
   useEffect(() => {
     fetchPrefix();
@@ -155,12 +157,13 @@ function CreateBranch() {
     fetch(`${apiUrl}/create_branch`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         if (res.data) {
           setSuccess(true);
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           window.location.href = "/DataBranch";
         } else {
           setError(true);
+          setAlertMessage(res.error);
         }
       });
   }
@@ -175,147 +178,152 @@ function CreateBranch() {
           outerContainerId={"outer-container"}
         />
         <div id="page-CreateBranch">
-
-        <Snackbar
+          <Snackbar
+            id="success"
             open={success}
-            autoHideDuration={6000}
+            autoHideDuration={3000}
             onClose={handleClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           >
             <Alert onClose={handleClose} severity="success">
-              บันทึกข้อมูลสำเร็จ
+              {message}
             </Alert>
           </Snackbar>
 
           <Snackbar
+            id="error"
             open={error}
-            autoHideDuration={6000}
+            autoHideDuration={3000}
             onClose={handleClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           >
             <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
+              {message}
             </Alert>
           </Snackbar>
 
-        <Box sx={{ bgcolor: "#CFD8DC", height: "100vh" }}>
-          <React.Fragment>
-            <CssBaseline>
-              <Container maxWidth="lg">
-                <Paper sx={{ padding: 2, mb: 2 }}>
-                  <Box display={"flex"}>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography
-                        sx={{
-                          color: "#F06292",
-                          fontFamily: "fantasy",
-                          fontSize: 30,
-                          textAlign: "center",
-                        }}
-                      >
-                        Branch
-                      </Typography>
+          <Box sx={{ bgcolor: "#CFD8DC", height: "auto" }}>
+            <React.Fragment>
+              <CssBaseline>
+                <Container maxWidth="lg" sx={{ padding: 2 }}>
+                  <Paper sx={{ padding: 2, mb: 2 }}>
+                    <Box display={"flex"}>
+                      <Box sx={{ flexGrow: 1 }}>
+                        <Typography
+                          sx={{
+                            color: "#F06292",
+                            fontFamily: "fantasy",
+                            fontSize: 30,
+                            textAlign: "center",
+                          }}
+                        >
+                          Branch
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </Paper>
-                <Paper elevation={2}>
-                  <Grid item xs={12} sx={{ padding: 5 }}>
-                    <Grid container spacing={2} sx={{ padding: 2 }}>
-                      <Grid item xs={12}>
-                        <h3>สาขา</h3>
-                        <TextField
-                          fullWidth
-                          id="Branch_Name"
-                          variant="outlined"
-                          value={Branch.Branch_Name}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
+                  </Paper>
+                  <Paper elevation={2}>
+                    <Grid item xs={12} sx={{ padding: 5 }}>
+                      <Grid container spacing={2} sx={{ padding: 2 }}>
+                        <Grid item xs={12}>
+                          <h3>สาขาวิชา</h3>
+                          <TextField
+                            fullWidth
+                            required
+                            id="Branch_Name"
+                            variant="outlined"
+                            value={Branch.Branch_Name}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                      <Grid item xs={12}>
-                        <h3>สำนักวิชา</h3>
-                        <Select
-                          fullWidth
-                          id="Institute"
-                          onChange={handleChange}
-                          native
-                          value={Branch.InstituteID + ""}
-                          inputProps={{ name: "InstituteID" }}
-                        >
-                          <option aria-label="None" value="">
-                            กรุณาเลือกสำนักวิชา
-                          </option>
-                          {Institute.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Institute_Name}
+                        <Grid item xs={12}>
+                          <h3>สำนักวิชา</h3>
+                          <Select
+                            fullWidth
+                            required
+                            id="Institute"
+                            onChange={handleChange}
+                            native
+                            value={Branch.InstituteID + ""}
+                            inputProps={{ name: "InstituteID" }}
+                          >
+                            <option aria-label="None" value="">
+                              กรุณาเลือกสำนักวิชา
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
+                            {Institute.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Institute_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={12}>
-                        <h3>คำนำหน้า</h3>
-                        <Select
-                          fullWidth
-                          id="Prefix"
-                          onChange={handleChange}
-                          native
-                          value={Branch.PrefixID + ""}
-                          inputProps={{ name: "PrefixID" }}
-                        >
-                          <option aria-label="None" value="">
-                            กรุณาเลือกคำนำหน้า
-                          </option>
-                          {Prefix.map((item) => (
-                            <option key={item.ID} value={item.ID}>
-                              {item.Prefix_Name}
+                        <Grid item xs={12}>
+                          <h3>คำนำหน้า</h3>
+                          <Select
+                            fullWidth
+                            required
+                            id="Prefix"
+                            onChange={handleChange}
+                            native
+                            value={Branch.PrefixID + ""}
+                            inputProps={{ name: "PrefixID" }}
+                          >
+                            <option aria-label="None" value="">
+                              กรุณาเลือกคำนำหน้า
                             </option>
-                          ))}
-                        </Select>
-                      </Grid>
+                            {Prefix.map((item) => (
+                              <option key={item.ID} value={item.ID}>
+                                {item.Prefix_Name}
+                              </option>
+                            ))}
+                          </Select>
+                        </Grid>
 
-                      <Grid item xs={12}>
-                        <h3>ผู้ก่อตั้งสาขา</h3>
-                        <TextField
-                          fullWidth
-                          id="Branch_Teacher"
-                          variant="outlined"
-                          value={Branch.Branch_Teacher}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
+                        <Grid item xs={12}>
+                          <h3>ผู้ก่อตั้งสาขา</h3>
+                          <TextField
+                            fullWidth
+                            required
+                            placeholder="ชื่อภาษาอังกฤษ"
+                            id="Branch_Teacher"
+                            variant="outlined"
+                            value={Branch.Branch_Teacher}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                      <Grid item xs={12}>
-                        <h3>
-                          รายละเอียดเกี่ยวกับสาขา (ความยาวไม่น้อยกว่า 100
-                          ตัวอักษร)
-                        </h3>
-                        <TextField
-                          fullWidth
-                          id="Branch_Info"
-                          variant="outlined"
-                          multiline
-                          value={Branch.Branch_Info}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
+                        <Grid item xs={12}>
+                          <h3>รายละเอียดเกี่ยวกับสาขา</h3>
+                          <TextField
+                            fullWidth
+                            required
+                            placeholder="ความยาวไม่เกิน 450 ตัวอักษร"
+                            id="Branch_Info"
+                            variant="outlined"
+                            multiline
+                            value={Branch.Branch_Info}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
 
-                      <Grid item xs={12}>
-                        <Button
-                          onClick={submit}
-                          variant="contained"
-                          color="primary"
-                          sx={{ float: "right" }}
-                        >
-                          SUBMIT
-                        </Button>
+                        <Grid item xs={12}>
+                          <Button
+                            onClick={submit}
+                            variant="contained"
+                            color="primary"
+                            sx={{ float: "right" }}
+                          >
+                            SUBMIT
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Paper>
-              </Container>
-            </CssBaseline>
-          </React.Fragment>
+                  </Paper>
+                </Container>
+              </CssBaseline>
+            </React.Fragment>
           </Box>
         </div>
       </ThemeProvider>

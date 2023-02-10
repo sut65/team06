@@ -141,7 +141,7 @@ type STUDENT struct {
 
 type BRANCH struct {
 	gorm.Model
-	Branch_Name    string
+	Branch_Name    string `valid:"stringlength(5|50)~กรอกชื่อสาขา (ความยาวตัวอักษร 5-50 ตัวอักษร)"`
 	Branch_Teacher string
 	Branch_Info    string
 
