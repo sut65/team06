@@ -141,9 +141,9 @@ type STUDENT struct {
 
 type BRANCH struct {
 	gorm.Model
-	Branch_Name    string `valid:"stringlength(5|50)~กรอกชื่อสาขา (ความยาวตัวอักษร 5-50 ตัวอักษร)"`
-	Branch_Teacher string `valid:"matches(^[a-zA-Z ]*$)~กรุณากรอกชื่อผู้ก่อตั้งสาขา"`
-	Branch_Info    string `valid:"maxstringlength(450)~รายละเอียดเกี่ยวกับสาขา (ความยาวไม่เกิน 450 ตัวอักษร)"`
+	Branch_Name    string `valid:"stringlength(5|50)"`
+	Branch_Teacher string `valid:"matches(^[a-zA-Z ]*$)"`
+	Branch_Info    string `valid:"maxstringlength(450)"`
 
 	PrefixID    *uint
 	InstituteID *uint
@@ -185,9 +185,9 @@ type SCHOLARSHIP struct {
 type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
-	Identity_Card string  `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
-	Reasons       string  `valid:"required~ลืมกรอกเหตุผลในการสมัครทุน,minstringlength(300)~เหตุผลในการสมัครทุนความยาวไม่น้อยกว่า 300 ตัวอักษร"`
-	GPAX          float32 `valid:"required~ลืมกรอกเกรดเฉลี่ย,range(0|4)~เกรดเฉลี่ยไม่ถูกต้อง"`
+	Identity_Card string  `valid:"required,matches(^\\d{13}$)"`
+	Reasons       string  `valid:"required,minstringlength(300)"`
+	GPAX          float32 `valid:"required,matches(^[+]?([1-3]+([.][0-9]*)?|[4]?|[.][0]+)$)"`
 
 	ScholarshipTypeID *uint
 	ScholarshipID     *uint

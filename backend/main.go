@@ -125,25 +125,24 @@ func main() {
 
 			/////////////////////////////////////////////////////////////
 			//รับข้อมูลเข้าตาราง scholarship applicant
-			router.POST("/create", controller.CreateScholarshipAp)
+			r.POST("/create", controller.CreateScholarshipAp)
 			//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
-			router.GET("/data_scholarship_applicants", controller.ListScholarshipApTable)
-			//ใช้ในหน้าแสดงข้อมูล data scholarship applicant
-			router.GET("/ListScholarshipApBySID/:id", controller.ListScholarshipApBySID)
+			r.GET("/ListScholarshipApBySID/:id", controller.ListScholarshipApBySID)
 
 			// แก้ไขข้อมูล scholarship applicants
-			router.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
+			r.PATCH("/update_scholarship_applicants", controller.UpdateScholarshipAp)
 			// ลบข้อมูล scholarship applicants by id
-			router.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
+			r.DELETE("/delete_scholarship_applicants/:id", controller.DeleteScholarshipApByID)
 
 			/// ดึงข้อมูล scholarships by id ใช้ในหน้า all scholarship
-			router.GET("/scholarship/:id", controller.ListScholarshipByID)
+			r.GET("/scholarship/:id", controller.ListScholarshipByID)
 			/// ดึงข้อมูล scholarship type by id ใช้ในหน้า all scholarship
-			router.GET("/scholarship_type/:id", controller.ListScholarshipTypeByID)
+			r.GET("/scholarship_type/:id", controller.ListScholarshipTypeByID)
 			/// ดึงข้อมูล applicant by id ใช้ในหน้า update scholarship applicant
-			router.GET("/applicant/:id", controller.GetApplicantByID)
+			r.GET("/applicant/:id", controller.GetApplicantByID)
 			/// ดึงข้อมูล student by id ใช้ในหน้า create scholarship applicant
-			router.GET("/scholarship_student/:id", controller.GetStudentByID)
+			r.GET("/scholarship_student/:id", controller.GetStudentByID)
+
 
 			/////////////////////////////////////////////////////////////
 			//รับข้อมูลเข้าตาราง Grade
