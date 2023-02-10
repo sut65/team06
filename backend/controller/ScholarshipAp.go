@@ -148,7 +148,6 @@ func UpdateScholarshipAp(c *gin.Context) {
 		return
 	}
 
-
 	update := entity.SCHOLARSHIPAP{
 		Identity_Card: ScholarshipAp.Identity_Card,
 		Reasons:       ScholarshipAp.Reasons,

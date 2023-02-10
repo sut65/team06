@@ -5,7 +5,6 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
-	
 )
 
 func Test_Validate_Course_Credit(t *testing.T) {

@@ -6,13 +6,12 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
-	
 )
 
 func Test_Validate_Student_Number(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	student := STUDENT {
+	student := STUDENT{
 		Student_Year_Of_Entry: time.Now(),
 		Student_Number:        "B630000",
 		Student_Name:          "ศุภกานต์ แสงจันทร์",
@@ -42,7 +41,7 @@ func Test_Validate_Student_Number(t *testing.T) {
 func Test_Validate_Student_Identity_Card(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	student := STUDENT {
+	student := STUDENT{
 		Student_Year_Of_Entry: time.Now(),
 		Student_Number:        "B6300001",
 		Student_Name:          "ศุภกานต์ แสงจันทร์",
@@ -72,7 +71,7 @@ func Test_Validate_Student_Identity_Card(t *testing.T) {
 func Test_Validate_Student_Address(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	student := STUDENT {
+	student := STUDENT{
 		Student_Year_Of_Entry: time.Now(),
 		Student_Number:        "B6300000",
 		Student_Name:          "ศุภกานต์ แสงจันทร์",

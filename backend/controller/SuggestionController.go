@@ -5,28 +5,28 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
-	"github.com/asaskevich/govalidator"
 )
 
 type CreateSuggestionPayload struct {
-	Suggestion_Teacher        string	`json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
-	Suggestion_Student_Number string	`json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
-	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
-	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
-	Suggestion_Detail         string	`json:"Suggestion_Detail"`
+	Suggestion_Teacher        string    `json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
+	Suggestion_Student_Number string    `json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
+	Suggestion_Student_Name   string    `json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
+	Suggestion_Date           time.Time `json:"Suggestion_Date"`
+	Suggestion_Detail         string    `json:"Suggestion_Detail"`
 
-	PrefixID    uint	`json:"PrefixID"`
-	InstituteID uint	`json:"InstituteID"`
-	BranchID    uint	`json:"BranchID"`
-	StudentID   uint	`json:"StudentID"`
+	PrefixID    uint `json:"PrefixID"`
+	InstituteID uint `json:"InstituteID"`
+	BranchID    uint `json:"BranchID"`
+	StudentID   uint `json:"StudentID"`
 }
 
-func CreatSuggestion(c *gin.Context)  {
+func CreatSuggestion(c *gin.Context) {
 
 	var payload_suggestion CreateSuggestionPayload
-	
+
 	var Prefix entity.PREFIX
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
@@ -56,21 +56,20 @@ func CreatSuggestion(c *gin.Context)  {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
-
 	//12:สร้าง entity ADMIN
-	
-	Suggestion.Suggestion_Teacher =       	payload_suggestion.Suggestion_Teacher
-	Suggestion.Suggestion_Student_Number =	payload_suggestion.Suggestion_Student_Number
-	Suggestion.Suggestion_Student_Name =  	payload_suggestion.Suggestion_Student_Name
-	Suggestion.Suggestion_Date =         	payload_suggestion.Suggestion_Date
-	Suggestion.Suggestion_Detail =      	payload_suggestion.Suggestion_Detail
 
-	Suggestion.Prefix =   					Prefix
-	Suggestion.Institute = 					Institute
-	Suggestion.Branch =   					Branch
-		
+	Suggestion.Suggestion_Teacher = payload_suggestion.Suggestion_Teacher
+	Suggestion.Suggestion_Student_Number = payload_suggestion.Suggestion_Student_Number
+	Suggestion.Suggestion_Student_Name = payload_suggestion.Suggestion_Student_Name
+	Suggestion.Suggestion_Date = payload_suggestion.Suggestion_Date
+	Suggestion.Suggestion_Detail = payload_suggestion.Suggestion_Detail
+
+	Suggestion.Prefix = Prefix
+	Suggestion.Institute = Institute
+	Suggestion.Branch = Branch
+
 	// StudentID: 					Suggestion.StudentID,
-	Suggestion.Student =					Student
+	Suggestion.Student = Student
 
 	//13:บันทึก
 	if err := entity.DB().Create(&Suggestion).Error; err != nil {
@@ -85,15 +84,14 @@ func ListSuggestionTable(c *gin.Context) {
 	var suggestion_table []entity.SUGGESTION
 
 	if err := entity.DB().Preload("Prefix").Preload("Institute").Preload("Branch").
-	Preload("Student").Raw("SELECT * FROM suggestions").Scan(&suggestion_table).Find(&suggestion_table).Error; err != nil {
+		Preload("Student").Raw("SELECT * FROM suggestions").Scan(&suggestion_table).Find(&suggestion_table).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": suggestion_table})
 }
 
-
-// ดึงข้อมูล Course by id 
+// ดึงข้อมูล Course by id
 func ListSuggestionByID(c *gin.Context) {
 
 	var suggestion_by_id entity.SUGGESTION
@@ -118,19 +116,18 @@ func DeleteSuggestionByID(c *gin.Context) {
 }
 
 type UpdateSuggestionPayload struct {
-	ID 						  uint 		`json:"ID"`
-	Suggestion_Teacher        string	`json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
-	Suggestion_Student_Number string	`json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
-	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~name cannot be blank"`
-	Suggestion_Date           time.Time	`json:"Suggestion_Date"`
-	Suggestion_Detail         string	`json:"Suggestion_Detail"`
+	ID                        uint      `json:"ID"`
+	Suggestion_Teacher        string    `json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
+	Suggestion_Student_Number string    `json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
+	Suggestion_Student_Name   string    `json:"Suggestion_Student_Name" valid:"required~name cannot be blank"`
+	Suggestion_Date           time.Time `json:"Suggestion_Date"`
+	Suggestion_Detail         string    `json:"Suggestion_Detail"`
 
-	PrefixID    uint	`json:"PrefixID"`
-	InstituteID uint	`json:"InstituteID"`
-	BranchID    uint	`json:"BranchID"`
-	StudentID   uint	`json:"StudentID"`
+	PrefixID    uint `json:"PrefixID"`
+	InstituteID uint `json:"InstituteID"`
+	BranchID    uint `json:"BranchID"`
+	StudentID   uint `json:"StudentID"`
 }
-
 
 // แก้ไขข้อมูล Dormitory
 func UpdateSuggestion(c *gin.Context) {
@@ -165,18 +162,17 @@ func UpdateSuggestion(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
-
 	//12:สร้าง entity ADMIN
 	Suggestion.ID = payload_update_suggestion.ID
-	Suggestion.Suggestion_Teacher =       	payload_update_suggestion.Suggestion_Teacher
-	Suggestion.Suggestion_Student_Number =	payload_update_suggestion.Suggestion_Student_Number
-	Suggestion.Suggestion_Student_Name =  	payload_update_suggestion.Suggestion_Student_Name
-	Suggestion.Suggestion_Date =         	payload_update_suggestion.Suggestion_Date
-	Suggestion.Suggestion_Detail =      	payload_update_suggestion.Suggestion_Detail
+	Suggestion.Suggestion_Teacher = payload_update_suggestion.Suggestion_Teacher
+	Suggestion.Suggestion_Student_Number = payload_update_suggestion.Suggestion_Student_Number
+	Suggestion.Suggestion_Student_Name = payload_update_suggestion.Suggestion_Student_Name
+	Suggestion.Suggestion_Date = payload_update_suggestion.Suggestion_Date
+	Suggestion.Suggestion_Detail = payload_update_suggestion.Suggestion_Detail
 
-	Suggestion.Prefix =   					Prefix
-	Suggestion.Institute = 					Institute
-	Suggestion.Branch =   					Branch
+	Suggestion.Prefix = Prefix
+	Suggestion.Institute = Institute
+	Suggestion.Branch = Branch
 	//update
 	if err := entity.DB().Where("id = ?", Suggestion.ID).Updates(&Suggestion).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

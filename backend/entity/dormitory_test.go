@@ -5,7 +5,6 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
-	
 )
 
 func Test_Validate_Dormitory_Student_Number(t *testing.T) {

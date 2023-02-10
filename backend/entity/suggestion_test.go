@@ -6,7 +6,6 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
-	
 )
 
 func Test_Validate_Suggestion_Teacher(t *testing.T) {
@@ -30,7 +29,7 @@ func Test_Validate_Suggestion_Teacher(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required;กรุณากรอกชื่ออาจารย์"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่ออาจารย์"))
 }
 
 func Test_Validate_Suggestion_Student_Number(t *testing.T) {
@@ -54,7 +53,7 @@ func Test_Validate_Suggestion_Student_Number(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required;Suggestion_Student_Number: A63063 does not validate as matches(^[BMD]\\d{7}$)"))
+	g.Expect(err.Error()).To(Equal("Suggestion_Student_Number: A63063 does not validate as matches(^[BMD]\\d{7}$)"))
 }
 
 func Test_Validate_Suggestion_Student_Name(t *testing.T) {
@@ -78,5 +77,5 @@ func Test_Validate_Suggestion_Student_Name(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Student.Student_Identity_Card: non zero value required;Student.Student_Number: non zero value required;กรุณากรอกชื่อสกุลนักศึกษา"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่อสกุลนักศึกษา"))
 }

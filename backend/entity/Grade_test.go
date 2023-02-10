@@ -5,8 +5,8 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
-	
 )
+
 func Test_Validate_Grade_Student_Number(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -73,7 +73,6 @@ func Test_Validate_Grade_Supject(t *testing.T) {
 	g.Expect(err.Error()).To(Equal("Grade_Supject: SOFTWARE ENGINEERING SOFTWARE ENGINEERING SOFTWARE ENGINEERING does not validate as maxstringlength(20)"))
 }
 
-
 func Test_Validate_Grade_Supject_Not_Null(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -138,4 +137,3 @@ func Test_Validate_Grade_Code_Supject_Not_Null(t *testing.T) {
 	// err.Error ต้องมี error message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("Grade_Code_Supject: non zero value required"))
 }
-

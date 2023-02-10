@@ -185,8 +185,8 @@ type SCHOLARSHIP struct {
 type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
-	Identity_Card string `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
-	Reasons       string `valid:"required~ลืมกรอกเหตุผลในการสมัครทุน,minstringlength(300)~เหตุผลในการสมัครทุนความยาวไม่น้อยกว่า 300 ตัวอักษร"`
+	Identity_Card string  `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
+	Reasons       string  `valid:"required~ลืมกรอกเหตุผลในการสมัครทุน,minstringlength(300)~เหตุผลในการสมัครทุนความยาวไม่น้อยกว่า 300 ตัวอักษร"`
 	GPAX          float32 `valid:"required~ลืมกรอกเกรดเฉลี่ย,range(0|4)~เกรดเฉลี่ยไม่ถูกต้อง"`
 
 	ScholarshipTypeID *uint
@@ -283,9 +283,9 @@ type DORMITORY struct {
 
 type SUGGESTION struct {
 	gorm.Model
-	Suggestion_Teacher        string	`json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
-	Suggestion_Student_Number string	`json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
-	Suggestion_Student_Name   string	`json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
+	Suggestion_Teacher        string `json:"Suggestion_Teacher" valid:"required~กรุณากรอกชื่ออาจารย์"`
+	Suggestion_Student_Number string `json:"Suggestion_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษาขึ้นต้นด้วยBหรือMหรือDและตามด้วยตัวเลข6หลัก, matches(^[BMD]\\d{7}$)"`
+	Suggestion_Student_Name   string `json:"Suggestion_Student_Name" valid:"required~กรุณากรอกชื่อสกุลนักศึกษา"`
 	Suggestion_Date           time.Time
 	Suggestion_Detail         string
 
