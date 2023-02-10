@@ -5,7 +5,6 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Link as RouterLink } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
@@ -14,11 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import { StudentInterface } from "../../models/IStudent";
-import { ScholarshipInterface } from "../../models/IScholarship";
 import { ScholarshipTypeInterface } from "../../models/IScholarshipType";
-import { InstituteInterface } from "../../models/IInstitute";
-import { BranchInterface } from "../../models/IBranch";
 import { ScholarshipApInterface } from "../../models/IScholarshipAp";
 import { Studentbar } from "../Bar-Student";
 
@@ -48,12 +43,6 @@ function UpdateScholarshipAp() {
   let { id } = useParams(); // id ของ row ที่เลือกหน้า data scholarship applicant
   console.log("id", id);
 
-  const [Student, setStudent] = useState<StudentInterface[]>([]);
-  const [Branch, setBranch] = useState<BranchInterface[]>([]);
-  const [Institute, setInstitute] = useState<InstituteInterface[]>([]);
-  const [Scholarship, setScholarship] = useState<Partial<ScholarshipInterface>>(
-    {}
-  );
   const [ScholarshipType, setScholarshipType] = useState<
     Partial<ScholarshipTypeInterface>
   >({});
@@ -64,6 +53,7 @@ function UpdateScholarshipAp() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [message, setAlertMessage] = useState("");
 
   console.log("ScholarshipType", ScholarshipType.ID);
 
@@ -156,9 +146,11 @@ function UpdateScholarshipAp() {
         if (res.data) {
           console.log("update", res.data);
           setSuccess(true);
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           window.location.href = "/data_scholarship_applicants";
         } else {
           setError(true);
+          setAlertMessage(res.error);
         }
       });
   }
@@ -173,29 +165,31 @@ function UpdateScholarshipAp() {
           outerContainerId={"outer-container"}
         />
         <div id="page-UpdateScholarshipApplicant">
-          <Box sx={{ bgcolor: "#CFD8DC", height: "300vh" }}>
+          <Box sx={{ bgcolor: "#CFD8DC", height: "auto" }}>
             <React.Fragment>
               <CssBaseline>
                 <Container maxWidth="lg" sx={{ padding: 2 }}>
                   <Snackbar
+                    id="success"
                     open={success}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      บันทึกข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
                   <Snackbar
+                    id="error"
                     open={error}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      บันทึกข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
@@ -221,11 +215,11 @@ function UpdateScholarshipAp() {
                         <Grid item xs={12}>
                           <h3>ชื่อ-นามสกุล</h3>
                           <TextField
+                            inputProps={{ readOnly: true }}
                             fullWidth
                             id="StudentID"
                             variant="outlined"
                             value={ScholarshipAp.Student?.Student_Name}
-                            disabled
                           />
                         </Grid>
 
@@ -233,6 +227,7 @@ function UpdateScholarshipAp() {
                           <h3>เลขประจำตัวประชาชน 13 หลัก</h3>
                           <TextField
                             fullWidth
+                            
                             id="Identity_Card"
                             variant="outlined"
                             inputProps={{ maxLength: 13 }}
@@ -245,6 +240,7 @@ function UpdateScholarshipAp() {
                           <h3>เกรดเฉลี่ยสะสม (GPAX)</h3>
                           <TextField
                             fullWidth
+                            
                             id="GPAX"
                             inputProps={{ maxLength: 4 }}
                             variant="outlined"
@@ -258,12 +254,14 @@ function UpdateScholarshipAp() {
                           <TextField
                             fullWidth
                             id="ScholarshipTypeID"
-                            disabled
                             value={
                               ScholarshipAp.ScholarshipType
                                 ?.Scholarship_Type_Name
                             }
-                            inputProps={{ name: "ScholarshipTypeID" }}
+                            inputProps={{
+                              readOnly: true,
+                              name: "ScholarshipTypeID",
+                            }}
                           ></TextField>
                         </Grid>
 
@@ -272,20 +270,21 @@ function UpdateScholarshipAp() {
                           <TextField
                             fullWidth
                             id="ScholarshipID"
-                            disabled
                             value={ScholarshipAp.Scholarship?.Scholarship_Name}
-                            inputProps={{ name: "ScholarshipID" }}
+                            inputProps={{
+                              readOnly: true,
+                              name: "ScholarshipID",
+                            }}
                           ></TextField>
                         </Grid>
 
                         <Grid item xs={12}>
-                          <h3>สาขา</h3>
+                          <h3>สาขาวิชา</h3>
                           <TextField
                             fullWidth
                             id="Branch"
-                            disabled
                             value={ScholarshipAp.Branch?.Branch_Name}
-                            inputProps={{ name: "BranchID" }}
+                            inputProps={{ readOnly: true, name: "BranchID" }}
                           ></TextField>
                         </Grid>
 
@@ -294,9 +293,8 @@ function UpdateScholarshipAp() {
                           <TextField
                             fullWidth
                             id="Institute"
-                            disabled
                             value={ScholarshipAp.Institute?.Institute_Name}
-                            inputProps={{ name: "InstituteID" }}
+                            inputProps={{ readOnly: true, name: "InstituteID" }}
                           ></TextField>
                         </Grid>
 
@@ -306,6 +304,7 @@ function UpdateScholarshipAp() {
                           </h3>
                           <TextField
                             fullWidth
+                            
                             id="Reasons"
                             variant="outlined"
                             multiline
