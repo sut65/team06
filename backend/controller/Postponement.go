@@ -1,11 +1,12 @@
 package controller
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team06/entity"
-	"net/http"
-	"time"
 )
 
 type CreatePostponementPayload struct {
@@ -115,10 +116,10 @@ func ListPostponementTable(c *gin.Context) {
 
 // ดึงข้อมูล Postponement by id
 func ListPostponementByID(c *gin.Context) {
-	var Postponement entity.POSTPONEMENT
+	var Postponement []entity.POSTPONEMENT
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM postponements WHERE id = ?", id).Scan(&Postponement).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM postponements WHERE student_id = ?", id).Scan(&Postponement).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"ListPostponementByID_error": err.Error()})
 
