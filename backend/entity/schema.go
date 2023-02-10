@@ -103,11 +103,11 @@ type COURSE struct {
 type STUDENT struct {
 	gorm.Model
 	Student_Year_Of_Entry time.Time
-	Student_Number        string `gorm:"uniqueIndex" valid:"required ,matches(^[BMD]\\d{7}$)"`
+	Student_Number        string `gorm:"uniqueIndex" valid:"matches(^[BMD]\\d{7}$)"`
 	Student_Name          string
 	Student_Birthday      time.Time
 	Student_Tel           string
-	Student_Identity_Card string `gorm:"uniqueIndex" valid:"required ,matches(^\\d{13}$)"`
+	Student_Identity_Card string `gorm:"uniqueIndex" valid:"matches(^\\d{13}$)"`
 	Student_Nationality   string
 	Student_Religion      string
 	Student_Address       string `valid:"minstringlength(10)"`
