@@ -187,7 +187,7 @@ type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 
 	Identity_Card string `valid:"required~ลืมกรอกเลขประจำตัวประชาชน,matches(^\\d{13}$)~เลขประจำตัวประชาชนไม่ถูกต้อง"`
 	Reasons       string
-	GPAX          float32
+	GPAX          float32 `valid:"required~ลืมกรอกเกรดเฉลี่ย,range(0|4)~เกรดเฉลี่ยไม่ถูกต้อง"`
 
 	ScholarshipTypeID *uint
 	ScholarshipID     *uint
