@@ -22,7 +22,7 @@ type CreateDisciplinePayload struct {
 
 	Discipline_Reason     string    `json:"Discipline_Reason" valid:"required~Discipline_Reason cannot be blank"`
 	Discipline_Punishment string    `json:"Discipline_Punishment" valid:"required~Discipline_Punishment cannot be blank"`
-	Discipline_Point      uint      `json:"Discipline_Point"` //valid:"required~Discipline_Point cannot be blank, range(1|5)"`
+	Discipline_Point      uint      `json:"Discipline_Point" valid:"required~Discipline_Point cannot be blank, range(1|5)"`
 	Added_Time            time.Time `json:"Added_Time"`
 }
 

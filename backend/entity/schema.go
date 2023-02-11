@@ -353,9 +353,9 @@ type Discipline struct {
 	DisciplineTypeID *uint
 	DisciplineType   DisciplineType `gorm:"references:id"`
 
-	Discipline_Reason     string
-	Discipline_Punishment string
-	Discipline_Point      uint
+	Discipline_Reason     string `valid:"required~Discipline_Reason cannot be blank"`
+	Discipline_Punishment string `valid:"required~Discipline_Punishment cannot be blank"`
+	Discipline_Point      uint   `valid:"required~Discipline_Point cannot be blank, range(1|5)"`
 	Added_Time            time.Time
 }
 
