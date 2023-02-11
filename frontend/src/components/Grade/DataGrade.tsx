@@ -12,7 +12,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup, TextField } from "@mui/material";
+import {
+  ButtonGroup,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { GradeInterface } from "../../models/IGrade";
@@ -21,6 +29,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
 import { Adminbar } from "../Bar-Admin";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 const Theme = createTheme({
   palette: {
@@ -39,10 +48,20 @@ const Theme = createTheme({
 function DataGrade() {
   /////////////////////////////////////////////////////
   let navigate = useNavigate();
+
   const [Gradestable, setGradestable] = useState<GradeInterface[]>([]);
   const [Filter, setFilter] = useState(Gradestable);
   const [input, setInput] = useState("");
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
 
+  const handleClickOpenPopup = (id: string) => {
+    console.log("click");
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -81,7 +100,7 @@ function DataGrade() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          //alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataGrade";
           }, 500);
@@ -134,18 +153,10 @@ function DataGrade() {
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        <Button
-                          color="inherit"
-                          component={RouterLink}
-                          to="/HomeAdmin"
-                          sx={{ marginBottom: 0.5 }}
-                        >
-                          <HiHome size="30" />
-                        </Button>
                         GRADE
                       </Typography>
                     </Box>
-                    <Box sx={{ marginLeft: 25 }}>
+                    <Box sx={{ marginLeft: 35 }}>
                       <Typography variant="h4" gutterBottom>
                         <TextField
                           fullWidth
@@ -162,7 +173,7 @@ function DataGrade() {
                     <Box sx={{ marginTop: 2.3 }}>
                       <BiSearchAlt size="30" />
                     </Box>
-                    <Box sx={{ marginLeft: 43.5, marginTop: 0.9 }}>
+                    <Box sx={{ marginLeft: 46, marginTop: 0.9 }}>
                       <Button
                         variant="contained"
                         component={RouterLink}
@@ -170,7 +181,7 @@ function DataGrade() {
                         color="secondary"
                         size="large"
                       >
-                        create
+                        <a className="menu-button-back">create</a>
                       </Button>
                     </Box>
                   </Box>
@@ -224,7 +235,9 @@ function DataGrade() {
                                 <SearchIcon />
                               </Button>
                               <Button
-                                onClick={() => DeleteGrade(row.ID + "")}
+                                onClick={() =>
+                                  handleClickOpenPopup(row.ID + "")
+                                }
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -237,6 +250,35 @@ function DataGrade() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => DeleteGrade(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>

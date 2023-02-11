@@ -718,24 +718,26 @@ func SetupDatabase() {
 	///////////////ข้อมูลใน entity GRADE ///////////////////////////////
 
 	Grade1 := GRADE{
-		Grade_Student_Number: "B6428531",
-		Grade_Code_Supject:   "SOFTWARE ENGINEERING",
-		Grade_Supject:        "523332",
+		Grade_Student_Number: "B6300000",
+		Grade_Code_Supject:   "523332",
+		Grade_Supject:        "SOFTWARE ENGINEERING",
 		Grade:                "A",
 		Institute:            Institute1,
 		Branch:               Branch1,
 		Admin:                Admin1,
+		Student:              Student1,
 	}
 	db.Model(&GRADE{}).Create(&Grade1)
 
 	Grade2 := GRADE{
-		Grade_Student_Number: "B6175324",
-		Grade_Code_Supject:   "MATH",
-		Grade_Supject:        "235661",
+		Grade_Student_Number: "B6311010",
+		Grade_Code_Supject:   "235661",
+		Grade_Supject:        "MATH",
 		Grade:                "B",
 		Institute:            Institute1,
 		Branch:               Branch1,
 		Admin:                Admin2,
+		Student:              Student2,
 	}
 	db.Model(&GRADE{}).Create(&Grade2)
 
