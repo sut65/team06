@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"gorm.io/gorm"
+	"github.com/asaskevich/govalidator"
 )
 
 type GENDER struct {
@@ -388,8 +389,28 @@ type Petition struct {
 	PetitionPeriodID *uint
 	PetitionPeriod   PetitionPeriod `gorm:"references:id"`
 
-	Petition_Reason    string
-	Petition_Startdate time.Time
+	Petition_Reason    string `valid:"required~Petition_Reason cannot be blank"`
+	Petition_Startdate time.Time `valid:"startdate~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time
-	Added_Time         time.Time
+	Added_Time         time.Time `valid:"addedtime~Added_Time is invalid"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("startdate", func(i interface{}, _ interface{}) bool {
+		t := i.(time.Time)
+		if t.Before(time.Now().Add(-60 * time.Minute)) {
+			return false
+		} else {
+			return true
+		}
+	})
+
+	govalidator.CustomTypeTagMap.Set("addedtime", func(i interface{}, _ interface{}) bool {
+		t := i.(time.Time)
+		if t.Before(time.Now().Add(-60 * time.Minute)) || t.After(time.Now().Add(60*time.Minute)) {
+			return false
+		} else {
+			return true
+		}
+	})
 }
