@@ -41,8 +41,8 @@ type CreatePetitionPayload struct {
 	//PetitionPeriod FK
 	PetitionPeriod uint `json:"PetitionPeriod"`
 
-	Petition_Reason    string    `json:"Petition_Reason"`// valid:"required~Petition_Reason cannot be blank"`
-	Petition_Startdate time.Time `json:"Petition_Startdate"`// valid:"required~Petition_Startdate cannot be blank, startdate~Petition_Startdate is invalid"`
+	Petition_Reason    string    `json:"Petition_Reason" valid:"required~Petition_Reason cannot be blank"`
+	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"required~Petition_Startdate cannot be blank, startdate~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time `json:"Petition_Enddate"`
 	Added_Time         time.Time `json:"Added_Time"`// valid:"addedtime~Added_Time is invalid"`
 }
