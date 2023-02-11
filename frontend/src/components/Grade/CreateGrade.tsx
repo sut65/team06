@@ -8,8 +8,13 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { FormControl } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Link as RouterLink } from "react-router-dom";
 import Home from "../Home";
+import DataGrade from "./DataGrade";
 import { Adminbar } from "../Bar-Admin";
 import { FiArrowLeft } from "react-icons/fi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -206,14 +211,16 @@ function CreateGrade() {
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        <Button
-                          color="inherit"
-                          component={RouterLink}
-                          to="/DataStudent"
-                          sx={{ marginBottom: 0.5 }}
-                        >
-                          <FiArrowLeft size="30" />
-                        </Button>
+                        <a className="menu-head">
+                          <Button
+                            color="inherit"
+                            component={RouterLink}
+                            to="/DataGrade"
+                            sx={{ marginBottom: 0.5 }}
+                          >
+                            <FiArrowLeft size="30" />
+                          </Button>
+                        </a>
                         CREATE GRADE
                       </Typography>
                     </Box>
@@ -357,7 +364,7 @@ function CreateGrade() {
                             color="primary"
                             onClick={submit}
                           >
-                            submit
+                            <a className="menu-button-submit">submit</a>
                           </Button>
                         </Grid>
                         <Grid item xs={3}>
@@ -369,7 +376,7 @@ function CreateGrade() {
                             component={RouterLink}
                             to="/DataGrade"
                           >
-                            back
+                            <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={6}></Grid>

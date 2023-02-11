@@ -202,14 +202,16 @@ function UpdateGrade() {
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        <Button
-                          color="inherit"
-                          component={RouterLink}
-                          to="/DataGrade"
-                          sx={{ marginBottom: 0.5 }}
-                        >
-                          <FiArrowLeft size="30" />
-                        </Button>
+                        <a className="menu-head">
+                          <Button
+                            color="inherit"
+                            component={RouterLink}
+                            to="/DataGrade"
+                            sx={{ marginBottom: 0.5 }}
+                          >
+                            <FiArrowLeft size="30" />
+                          </Button>
+                        </a>
                         UPDATE GRADE
                       </Typography>
                     </Box>
@@ -355,7 +357,7 @@ function UpdateGrade() {
                             // component={RouterLink}
                             // to="/DataGrade"
                           >
-                            Update
+                            <a className="menu-button-submit">update</a>
                           </Button>
                         </Grid>
                         <Grid item xs={3}>
@@ -367,7 +369,7 @@ function UpdateGrade() {
                             component={RouterLink}
                             to="/DataGrade"
                           >
-                            back
+                            <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={6}></Grid>
