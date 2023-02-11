@@ -43,7 +43,8 @@ import SearchDiscipline from "./components/Discipline/SearchDiscipline";
 import DataGrade from "./components/Grade/DataGrade";
 import CreateGrade from "./components/Grade/CreateGrade";
 import UpdateGrade from "./components/Grade/UpdateGrade";
-import SearchGrade from "./components/Grade/SearchGrade"
+import SearchGrade from "./components/Grade/SearchGrade";
+import ShowGrade from "./components/Grade/ShowGrade";
 
 import DataActivity from "./components/Activity/DataActivity";
 import CreateActivity from "./components/Activity/CreateActivity";
@@ -113,6 +114,7 @@ function App() {
       <Route path="/CreateGrade" element={<CreateGrade />} />
       <Route path="/DataGrade/UpdateGrade/:id" element={<UpdateGrade />} />
       <Route path="/DataGrade/SearchGrade/:id" element={<SearchGrade />} />
+      <Route path="/ShowGrade" element={<ShowGrade />} />
 
 
       <Route path="/DataActivity" element={<DataActivity />} />
