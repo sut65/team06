@@ -22,6 +22,7 @@ import { SuggestionInterface } from "../../models/ISuggestion";
 
 import Home from "../Home";
 import { Studentbar } from "../Bar-Student";
+import { id } from "date-fns/locale";
 
 const Theme = createTheme({
   palette: {
@@ -42,6 +43,7 @@ function DataSuggestion() {
 
   let navigate = useNavigate();
   console.log(navigate);
+  const id = localStorage.getItem("Student-id");
 
   const [suggestiontable, setSuggestiontable] = useState<SuggestionInterface[]>(
     []
@@ -62,7 +64,7 @@ function DataSuggestion() {
 
   //แสดงข้อมูล suggestion ทั้งหมด
   const feachSuggestiontable = async () => {
-    fetch(`${apiUrl}/suggestion_table`, requestOpionsGet)
+    fetch(`${apiUrl}/suggestion_by_id/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         console.log(result.data);

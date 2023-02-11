@@ -279,7 +279,7 @@ function UpdateStudent() {
         />
         <div id="page-UpdateStudent">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
+            <Box sx={{ backgroundColor: "#313131", height: "auto" }}>
               <CssBaseline />
               <Container maxWidth="lg">
                 <Paper sx={{ padding: 1 }}>

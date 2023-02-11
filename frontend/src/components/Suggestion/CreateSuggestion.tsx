@@ -153,7 +153,6 @@ function CreateSuggestion() {
     feachInstitute();
     fetchStudentByID();
   }, []);
-
   /////////////////////////////////////////////////////
 
   const convertType = (data: string | number | undefined) => {
@@ -202,7 +201,6 @@ function CreateSuggestion() {
         }
       });
   }
-
   /////////////////////////////////////////////////////
 
   const [token, setToken] = useState<String>("");
