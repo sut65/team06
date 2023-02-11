@@ -12,12 +12,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import { ScholarshipApInterface } from "../../models/IScholarshipAp";
 import { Studentbar } from "../Bar-Student";
+import Home from "../Home";
 
 const Theme = createTheme({
   palette: {
@@ -43,6 +45,18 @@ function DataScholarshipAp() {
   >([]);
 
   console.log("ScholarshipAp", ScholarshipAp);
+
+  ////////////////////////////alert/////////////////////
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log("click");
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -95,6 +109,18 @@ function DataScholarshipAp() {
     fetchStudentByID();
   }, []);
   /////////////////////////////////////////////////////
+
+  const [token, setToken] = useState<String>("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
 
   return (
     <div className="DataScholarshipApplicant" id="outer-container">
@@ -191,7 +217,7 @@ function DataScholarshipAp() {
                               UPDATE
                             </Button>
                             <Button
-                              onClick={() => DeleteScholarship(row?.ID + "")}
+                              onClick={() => handleClickOpenPopup(row?.ID + "")}
                               color="secondary"
                             >
                               <DeleteOutlineIcon />
@@ -204,6 +230,35 @@ function DataScholarshipAp() {
                 </Table>
               </TableContainer>
             </Container>
+            {/* Popup */}
+            <Dialog
+              open={isOpenPopup}
+              onClose={handleClickClosePopup}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "#DE3163",
+                    fontSize: "2rem",
+                  }}
+                >
+                  Delete {<PriorityHighIcon fontSize="large" />}
+                </Box>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure to delete ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClickClosePopup}>Cancel</Button>
+                <Button onClick={() => DeleteScholarship(rowID + "")}>Sure</Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </div>
       </ThemeProvider>
