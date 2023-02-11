@@ -55,6 +55,10 @@ func CreatSuggestion(c *gin.Context) {
 	if tx := entity.DB().Where("id = ?", payload_suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
+	if tx := entity.DB().Where("id = ?", payload_suggestion.StudentID).First(&Student); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Province not found"})
+		return
+	}
 
 	//12:สร้าง entity ADMIN
 
@@ -94,9 +98,9 @@ func ListSuggestionTable(c *gin.Context) {
 // ดึงข้อมูล Course by id
 func ListSuggestionByID(c *gin.Context) {
 
-	var suggestion_by_id entity.SUGGESTION
+	var suggestion_by_id []entity.SUGGESTION
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM suggestions WHERE id = ?", id).Scan(&suggestion_by_id).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM suggestions WHERE student_id = ?", id).Scan(&suggestion_by_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ListSuggestionByID_error": err.Error()})
 		return
 	}
@@ -137,7 +141,6 @@ func UpdateSuggestion(c *gin.Context) {
 	var Institute entity.INSTITUTE
 	var Branch entity.BRANCH
 	var Suggestion entity.SUGGESTION
-	// var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&payload_update_suggestion); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
