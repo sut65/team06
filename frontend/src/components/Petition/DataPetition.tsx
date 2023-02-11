@@ -17,8 +17,6 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { format } from "date-fns";
-import * as dayjs from "dayjs";
-import Moment from "moment";
 import TextField from "@mui/material/TextField";
 import {
   Alert,
@@ -51,11 +49,11 @@ const Theme = createTheme({
 function date_TO_String(date_Object: string): string {
   // get the year, month, date, hours, and minutes seprately and append to the strig.n
   let date_String: string =
-    date_Object.slice(0, 4) +
-    "/" +
     date_Object.slice(5, 7) +
     "/" +
-    date_Object.slice(8, 10);
+    date_Object.slice(8, 10) +
+    "/" +
+    date_Object.slice(0, 4);
   return date_String;
 }
 

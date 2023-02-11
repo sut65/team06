@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -26,11 +26,29 @@ import {
   PetitionTypeInterface,
   PetitionPeriodInterface,
 } from "../../models/IPetition";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 import { Studentbar } from "../Bar-Student";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { FiArrowLeft } from "react-icons/fi";
 // import ResponsiveAppBar from './Bar_01'; #this is bar from own project
+
+function date_TO_String(date_Object: string): string {
+  // get the year, month, date, hours, and minutes seprately and append to the strig.n
+  let date_String: string =
+    date_Object.slice(5, 7) +
+    "/" +
+    date_Object.slice(8, 10) +
+    "/" +
+    date_Object.slice(0, 4);
+  return date_String;
+}
+
+function date_date(date_Object: string): string {
+  // get the year, month, date, hours, and minutes seprately and append to the strig.n
+  let date_String: string = date_Object.slice(8, 10);
+  return date_String;
+}
 
 const Theme = createTheme({
   palette: {
@@ -52,14 +70,18 @@ export default function UpdatePetition() {
   const [Added_Time, setAdded_Time] = React.useState<Dayjs | null>(dayjs());
   const [Petition_Startdate, setPetition_Startdate] =
     React.useState<Dayjs | null>(dayjs());
-  const [Petition_Enddate, setPetition_Enddate] = React.useState<Dayjs | null>(
+  const [Petition_Enddate, setPetition_Enddate] = React.useState<Dayjs>(
     dayjs()
   );
   const [Petition_Reason, setPetition_Reason] = React.useState<String>("");
 
+  const [date_start, setDate_start] = React.useState<String>("");
+
   //save entity
   const [PetitionTypeID, setPetitionTypeID] = React.useState("");
   const [PetitionPeriodID, setPetitionPeriodID] = React.useState("");
+
+  const [Period, setPeriod] = React.useState<Number>(1);
 
   //data from fetch
 
@@ -77,6 +99,8 @@ export default function UpdatePetition() {
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const [message, setAlertMessage] = React.useState("");
+
   //Petition
   const [Petition, setPetition] = React.useState<Partial<PetitionInterface>>(
     {}
@@ -90,7 +114,16 @@ export default function UpdatePetition() {
 
   const onChangePetitionPeriod = (event: SelectChangeEvent) => {
     setPetitionPeriodID(event.target.value as string);
+    SearchPeriod();
     console.log(event.target.value as string);
+  };
+
+  const onChangePetition_Startdate = (newValue: Dayjs | null) => {
+    setPetition_Startdate(newValue);
+    setDate_start(date_date(dayjs(newValue).toISOString()));
+  };
+
+  const onChangePetition_Enddate = (newValue: Dayjs | null) => {
   };
 
   const handleClose = (
@@ -115,9 +148,9 @@ export default function UpdatePetition() {
     //Data ที่จะนำไปบันทึกลงใน Petition
     let data = {
       ID: convertType(id),
-      StudentID: studentID,
-      PetitionTypeID: PetitionTypeID,
-      PetitionPeriodID: PetitionPeriodID,
+      Student: studentID,
+      PetitionType: PetitionTypeID,
+      PetitionPeriod: PetitionPeriodID,
       Petition_Reason: Petition_Reason,
       Petition_Startdate: Petition_Startdate,
       Petition_Enddate: Petition_Enddate,
@@ -138,9 +171,11 @@ export default function UpdatePetition() {
       .then((res) => {
         console.log(res);
         if (res.data) {
+          setAlertMessage("บันทึกข้อมูลสำเร็จ")
           setSuccess(true);
           console.log(PetitionTypeID);
         } else {
+          setAlertMessage(res.error)
           setError(true);
         }
       });
@@ -214,10 +249,64 @@ export default function UpdatePetition() {
       });
   };
 
+  const SearchPeriod = async () => {
+    const apiUrl1 = `http://localhost:8080/GetPetitionPeriod/${PetitionPeriodID}`;
+    const requestOptions1 = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+    fetch(apiUrl1, requestOptions1)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          setPeriod(res.data.PetitionPeriod_Num);
+        }
+      });
+  };
+
+  const pppp = async () => {
+    for (let i = 0; i < 1; i++) {
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
+    }
+  }
+
+  const ppenddate = async () => {
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+    pppp();
+  }
+
+  const ps_ppenddate = async () => {
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+  }
+
   //========function useEffect ========
   // React.useEffect(() => {
   //     SearchStudent();
   // }, [StudentID]);
+
+  React.useEffect(() => {
+    console.log(date_start);
+    console.log(Number(date_start));
+    ps_ppenddate();
+  }, [Petition_Startdate]);
+
+  React.useEffect(() => {
+    SearchPeriod()
+    console.log(date_start);
+    console.log(Number(date_start));
+    setDate_start(date_date(dayjs(Petition_Startdate).toISOString()));
+    ppenddate();
+  }, [PetitionPeriodID]);
+
+  React.useEffect(() => {
+    pppp();
+  }, [Petition_Enddate]);
 
   React.useEffect(() => {
     ListPetitionType();
@@ -242,19 +331,20 @@ export default function UpdatePetition() {
                     open={success}
                     autoHideDuration={6000}
                     onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      บันทึกข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                   <Snackbar
                     open={error}
                     autoHideDuration={6000}
                     onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      บันทึกข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
@@ -377,13 +467,14 @@ export default function UpdatePetition() {
                         </Grid>
                         <Grid item xs={4}>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateTimePicker
-                              renderInput={(props) => <TextField {...props} />}
+                            <DesktopDatePicker
                               label="Petition_Startdate"
+                              inputFormat="MM/DD/YYYY"
                               value={Petition_Startdate}
-                              onChange={(newValue) => {
-                                setPetition_Startdate(newValue);
-                              }}
+                              onChange={onChangePetition_Startdate}
+                              renderInput={(params) => (
+                                <TextField {...params} />
+                              )}
                             />
                           </LocalizationProvider>
                         </Grid>
@@ -394,14 +485,25 @@ export default function UpdatePetition() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
+                          {/* <TextField
+                            fullWidth
+                            id="Petition_Enddate"
+                            value={Petition_Enddate.toString()}
+                            //value={Period}
+                            InputProps={{
+                              readOnly: true,
+                            }}
+                          /> */}
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateTimePicker
-                              renderInput={(props) => <TextField {...props} />}
-                              label="Petition_Enddate"
+                            <DesktopDatePicker
+                              label="Petition_Startdate"
+                              inputFormat="MM/DD/YYYY"
                               value={Petition_Enddate}
-                              onChange={(newValue) => {
-                                setPetition_Enddate(newValue);
-                              }}
+                              disabled
+                              onChange={onChangePetition_Enddate}
+                              renderInput={(params) => (
+                                <TextField {...params} />
+                              )}
                             />
                           </LocalizationProvider>
                         </Grid>
