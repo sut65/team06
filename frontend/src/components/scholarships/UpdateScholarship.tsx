@@ -318,8 +318,8 @@ function UpdateScholarshipAp() {
                             onClick={update}
                             variant="contained"
                             color="primary"
-                            component={RouterLink}
-                            to="/data_scholarship_applicants"
+                            // component={RouterLink}
+                            // to="/data_scholarship_applicants"
                             sx={{ float: "right" }}
                           >
                             UPDATE
