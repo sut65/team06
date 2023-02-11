@@ -83,7 +83,7 @@ function UpdateSuggestion() {
   /////////////////// combobox /////////////////////////
 
   const feachSuggestionByID = async () => {
-    fetch(`${apiUrl}/suggestion_by_id/${id}`, requestOptionsGet)
+    fetch(`${apiUrl}/suggestion_id/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
         console.log("id:", result.data);

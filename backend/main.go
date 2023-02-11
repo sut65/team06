@@ -191,6 +191,7 @@ func main() {
 			router.GET("/suggestion_table", controller.ListSuggestionTable)
 			// ดึงข้อมูล Suggestion by id
 			router.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
+			router.GET("/suggestion_id/:id", controller.ListSuggestionID)
 			// แก้ไขข้อมูล Suggestion
 			router.PATCH("/update_suggestion", controller.UpdateSuggestion)
 			// ลบข้อมูล Suggestion by id
