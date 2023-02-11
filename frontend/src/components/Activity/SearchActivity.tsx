@@ -56,7 +56,7 @@ function SearchActivity() {
   /////////////////// combobox /////////////////////////
 
   const feachActivityByID = async () => {
-    fetch(`${apiUrl}/activity/${id}`, requestOpionsGet)
+    fetch(`${apiUrl}/activitys/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setActivity(result.data);
@@ -137,13 +137,15 @@ function SearchActivity() {
                   <Box display={"flex"}>
                     <Box sx={{ flexGrow: 1 }}>
                       <Typography variant="h4" gutterBottom>
+                      <a className="menu-head">
                         <Button
                           color="inherit"
                           component={RouterLink}
-                          to="/DataCourse"
+                          to="/DataActivity"
                         >
                           <FiArrowLeft size="30" />
                         </Button>
+                        </a>
                         SEARCH ACTIVITY
                       </Typography>
                     </Box>
@@ -244,17 +246,16 @@ function SearchActivity() {
                         <Grid item xs={4}>
                           <FormControl fullWidth variant="outlined">
                             <p>วันที่ทำกิจกรรม</p>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                              <DatePicker
-                                renderInput={(params) => (
-                                  <TextField {...params} />
-                                )}
-                                value={activity_Date}
-                                label="วันที่ทำกิจกรรม"
-                                disabled
-                                onChange={setActivity_Date}
-                              />
-                            </LocalizationProvider>
+                            <TextField
+                              fullWidth
+                              id="Activity_Date"
+                              type="string"
+                              variant="outlined"
+                              name="Activity_Date"
+                              disabled
+                              value={activity.Activity_Date}
+                              onChange={handleInputChange}
+                            />
                           </FormControl>
                         </Grid>
                         <Grid item xs={8}></Grid>
@@ -310,11 +311,6 @@ function SearchActivity() {
                           />
                         </Grid>
                         <Grid item xs={8}></Grid>
-                        {/* <Grid item xs={3}>
-                    <Button variant="contained" size="large" fullWidth onClick={Search}>
-                    update
-                    </Button>
-                  </Grid> */}
                         <Grid item xs={3}>
                           <Button
                             variant="contained"
@@ -323,7 +319,7 @@ function SearchActivity() {
                             component={RouterLink}
                             to="/DataActivity"
                           >
-                            back
+                             <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={6}></Grid>

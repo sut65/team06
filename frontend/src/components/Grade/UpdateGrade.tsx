@@ -65,7 +65,7 @@ function UpdateGrade() {
   /////////////////// combobox /////////////////////////
 
   const feachGradeByID = async () => {
-    fetch(`${apiUrl}/grade/${id}`, requestOpionsGet)
+    fetch(`${apiUrl}/grades/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setGrade(result.data);

@@ -68,7 +68,7 @@ type CreateGradePayload struct {
 			return
 		}
 	
-		//  ค้นหา Student ด้วย id
+		//  ค้นหา Student ด้วย number
 		if tx := entity.DB().Where("student_number = ?", payload.Grade_Student_Number).First(&Student); tx.RowsAffected == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
 			return
@@ -128,6 +128,22 @@ type CreateGradePayload struct {
 		c.JSON(http.StatusOK, gin.H{"data": GradeByID})
 	}
 	
+
+	func GradeByID(c *gin.Context) {
+	
+		var GradeByID entity.GRADE
+		id := c.Param("id")
+		if err := entity.DB().Raw("SELECT * FROM grades WHERE id = ?", id).Scan(&GradeByID).Error; err != nil {
+	
+			c.JSON(http.StatusBadRequest, gin.H{"ListGradeByID_error": err.Error()})
+	
+			return
+	
+		}
+	
+		c.JSON(http.StatusOK, gin.H{"data": GradeByID})
+	}
+	
 	// ลบข้อมูล Grade by id
 	func DeleteGradeByID(c *gin.Context) {
 		id := c.Param("id")
@@ -169,7 +185,7 @@ type CreateGradePayload struct {
 			return
 		}
 	
-		//  ค้นหา Student ด้วย id
+		//  ค้นหา Student ด้วย number
 		if tx := entity.DB().Where("student_number = ?", payload.Grade_Student_Number).First(&Student); tx.RowsAffected == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
 			return

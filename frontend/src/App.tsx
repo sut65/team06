@@ -50,6 +50,7 @@ import DataActivity from "./components/Activity/DataActivity";
 import CreateActivity from "./components/Activity/CreateActivity";
 import UpdateActivity from "./components/Activity/UpdateActivity";
 import SearchActivity from "./components/Activity/SearchActivity";
+import ShowActivity from "./components/Activity/ShowAvtivity";
 
 import DataBranch from "./components/branches/DataBranch";
 import CreateBranch from "./components/branches/CreateBranch";
@@ -121,6 +122,7 @@ function App() {
       <Route path="/CreateActivity" element={<CreateActivity />} />
       <Route path="/DataActivity/UpdateActivity/:id" element={<UpdateActivity />} />
       <Route path="/DataActivity/SearchActivity/:id" element={<SearchActivity />} />
+      <Route path="/ShowActivity" element={<ShowActivity />} />
 
       <Route path="/DataBranch" element={<DataBranch />} />
       <Route path="/create_branch" element={<CreateBranch />} />

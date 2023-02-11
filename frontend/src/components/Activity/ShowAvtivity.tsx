@@ -10,10 +10,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { GradeInterface } from "../../models/IGrade";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Studentbar } from "../Bar-Student";
+import { ActivityInterface } from "../../models/IActivity";
 import Home from "../Home";
+import { Studentbar } from "../Bar-Student";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+
 const Theme = createTheme({
   palette: {
     primary: {
@@ -28,12 +30,12 @@ const Theme = createTheme({
   },
 });
 
-function ShowGrade() {
+function ShowActivity() {
   /////////////////////////////////////////////////////
 
-  const [grade, setGrade] = useState<GradeInterface[]>([]);
-
+  const [activity, setActivity] = useState<ActivityInterface[]>([]);
   const id = localStorage.getItem("Student-id");
+
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -45,24 +47,23 @@ function ShowGrade() {
   };
   /////////////////////////////////////////////////////
 
-  //แสดงข้อมูล Grade ทั้งหมด
-  const feachGradeByID = async () => {
-    fetch(`${apiUrl}/grade/${id}`, requestOpionsGet)
+  //แสดงข้อมูล Activity ทั้งหมด
+  const feachActivityByID = async () => {
+    fetch(`${apiUrl}/activity/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
           console.log(result.data);
-          setGrade(result.data);
+          setActivity(result.data);
         } else {
           return false;
         }
       });
   };
-
   /////////////////////////////////////////////////////
 
   useEffect(() => {
-    feachGradeByID();
+    feachActivityByID();
   }, []);
 
   /////////////////////////////////////////////////////
@@ -77,43 +78,45 @@ function ShowGrade() {
   if (!token) {
     return <Home />;
   }
-  /////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////
+
   return (
-    <div className="ShowGrade" id="outer-container">
+    <div className="ShowActivity" id="outer-container">
       <ThemeProvider theme={Theme}>
         <Studentbar
-          pageWrapId={"page-ShowGrade"}
+          pageWrapId={"page-ShowActivity"}
           outerContainerId={"outer-container"}
         />
-        <div id="page-ShowGrade">
+        <div id="page-ShowActivity">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "200vh" }}>
+            <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
               <CssBaseline />
               <Container maxWidth="lg">
                 <Paper sx={{ padding: 1 }}>
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
                       <Typography variant="h4" gutterBottom>
-                        Grade
+                        ACTIVITY
                       </Typography>
                     </Box>
                   </Box>
                 </Paper>
-                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">Row</TableCell>
-                        <TableCell align="center">
-                          Grade_Student_Number
-                        </TableCell>
-                        <TableCell align="center">Grade_Code_Supject</TableCell>
-                        <TableCell align="center">Grade_Supject</TableCell>
-                        <TableCell align="center">Grade</TableCell>
+                        <TableCell align="center">ID</TableCell>
+                        <TableCell align="center">รหัสนักศึกษา</TableCell>
+                        <TableCell align="center">ชื่อกิจกรรม</TableCell>
+                        <TableCell align="center">สถานที่</TableCell>
+                        <TableCell align="center">ตำแหน่ง</TableCell>
+                        <TableCell align="center">ชั่วโมงจิตอาสา</TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {grade.map((row, idx) => (
+                      {activity.map((row, idx) => (
                         <TableRow
                           key={row.ID}
                           sx={{
@@ -122,15 +125,14 @@ function ShowGrade() {
                         >
                           <TableCell align="center">{idx + 1}</TableCell>
                           <TableCell align="center">
-                            {row.Grade_Student_Number}
+                            {row.Activity_Student_Number}
                           </TableCell>
                           <TableCell align="center">
-                            {row.Grade_Code_Supject}
+                            {row.Activity_Name}
                           </TableCell>
-                          <TableCell align="center">
-                            {row.Grade_Supject}
-                          </TableCell>
-                          <TableCell align="center">{row.Grade}</TableCell>
+                          <TableCell align="center">{row.Location}</TableCell>
+                          <TableCell align="center">{row.Position} </TableCell>
+                          <TableCell align="center">{row.Hour} </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -145,4 +147,4 @@ function ShowGrade() {
   );
 }
 
-export default ShowGrade;
+export default ShowActivity;

@@ -17,9 +17,9 @@ type CreateActivityPayload struct {
 	Position                string    `json:"Position"`
 	Hour                    string    `json:"Hour"`
 
-	ActivityType uint
-	Trimester    uint
-	Admin        uint
+	ActivityType uint `json:"ActivityType"` 
+	Trimester    uint `json:"Trimester"`
+	Admin        uint `json:"Admin"`
 }
 
 type UpdateActivityPayload struct {
@@ -32,8 +32,8 @@ type UpdateActivityPayload struct {
 	Activity_Year           string    `json:"Activity_Year" valid:"required~กรุณากรอกปีการศึกษา"`
 	Hour                    string    `json:"Hour"`
 
-	ActivityType uint
-	Trimester    uint
+	ActivityType uint `json:"ActivityType"`
+	Trimester    uint `json:"Trimester"`
 }
 
 func CreateActivity(c *gin.Context) {
@@ -42,6 +42,7 @@ func CreateActivity(c *gin.Context) {
 	var Activity entity.ACTIVITY
 	var ActivityType entity.ACTIVITYTYPE
 	var Trimester entity.TRIMESTER
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Activity_error": err.Error()})
@@ -65,6 +66,12 @@ func CreateActivity(c *gin.Context) {
 		return
 	}
 
+	//  ค้นหา Student ด้วย number
+	if tx := entity.DB().Where("student_number = ?", payload.Activity_Student_Number).First(&Student); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
+		return
+	}
+
 	// 10: สร้าง entity Activity
 
 	Activity.Activity_Student_Number = payload.Activity_Student_Number
@@ -78,10 +85,12 @@ func CreateActivity(c *gin.Context) {
 	Activity.ActivityType = ActivityType
 	Activity.Trimester = Trimester
 	Activity.Admin = Admin
+	Activity.Student = Student
+	
 
 	// 11: บันทึก
 	if err := entity.DB().Create(&Activity).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"Data_Grade_error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"Data_Activity_error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": Activity})
@@ -105,6 +114,21 @@ func ListActivityTable(c *gin.Context) {
 
 // ดึงข้อมูล Activity by id
 func ListActivityByID(c *gin.Context) {
+
+	var ActivityByID []entity.ACTIVITY
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM activities WHERE student_id = ?", id).Scan(&ActivityByID).Error; err != nil {
+
+		c.JSON(http.StatusBadRequest, gin.H{"ListActivityByID_error": err.Error()})
+
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": ActivityByID})
+}
+
+func ActivityByID(c *gin.Context) {
 
 	var ActivityByID entity.ACTIVITY
 	id := c.Param("id")
@@ -138,6 +162,7 @@ func UpdateActivity(c *gin.Context) {
 	var ActivityType entity.ACTIVITYTYPE
 	var Trimester entity.TRIMESTER
 	var payload UpdateActivityPayload
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Activity_error": err.Error()})
@@ -160,6 +185,11 @@ func UpdateActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Trimester not found"})
 		return
 	}
+	//  ค้นหา Student ด้วย number
+	if tx := entity.DB().Where("student_number = ?", payload.Activity_Student_Number).First(&Student); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
+		return
+	}
 
 	// 10:update entity Activity
 	Activity.ID = payload.ID
@@ -172,6 +202,7 @@ func UpdateActivity(c *gin.Context) {
 
 	Activity.ActivityType = ActivityType
 	Activity.Trimester = Trimester
+	Activity.Student = Student
 	// Activity.Admin = Admin
 	// update
 	if err := entity.DB().Where("id = ?", Activity.ID).Updates(&Activity).Error; err != nil {

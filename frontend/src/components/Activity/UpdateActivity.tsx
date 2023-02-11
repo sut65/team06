@@ -208,6 +208,7 @@ function UpdateActivity() {
                   <Box display={"flex"}>
                     <Box sx={{ flexGrow: 1 }}>
                       <Typography variant="h4" gutterBottom>
+                      <a className="menu-head">
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -215,6 +216,7 @@ function UpdateActivity() {
                         >
                           <FiArrowLeft size="30" />
                         </Button>
+                        </a>
                         UPDATE ACTIVITY
                       </Typography>
                     </Box>
@@ -402,7 +404,7 @@ function UpdateActivity() {
                             color="primary"
                             onClick={update}
                           >
-                            update
+                            <a className="menu-button-submit">update</a>
                           </Button>
                         </Grid>
                         <Grid item xs={3}>
@@ -414,7 +416,7 @@ function UpdateActivity() {
                             component={RouterLink}
                             to="/DataActivity"
                           >
-                            back
+                            <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={6}></Grid>

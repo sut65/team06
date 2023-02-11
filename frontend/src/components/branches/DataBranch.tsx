@@ -12,14 +12,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import { BranchInterface } from "../../models/IBranch";
 import { Adminbar } from "../Bar-Admin";
+import { Home } from "@mui/icons-material";
 
 const Theme = createTheme({
   palette: {
@@ -39,9 +41,18 @@ function DataBranch() {
   let navigate = useNavigate();
 
   const [Branchstable, setBranchstable] = useState<BranchInterface[]>([]);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
+  ////////////////////////////alert/////////////////////
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log("click");
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOptionsGet = {
@@ -79,13 +90,10 @@ function DataBranch() {
       .then((res) => {
         console.log(res);
         if (res.data) {
-          setSuccess(true);
-          // alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataBranch";
           }, 500);
         } else {
-          setError(true);
         }
       });
   };
@@ -94,6 +102,17 @@ function DataBranch() {
     fetchBranchstable();
   }, []);
   /////////////////////////////////////////////////////
+  const [token, setToken] = useState<String>("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
 
   return (
     <div className="DataBranch" id="outer-container">
@@ -197,7 +216,7 @@ function DataBranch() {
                                 update
                               </Button>
                               <Button
-                                onClick={() => DeleteBranch(row.ID + "")}
+                                onClick={() => handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -211,6 +230,35 @@ function DataBranch() {
                 </TableContainer>
               </Paper>
             </Container>
+            {/* Popup */}
+            <Dialog
+              open={isOpenPopup}
+              onClose={handleClickClosePopup}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "#DE3163",
+                    fontSize: "2rem",
+                  }}
+                >
+                  Delete {<PriorityHighIcon fontSize="large" />}
+                </Box>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure to delete ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClickClosePopup}>Cancel</Button>
+                <Button onClick={() => DeleteBranch(rowID + "")}>Sure</Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </div>
       </ThemeProvider>
@@ -218,3 +266,6 @@ function DataBranch() {
   );
 }
 export default DataBranch;
+
+
+// old
