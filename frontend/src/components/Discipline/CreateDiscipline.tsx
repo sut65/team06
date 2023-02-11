@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -70,6 +70,8 @@ export default function CreateDiscipline() {
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const [message, setAlertMessage] = React.useState("");
+
   //onchange
   const onChangeDisciplineType = (event: SelectChangeEvent) => {
     setDisciplineTypeID(event.target.value as string);
@@ -77,7 +79,8 @@ export default function CreateDiscipline() {
 
   const onChangeStudent = (event: SelectChangeEvent) => {
     setStudentID(event.target.value as string);
-    console.log(event.target.value as string);
+    //console.log(event.target.value as string);
+    console.log(StudentID);
     SearchStudent();
   };
 
@@ -97,9 +100,9 @@ export default function CreateDiscipline() {
     //TODO I'll do it later
     //Data ที่จะนำไปบันทึกลงใน Discipline
     let data = {
-      AdminID: adminID,
-      StudentID: StudentID,
-      DisciplineTypeID: DisciplineTypeID,
+      Admin: adminID,
+      Student: StudentID,
+      DisciplineType: DisciplineTypeID,
       Discipline_Reason: Discipline_Reason,
       Discipline_Punishment: Discipline_Punishment,
       Discipline_Point: Number(Discipline_Point),
@@ -121,8 +124,10 @@ export default function CreateDiscipline() {
         if (res.data) {
           ListStudent();
           ListDisciplineType();
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -154,7 +159,7 @@ export default function CreateDiscipline() {
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
+          //console.log(res.data);
           setStudentName(res.data.Student_Name);
         }
       });
@@ -226,23 +231,24 @@ export default function CreateDiscipline() {
               <Container maxWidth="lg">
                 <Paper sx={{ padding: 1 }}>
                   <Snackbar
-                    open={success}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                      open={success}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
-                    <Alert onClose={handleClose} severity="success">
-                      บันทึกข้อมูลสำเร็จ
-                    </Alert>
+                      <Alert onClose={handleClose} severity="success">
+                          {message}
+                      </Alert>
                   </Snackbar>
                   <Snackbar
-                    open={error}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
+                      open={error}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
-                    <Alert onClose={handleClose} severity="error">
-                      บันทึกข้อมูลไม่สำเร็จ
-                    </Alert>
+                      <Alert onClose={handleClose} severity="error">
+                          {message}
+                      </Alert>
                   </Snackbar>
 
                   <Box display="flex">

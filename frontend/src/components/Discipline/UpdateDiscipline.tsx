@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -72,6 +72,8 @@ export default function UpdateDiscipline() {
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const [message, setAlertMessage] = React.useState("");
+
   //Discipline
   const [Discipline, setDiscipline] = React.useState<
     Partial<DisciplineInterface>
@@ -112,9 +114,9 @@ export default function UpdateDiscipline() {
     //Data ที่จะนำไปบันทึกลงใน Discipline
     let data = {
       ID: convertType(id),
-      AdminID: adminID,
-      StudentID: StudentID,
-      DisciplineTypeID: DisciplineTypeID,
+      Admin: adminID,
+      Student: StudentID,
+      DisciplineType: DisciplineTypeID,
       Discipline_Reason: Discipline_Reason,
       Discipline_Punishment: Discipline_Punishment,
       Discipline_Point: Number(Discipline_Point),
@@ -136,10 +138,12 @@ export default function UpdateDiscipline() {
         if (res.data) {
           ListStudent();
           ListDisciplineType();
+          setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           console.log(DisciplineTypeID);
           console.log(res.date);
         } else {
+          setAlertMessage(res.error);
           setError(true);
         }
       });
@@ -264,19 +268,20 @@ export default function UpdateDiscipline() {
                     open={success}
                     autoHideDuration={6000}
                     onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="success">
-                      บันทึกข้อมูลสำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
                   <Snackbar
                     open={error}
                     autoHideDuration={6000}
                     onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
                   >
                     <Alert onClose={handleClose} severity="error">
-                      บันทึกข้อมูลไม่สำเร็จ
+                      {message}
                     </Alert>
                   </Snackbar>
 
