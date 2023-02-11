@@ -883,7 +883,7 @@ func SetupDatabase() {
 		Prefix:                    Prefix1,
 		Institute:                 Institute2,
 		Branch:                    Branch2,
-		Student:                   Student1,
+		Student:                   Student2,
 	}
 	db.Model(&SUGGESTION{}).Create(&Suggestion2)
 

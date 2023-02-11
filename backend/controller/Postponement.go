@@ -129,7 +129,20 @@ func ListPostponementByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": Postponement})
 }
+func PostponementByID(c *gin.Context) {
+	
+	var PostponementByID entity.POSTPONEMENT
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM postponements WHERE id = ?", id).Scan(&PostponementByID).Error; err != nil {
 
+		c.JSON(http.StatusBadRequest, gin.H{"ListPostponementByID_error": err.Error()})
+
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": PostponementByID})
+}
 // ลบข้อมูล Postponement by id
 func DeletePostponementByID(c *gin.Context) {
 	id := c.Param("id")

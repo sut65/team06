@@ -73,7 +73,7 @@ function UpdatePostponement() {
   /////////////////// combobox /////////////////////////
 
   const feachPostponementByID = async () => {
-    fetch(`${apiUrl}/postponement/${id}`, requestOpionsGet)
+    fetch(`${apiUrl}/postponements/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         // console.log("id:", result.data);

@@ -201,8 +201,10 @@ func main() {
 			router.POST("/create_Postponement", controller.CreatePostponement)
 			//แสดงข้อมูลตาราง Postponement
 			router.GET("/postponement_table", controller.ListPostponementTable)
-			// ดึงข้อมูล Postponement by id
+			// ดึงข้อมูล Postponement by student id
 			router.GET("/postponement/:id", controller.ListPostponementByID)
+			// ดึงข้อมูล Postponement by id
+			router.GET("/postponements/:id", controller.PostponementByID)
 			// แก้ไขข้อมูล Postponement
 			router.PATCH("/update_postponement", controller.UpdatePostponement)
 			// ลบข้อมูล Postponement by id

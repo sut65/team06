@@ -47,6 +47,7 @@ function UpdateActivity() {
   /////////////////////////////////////////////////////
 
   let { id } = useParams();
+  
 
   const [activityType, setActivityType] = useState<ActivityTypeInterface[]>([]);
   const [trimester, setTrimester] = useState<TrimesterInterface[]>([]);
@@ -68,7 +69,7 @@ function UpdateActivity() {
   /////////////////// combobox /////////////////////////
 
   const feachActivityByID = async () => {
-    fetch(`${apiUrl}/activity/${id}`, requestOpionsGet)
+    fetch(`${apiUrl}/activitys/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setActivity(result.data);
