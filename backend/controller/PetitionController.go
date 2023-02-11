@@ -61,7 +61,7 @@ type UpdatePetitionPayload struct {
 	Petition_Reason    string    `json:"Petition_Reason" valid:"required~Petition_Reason cannot be blank"`
 	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"startdate~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time `json:"Petition_Enddate"`
-	Added_Time         time.Time `json:"Added_Time" valid:"addedtime"`
+	Added_Time         time.Time `json:"Added_Time" valid:"addedtime~Added_Time is invalid"`
 }
 
 //PetitionType
