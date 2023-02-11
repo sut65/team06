@@ -744,7 +744,7 @@ func SetupDatabase() {
 	///////////////ข้อมูลใน entity ACTIVITY_TYPE  ///////////////////////////////
 
 	ActivityType1 := ACTIVITYTYPE{
-		Activity_Type_Name: "กิจกรรในมหาวิทยาลัย",
+		Activity_Type_Name: "กิจกรรมในมหาวิทยาลัย",
 	}
 	db.Model(&ACTIVITYTYPE{}).Create(&ActivityType1)
 

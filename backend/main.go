@@ -149,8 +149,10 @@ func main() {
 			router.POST("/create_Grade", controller.CreateGrade)
 			//แสดงข้อมูลตารางGrade
 			router.GET("/grade_table", controller.ListGradeTable)
-			// ดึงข้อมูล Grade by id
+			// ดึงข้อมูล Grade by student_id
 			router.GET("/grade/:id", controller.ListGradeByID)
+			// ดึงข้อมูล Grade by id
+			router.GET("/grades/:id", controller.GradeByID)
 			// แก้ไขข้อมูล Grade
 			router.PATCH("/update_grade", controller.UpdateGrade)
 			// ลบข้อมูล Grade by id
@@ -161,8 +163,10 @@ func main() {
 			router.POST("/create_Activity", controller.CreateActivity)
 			//แสดงข้อมูลตาราง Activity
 			router.GET("/activity_table", controller.ListActivityTable)
-			// ดึงข้อมูล Activity by id
+			// ดึงข้อมูล Activity by student_id
 			router.GET("/activity/:id", controller.ListActivityByID)
+			// ดึงข้อมูล Activity by id
+			router.GET("/activitys/:id", controller.ActivityByID)
 			// แก้ไขข้อมูล Activity
 			router.PATCH("/update_activity", controller.UpdateActivity)
 			// ลบข้อมูล Activity by id

@@ -138,6 +138,7 @@ type STUDENT struct {
 	Disciplines   []Discipline    `gorm:"foreignKey:StudentID"`
 	Petitions     []Petition      `gorm:"foreignKey:StudentID"`
 	Grade         []GRADE         `gorm:"foreignKey:StudentID"`
+	Activity      []ACTIVITY      `gorm:"foreignKey:StudentID"`
 }
 
 type BRANCH struct {
@@ -247,10 +248,12 @@ type ACTIVITY struct {
 	ActivityTypeID *uint
 	TrimesterID    *uint
 	AdminID        *uint
+	StudentID      *uint
 
 	ActivityType ACTIVITYTYPE
 	Trimester    TRIMESTER
 	Admin        ADMIN
+	Student      STUDENT
 }
 
 type DORMITORYTYPE struct {

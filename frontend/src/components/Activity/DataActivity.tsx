@@ -12,7 +12,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup, TextField } from "@mui/material";
+import { ButtonGroup, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { ActivityInterface } from "../../models/IActivity";
@@ -21,6 +21,8 @@ import { Adminbar } from "../Bar-Admin";
 import { BiSearchAlt } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+
 
 const Theme = createTheme({
   palette: {
@@ -43,6 +45,16 @@ function DataActivity() {
   const [activitystable, setActivitystable] = useState<ActivityInterface[]>([]);
   const [Filter, setFilter] = useState(activitystable);
   const [input, setInput] = useState("");
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log("click");
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -82,7 +94,7 @@ function DataActivity() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          //alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataActivity";
           }, 500);
@@ -172,7 +184,7 @@ function DataActivity() {
                         color="secondary"
                         size="large"
                       >
-                        create
+                        <a className="menu-button-back">create</a>
                       </Button>
                     </Box>
                   </Box>
@@ -226,9 +238,11 @@ function DataActivity() {
                                 <SearchIcon />
                               </Button>
                               <Button
-                                onClick={() => DeleteActivity(row.ID + "")}
-                                color="secondary"
-                              >
+                                  onClick={() =>
+                                    handleClickOpenPopup(row.ID + "")
+                                  }
+                                  color="secondary"
+                                >
                                 <DeleteOutlineIcon />
                               </Button>
                             </ButtonGroup>
@@ -239,6 +253,36 @@ function DataActivity() {
                   </Table>
                 </TableContainer>
               </Container>
+                {/* Popup */}
+                <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => DeleteActivity(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
+
             </Box>
           </React.Fragment>
         </div>

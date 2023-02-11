@@ -16,6 +16,7 @@ import { BranchInterface } from "../../models/IBranch";
 import { InstituteInterface } from "../../models/IInstitute";
 import { GradeInterface } from "../../models/IGrade";
 import { Adminbar } from "../Bar-Admin";
+import Home from "../Home";
 
 const Theme = createTheme({
   palette: {
@@ -53,7 +54,7 @@ function SearchGrade() {
   /////////////////// combobox /////////////////////////
 
   const feachGradeByID = async () => {
-    fetch(`${apiUrl}/grade/${id}`, requestOpionsGet)
+    fetch(`${apiUrl}/grades/${id}`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setGrade(result.data);
@@ -103,6 +104,18 @@ function SearchGrade() {
     feachGradeByID();
   }, []);
   console.log(grade);
+
+   const [token, setToken] = useState<String>("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
   /////////////////////////////////////////////////////
   return (
     <div className="SearchGrade" id="outer-container">
@@ -149,6 +162,7 @@ function SearchGrade() {
                           <p>รหัสนักศึกษา</p>
                           <TextField
                             fullWidth
+                            disabled
                             id="Grade_Student_Number"
                             type="string"
                             //label="รหัสนักศึกษา"
@@ -163,6 +177,7 @@ function SearchGrade() {
                           <p>สำนักวิชา</p>
                           <Select
                             fullWidth
+                            disabled
                             id="Institute"
                             onChange={handleChange}
                             native
@@ -184,6 +199,7 @@ function SearchGrade() {
                           <p>สาขาวิชา</p>
                           <Select
                             fullWidth
+                            disabled
                             id="Branch"
                             onChange={handleChange}
                             native
@@ -205,6 +221,7 @@ function SearchGrade() {
                           <p>รหัสวิชา</p>
                           <TextField
                             fullWidth
+                            disabled
                             id="Grade_Code_Supject"
                             type="string"
                             //label="รหัสวิชา"
@@ -219,6 +236,7 @@ function SearchGrade() {
                           <p>ชื่อวิชา</p>
                           <TextField
                             fullWidth
+                            disabled
                             id="Grade_Supject"
                             type="string"
                             //label="ชื่อวิชา"
@@ -233,6 +251,7 @@ function SearchGrade() {
                           <p>ผลการเรียน</p>
                           <TextField
                             fullWidth
+                            disabled
                             id="Grade"
                             type="string"
                             //label="ผลการเรียน"

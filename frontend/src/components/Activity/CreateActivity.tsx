@@ -58,6 +58,8 @@ function CreateActivity() {
   const [error, setError] = useState(false);
   const [admin, setAdmin] = useState<AdminInterface>();
   const [message, setAlertMessage] = React.useState("");
+
+
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
   const requestOpionsGet = {
@@ -213,6 +215,7 @@ function CreateActivity() {
                   <Box display={"flex"}>
                     <Box>
                       <Typography variant="h4" gutterBottom>
+                      <a className="menu-head">
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -220,6 +223,7 @@ function CreateActivity() {
                         >
                           <FiArrowLeft size="30" />
                         </Button>
+                      </a>
                         CREATE ACTIVITY
                       </Typography>
                     </Box>
@@ -418,7 +422,7 @@ function CreateActivity() {
                             component={RouterLink}
                             to="/DataActivity"
                           >
-                            back
+                           <a className="menu-button-back">back</a>
                           </Button>
                         </Grid>
                         <Grid item xs={5}></Grid>
