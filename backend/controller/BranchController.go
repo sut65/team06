@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
@@ -48,6 +49,7 @@ func CreateBranch(c *gin.Context) {
 		Branch_Name:    Branch.Branch_Name,
 		Branch_Teacher: Branch.Branch_Teacher,
 		Branch_Info:    Branch.Branch_Info,
+		Branch_Date: Branch.Branch_Date,
 
 		Prefix:    Prefix,
 		Institute: Institute,
@@ -144,6 +146,7 @@ func UpdateBranch(c *gin.Context) {
 		Branch_Name:    Branch.Branch_Name,
 		Branch_Teacher: Branch.Branch_Teacher,
 		Branch_Info:    Branch.Branch_Info,
+		Branch_Date: Branch.Branch_Date,
 
 		Prefix:    Prefix,
 		Institute: Institute,

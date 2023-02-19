@@ -7,6 +7,7 @@ export interface BranchInterface {
     Branch_Name: string,
     Branch_Teacher: string,
     Branch_Info: string,
+    Branch_Date?: Date | null,
 
     PrefixID?: number
     InstituteID?: number

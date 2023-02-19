@@ -11,6 +11,7 @@ import Snackbar from "@mui/material/Snackbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { PrefixInterface } from "../../models/IPrefix";
 import { AdminInterface } from "../../models/IAdmin";
@@ -18,6 +19,9 @@ import { InstituteInterface } from "../../models/IInstitute";
 import { BranchInterface } from "../../models/IBranch";
 import { Adminbar } from "../Bar-Admin";
 import { GetAdminByID } from "../../services/HttpClientService";
+import { FormControl } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -46,6 +50,7 @@ function CreateBranch() {
   const [Prefix, setPrefix] = useState<PrefixInterface[]>([]);
   const [Institute, setInstitute] = useState<InstituteInterface[]>([]);
   const [admin, setAdmin] = useState<AdminInterface>();
+  const [BranchDate, setBranchDate] = useState<Date | null>(new Date());
 
   const [Branch, setBranch] = useState<Partial<BranchInterface>>({});
 
@@ -144,6 +149,7 @@ function CreateBranch() {
       Branch_Name: Branch.Branch_Name,
       Branch_Teacher: Branch.Branch_Teacher,
       Branch_Info: Branch.Branch_Info,
+      Branch_Date:Branch.Branch_Date,
     };
 
     console.log("data", data);
@@ -309,6 +315,21 @@ function CreateBranch() {
                             value={Branch.Branch_Info}
                             onChange={handleInputChange}
                           />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                        <FormControl fullWidth variant="outlined">
+                            <h3>วันที่ก่อตั้งสาขา</h3>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DatePicker
+                                renderInput={(props) => (
+                                  <TextField {...props} />
+                                )}
+                                value={BranchDate}
+                                onChange={setBranchDate}
+                              />
+                            </LocalizationProvider>
+                          </FormControl>
                         </Grid>
 
                         <Grid item xs={12}>
