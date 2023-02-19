@@ -548,8 +548,9 @@ func SetupDatabase() {
 
 	Branch1 := BRANCH{
 		Branch_Name:    "วิศวกรรมคอมพิวเตอร์",
-		Branch_Teacher: "หาย ไม่บอก",
+		Branch_Teacher: "Emma Sch",
 		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Branch_Date: t,
 		Prefix:         Prefix5,
 		Institute:      Institute1,
 		Admin:          Admin1,
@@ -558,8 +559,9 @@ func SetupDatabase() {
 
 	Branch2 := BRANCH{
 		Branch_Name:    "วิศวกรรมเครื่องกล",
-		Branch_Teacher: "แอบมอง คนดี",
+		Branch_Teacher: "Jimmy Fall",
 		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Branch_Date: t,
 		Prefix:         Prefix4,
 		Institute:      Institute1,
 		Admin:          Admin1,
