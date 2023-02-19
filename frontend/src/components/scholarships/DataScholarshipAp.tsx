@@ -130,7 +130,7 @@ function DataScholarshipAp() {
           outerContainerId={"outer-container"}
         />
         <div id="page-DataScholarshipApplicant">
-          <Box sx={{ bgcolor: "#CFD8DC", height: "auto" }}>
+          <Box sx={{ bgcolor: "#CFD8DC", height: "200vh" }}>
             <Container maxWidth="lg" sx={{ padding: 2 }}>
               <Paper sx={{ padding: 2, mb: 2 }}>
                 <Box display={"flex"}>

@@ -188,9 +188,9 @@ type SCHOLARSHIP struct {
 type SCHOLARSHIPAP struct { // ตาราง Scholarship applicant
 	gorm.Model
 
-	Identity_Card string  `valid:"required,matches(^\\d{13}$)"`
-	Reasons       string  `valid:"required,minstringlength(300)"`
-	GPAX          float32 `valid:"required,matches(^[+]?([1-3]+([.][0-9]*)?|[4]?|[.][0]+)$)"`
+	Identity_Card string  `valid:"required~กรุณากรอกเลขบัตรประจำตัวประชาชน,matches(^\\d{13}$)~เลขบัตรประจำตัวประชาชนไม่ถูกต้อง"`
+	Reasons       string  `valid:"required~กรุณากรอกเหตุผลประกอบในการสมัครทุนการศึกษา,minstringlength(300)~เหตุผลประกอบในการสมัครทุนการศึกษาต้องมีความยาวไม่ต่ำกว่า 300ตัวอักษร"`
+	GPAX          float32 `valid:"required~กรุณากรอกเกรดเฉลี่ยสะสม,matches(^[+]?([0-3]+([.][0-9]*)?|[4]?|[.][0]+)$)~เกรดเฉลี่ยสะสมไม่ถูกต้อง"`
 
 	ScholarshipTypeID *uint
 	ScholarshipID     *uint
