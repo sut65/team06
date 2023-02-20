@@ -10,6 +10,26 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
+func init() {
+	govalidator.CustomTypeTagMap.Set("datepast", func(i interface{}, _ interface{}) bool {
+		t := i.(time.Time)
+		if t.Before(time.Now().Add(-30 * time.Minute)) {
+			return false
+		} else {
+			return true
+		}
+	})
+
+	govalidator.CustomTypeTagMap.Set("datefuture", func(i interface{}, _ interface{}) bool {
+		t := i.(time.Time)
+		if t.After(time.Now().Add(30*time.Minute)) {
+			return false
+		} else {
+			return true
+		}
+	})
+}
+
 type CreateDisciplinePayload struct {
 	//Admin FK
 	Admin uint `json:"Admin"`
@@ -23,7 +43,7 @@ type CreateDisciplinePayload struct {
 	Discipline_Reason     string    `json:"Discipline_Reason" valid:"required~Discipline_Reason cannot be blank"`
 	Discipline_Punishment string    `json:"Discipline_Punishment" valid:"required~Discipline_Punishment cannot be blank"`
 	Discipline_Point      uint      `json:"Discipline_Point" valid:"required~Discipline_Point cannot be blank, range(1|5)"`
-	Added_Time            time.Time `json:"Added_Time"`
+	Added_Time            time.Time `json:"Added_Time" valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 type UpdateDisciplinePayload struct {
@@ -40,7 +60,7 @@ type UpdateDisciplinePayload struct {
 	Discipline_Reason     string    `json:"Discipline_Reason" valid:"required~Discipline_Reason cannot be blank"`
 	Discipline_Punishment string    `json:"Discipline_Punishment" valid:"required~Discipline_Punishment cannot be blank"`
 	Discipline_Point      uint      `json:"Discipline_Point" valid:"required~Discipline_Point cannot be blank, range(1|5)"`
-	Added_Time            time.Time `json:"Added_Time"`
+	Added_Time            time.Time `json:"Added_Time" valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 //DisciplineType
