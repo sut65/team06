@@ -69,7 +69,7 @@ export default function UpdatePetition() {
 
   const [Added_Time, setAdded_Time] = React.useState<Dayjs | null>(dayjs());
   const [Petition_Startdate, setPetition_Startdate] =
-    React.useState<Dayjs | null>(dayjs());
+    React.useState<Dayjs | null>();
   const [Petition_Enddate, setPetition_Enddate] = React.useState<Dayjs>(
     dayjs()
   );
@@ -270,19 +270,19 @@ export default function UpdatePetition() {
 
   const pppp = async () => {
     for (let i = 0; i < 1; i++) {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
     }
   }
 
   const ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
-    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
     pppp();
   }
 
   const ps_ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
-    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
   }
 
   //========function useEffect ========
