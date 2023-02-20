@@ -29,6 +29,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { Studentbar } from "../Bar-Student";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { FiArrowLeft } from "react-icons/fi";
+import { Sync } from "@mui/icons-material";
 // import ResponsiveAppBar from './Bar_01'; #this is bar from own project
 
 function date_TO_String(date_Object: string): string {
@@ -100,6 +101,7 @@ export default function CreatePetition() {
   //onchange
   const onChangePetitionType = (event: SelectChangeEvent) => {
     setPetitionTypeID(event.target.value as string);
+    console.log(Petition_Startdate?.format())
   };
 
   const onChangePetitionPeriod = (event: SelectChangeEvent) => {
@@ -237,19 +239,19 @@ export default function CreatePetition() {
 
   const pppp = async () => {
     for (let i = 0; i < 1; i++) {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
+      setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
     }
   }
 
   const ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
-    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
     pppp();
   }
 
   const ps_ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
-    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1).toISOString());
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
   }
 
   //========function useEffect ========
@@ -454,7 +456,7 @@ export default function CreatePetition() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <TextField
+                          {/* <TextField
                             fullWidth
                             id="Petition_Enddate"
                             value={date_TO_String(Petition_Enddate.toISOString())}
@@ -462,18 +464,19 @@ export default function CreatePetition() {
                             InputProps={{
                               readOnly: true,
                             }}
-                          />
-                          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          /> */}
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker
-                              label="Petition_Enddate"
+                              label="Petition_Startdate"
                               inputFormat="MM/DD/YYYY"
                               value={Petition_Enddate}
+                              disabled
                               onChange={onChangePetition_Enddate}
                               renderInput={(params) => (
                                 <TextField {...params} />
                               )}
                             />
-                          </LocalizationProvider> */}
+                          </LocalizationProvider>
                         </Grid>
 
                         <Grid item xs={6} />

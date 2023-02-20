@@ -396,6 +396,8 @@ type Petition struct {
 	Added_Time         time.Time `valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
+//validator
+
 func init() {
 	govalidator.CustomTypeTagMap.Set("datepast", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)

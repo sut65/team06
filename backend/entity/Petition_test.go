@@ -36,7 +36,7 @@ func Test_Validate_Petition_Startdate(t *testing.T) {
 
 	petition := Petition{
 		Petition_Reason: "โด๊น",
-		Petition_Startdate: time.Now().Add(-120 * time.Minute),
+		Petition_Startdate: time.Now().Add(-31 * time.Minute),
 		Petition_Enddate: time.Now(),
 		Added_Time: time.Now(),
 	}
@@ -54,14 +54,14 @@ func Test_Validate_Petition_Startdate(t *testing.T) {
 	g.Expect(err.Error()).To(Equal("Petition_Startdate is invalid"))
 }
 
-func Test_Validate_Petition_Enddate(t *testing.T) {
+func Test_Validate_Petition_Added_Time_DatePast(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	petition := Petition{
 		Petition_Reason: "โด๊น",
 		Petition_Startdate: time.Now(),
 		Petition_Enddate: time.Now(),
-		Added_Time: time.Now().Add(120 * time.Minute),
+		Added_Time: time.Now().Add(-31 * time.Minute),
 	}
 	// ตรวจสอบด้วย govalidator
 	ok, err := govalidator.ValidateStruct(petition)
@@ -73,5 +73,43 @@ func Test_Validate_Petition_Enddate(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error ต้องมี error message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Added_Time is invalid"))
+	g.Expect(err.Error()).To(Equal("Added_Time is Past"))
+}
+
+func Test_Validate_Petition_Added_Time_DateFuture(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	petition := Petition{
+		Petition_Reason: "โด๊น",
+		Petition_Startdate: time.Now(),
+		Petition_Enddate: time.Now(),
+		Added_Time: time.Now().Add(31 * time.Minute),
+	}
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(petition)
+
+	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
+	g.Expect(ok).ToNot(BeTrue())
+
+	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
+	g.Expect(err).ToNot(BeNil())
+
+	// err.Error ต้องมี error message แสดงออกมา
+	g.Expect(err.Error()).To(Equal("Added_Time is Future"))
+}
+
+func Test_Validate_Petition_True(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	petition := Petition{
+		Petition_Reason: "โด๊น",
+		Petition_Startdate: time.Now(),
+		Petition_Enddate: time.Now(),
+		Added_Time: time.Now(),
+	}
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(petition)
+
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
 }

@@ -96,13 +96,13 @@ function DataPetition() {
     fetch(`${apiUrl}/ListPetition`, requestOpionsGet)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.data);
+        //console.log(result.data);
         ListPetition(result.data);
       });
   };
 
   const DeletePetition = (id: string) => {
-    console.log(id);
+    //console.log(id);
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -114,7 +114,7 @@ function DataPetition() {
     fetch(`${apiUrl}/DeletePetition/${id}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.data) {
           // setSuccess(true);
           //alert(`Are you sure delete id: ${id}`);
@@ -141,11 +141,16 @@ function DataPetition() {
     });
 
     setFilter(NewFilter);
+
   }, [Petitions, studentID]);
 
   /////////////////////////////////////////////////////
 
-  const date = new Date();
+  const addHours = (date: Date, hours: number): Date => {
+    const result = new Date(date);
+    result.setHours(result.getHours() + hours);
+    return result;
+  };
 
   return (
     <div className="DataPetition" id="outer-container">
@@ -217,10 +222,10 @@ function DataPetition() {
                             {row.PetitionPeriod.PetitionPeriod_Num}
                           </TableCell>
                           <TableCell align="center">
-                            {date_TO_String(row.Petition_Startdate.toString())}
+                            {date_TO_String(addHours(row.Petition_Startdate, 7).toISOString())}
                           </TableCell>
                           <TableCell align="center">
-                            {date_TO_String(row.Petition_Enddate.toString())}{" "}
+                            {date_TO_String(addHours(row.Petition_Enddate, 7).toISOString())}{" "}
                           </TableCell>
                           <TableCell align="center">
                             <ButtonGroup>

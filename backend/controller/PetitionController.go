@@ -11,18 +11,18 @@ import (
 )
 
 func init() {
-	govalidator.CustomTypeTagMap.Set("startdate", func(i interface{}, _ interface{}) bool {
+	govalidator.CustomTypeTagMap.Set("datepast", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)
-		if t.Before(time.Now().Add(-60 * time.Minute)) {
+		if t.Before(time.Now().Add(-30 * time.Minute)) {
 			return false
 		} else {
 			return true
 		}
 	})
 
-	govalidator.CustomTypeTagMap.Set("addedtime", func(i interface{}, _ interface{}) bool {
+	govalidator.CustomTypeTagMap.Set("datefuture", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)
-		if t.Before(time.Now().Add(-60 * time.Minute)) || t.After(time.Now().Add(60*time.Minute)) {
+		if t.After(time.Now().Add(30*time.Minute)) {
 			return false
 		} else {
 			return true
@@ -42,9 +42,9 @@ type CreatePetitionPayload struct {
 	PetitionPeriod uint `json:"PetitionPeriod"`
 
 	Petition_Reason    string    `json:"Petition_Reason" valid:"required~Petition_Reason cannot be blank"`
-	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"required~Petition_Startdate cannot be blank, startdate~Petition_Startdate is invalid"`
+	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"datepast~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time `json:"Petition_Enddate"`
-	Added_Time         time.Time `json:"Added_Time" valid:"addedtime~Added_Time is invalid"`
+	Added_Time         time.Time `json:"Added_Time" valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 type UpdatePetitionPayload struct {
@@ -59,9 +59,9 @@ type UpdatePetitionPayload struct {
 	PetitionPeriod uint `json:"PetitionPeriod"`
 
 	Petition_Reason    string    `json:"Petition_Reason" valid:"required~Petition_Reason cannot be blank"`
-	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"startdate~Petition_Startdate is invalid"`
+	Petition_Startdate time.Time `json:"Petition_Startdate" valid:"datepast~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time `json:"Petition_Enddate"`
-	Added_Time         time.Time `json:"Added_Time" valid:"addedtime~Added_Time is invalid"`
+	Added_Time         time.Time `json:"Added_Time" valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 //PetitionType
