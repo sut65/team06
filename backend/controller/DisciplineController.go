@@ -31,7 +31,7 @@ func init() {
 }
 
 type CreateDisciplinePayload struct {
-	//Admin FK
+	//Admin FK abc
 	Admin uint `json:"Admin"`
 
 	//Student FK
