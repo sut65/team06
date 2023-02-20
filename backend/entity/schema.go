@@ -358,7 +358,7 @@ type Discipline struct {
 	Discipline_Reason     string `valid:"required~Discipline_Reason cannot be blank"`
 	Discipline_Punishment string `valid:"required~Discipline_Punishment cannot be blank"`
 	Discipline_Point      uint   `valid:"required~Discipline_Point cannot be blank, range(1|5)"`
-	Added_Time            time.Time
+	Added_Time            time.Time `valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 type PetitionType struct {
@@ -391,24 +391,24 @@ type Petition struct {
 	PetitionPeriod   PetitionPeriod `gorm:"references:id"`
 
 	Petition_Reason    string `valid:"required~Petition_Reason cannot be blank"`
-	Petition_Startdate time.Time `valid:"startdate~Petition_Startdate is invalid"`
+	Petition_Startdate time.Time `valid:"datepast~Petition_Startdate is invalid"`
 	Petition_Enddate   time.Time
-	Added_Time         time.Time `valid:"addedtime~Added_Time is invalid"`
+	Added_Time         time.Time `valid:"datepast~Added_Time is Past, datefuture~Added_Time is Future"`
 }
 
 func init() {
-	govalidator.CustomTypeTagMap.Set("startdate", func(i interface{}, _ interface{}) bool {
+	govalidator.CustomTypeTagMap.Set("datepast", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)
-		if t.Before(time.Now().Add(-60 * time.Minute)) {
+		if t.Before(time.Now().Add(-30 * time.Minute)) {
 			return false
 		} else {
 			return true
 		}
 	})
 
-	govalidator.CustomTypeTagMap.Set("addedtime", func(i interface{}, _ interface{}) bool {
+	govalidator.CustomTypeTagMap.Set("datefuture", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)
-		if t.Before(time.Now().Add(-60 * time.Minute)) || t.After(time.Now().Add(60*time.Minute)) {
+		if t.After(time.Now().Add(30*time.Minute)) {
 			return false
 		} else {
 			return true
