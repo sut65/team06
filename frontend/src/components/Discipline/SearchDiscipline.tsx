@@ -21,6 +21,7 @@ import { DisciplineInterface } from "../../models/IDiscipline";
 import { Studentbar } from "../Bar-Student";
 import { HiHome } from "react-icons/hi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Home from "../Home";
 
 const Theme = createTheme({
     palette: {
@@ -48,7 +49,7 @@ function SearchDiscipline() {
     const apiUrl = "http://localhost:8080";
     const requestOpionsGet = {
         method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,"Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
     };
     /////////////////////////////////////////////////////
 
@@ -76,6 +77,22 @@ function SearchDiscipline() {
     }, [Disciplines, studentID]);
 
     /////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////
+
+    const [token, setToken] = React.useState<String>("");
+    React.useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setToken(token);
+        }
+    }, []);
+
+    if (!token) {
+        return <Home />;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
 
     return (
         <div className="SearchDiscipline" id="outer-container">

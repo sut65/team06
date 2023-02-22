@@ -29,6 +29,7 @@ import { StudentInterface } from "../../models/IStudent";
 import { Adminbar } from "../Bar-Admin";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { FiArrowLeft } from "react-icons/fi";
+import Home from "../Home";
 
 const Theme = createTheme({
   palette: {
@@ -251,6 +252,22 @@ export default function UpdateDiscipline() {
     getDiscipline();
   }, []);
 
+  ///////////////////////////////////////////////////////////////////////
+
+  const [token, setToken] = React.useState<String>("");
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+
   return (
     <div className="UpdateDiscipline" id="outer-container">
       <ThemeProvider theme={Theme}>
@@ -316,7 +333,7 @@ export default function UpdateDiscipline() {
                       >
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Reason
+                            การทำผิดทางวินัย
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -334,7 +351,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            DisciplineType
+                            ประเภทความประพฤติ
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -363,7 +380,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Punishment
+                            บทลงโทษ
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -381,7 +398,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Student
+                            รหัสนักศึกษา
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -407,7 +424,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Point
+                            คะแนนทางวินัย
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -426,7 +443,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Student Name
+                            ชื่อนักศึกษา
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -444,7 +461,7 @@ export default function UpdateDiscipline() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Added_Time
+                            วันที่บันทึก
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
