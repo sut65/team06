@@ -30,6 +30,7 @@ import { Studentbar } from "../Bar-Student";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { FiArrowLeft } from "react-icons/fi";
 import { Sync } from "@mui/icons-material";
+import Home from "../Home";
 // import ResponsiveAppBar from './Bar_01'; #this is bar from own project
 
 function date_TO_String(date_Object: string): string {
@@ -239,18 +240,18 @@ export default function CreatePetition() {
 
   const pppp = async () => {
     for (let i = 0; i < 1; i++) {
-      setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+      setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
     }
   }
 
   const ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
     console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
     pppp();
   }
 
   const ps_ppenddate = async () => {
-    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)));
+    setPetition_Enddate(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period) -1));
     console.log(dayjs(Petition_Startdate).set('date', Number(date_start) + Number(Period)).toISOString());
   }
 
@@ -284,6 +285,22 @@ export default function CreatePetition() {
     setDate_start(date_date(dayjs().toISOString()));
     setPetition_Enddate(dayjs());
   }, []);
+
+  ///////////////////////////////////////////////////////////////////////
+
+  const [token, setToken] = React.useState<String>("");
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
 
   return (
     <div className="CreatePetition" id="outer-container">
@@ -350,7 +367,7 @@ export default function CreatePetition() {
                       >
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Reason
+                            เหตุผลลาหยุด
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -368,7 +385,7 @@ export default function CreatePetition() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            PetitionType
+                            ประเภทคำร้องลาหยุด
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -403,7 +420,7 @@ export default function CreatePetition() {
                             align="right"
                             sx={{ marginY: 3 }}
                           >
-                            Petition_Period
+                            จำนวนวันที่ลา
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -433,7 +450,7 @@ export default function CreatePetition() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Petition_Startdate
+                            วันที่เริ่มลา
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -452,7 +469,7 @@ export default function CreatePetition() {
 
                         <Grid item xs={2}>
                           <Typography variant="inherit" align="right">
-                            Petition_Enddate
+                            วันสุดท้ายที่ลา
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -487,7 +504,7 @@ export default function CreatePetition() {
                             align="right"
                             sx={{ marginY: 3 }}
                           >
-                            Added_Time
+                            วันที่บันทึก
                           </Typography>
                         </Grid>
                         <Grid item xs={4} sx={{ marginY: 3 }}>

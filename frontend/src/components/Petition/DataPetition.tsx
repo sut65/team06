@@ -32,6 +32,7 @@ import { PetitionInterface } from "../../models/IPetition";
 
 import { Studentbar } from "../Bar-Student";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import Home from "../Home";
 
 const Theme = createTheme({
   palette: {
@@ -151,6 +152,22 @@ function DataPetition() {
     result.setHours(result.getHours() + hours);
     return result;
   };
+
+  ///////////////////////////////////////////////////////////////////////
+
+  const [token, setToken] = React.useState<String>("");
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
 
   return (
     <div className="DataPetition" id="outer-container">
