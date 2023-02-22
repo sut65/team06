@@ -31,6 +31,7 @@ import { Adminbar } from "../Bar-Admin";
 import { HiHome } from "react-icons/hi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import Home from "../Home";
 
 const Theme = createTheme({
   palette: {
@@ -121,6 +122,22 @@ function DataDiscipline() {
   }, []);
 
   /////////////////////////////////////////////////////
+
+  ///////////////////////////////////////////////////////////////////////
+
+  const [token, setToken] = React.useState<String>("");
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  if (!token) {
+    return <Home />;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
 
   return (
     <div className="DataDiscipline" id="outer-container">
