@@ -20,7 +20,7 @@ import UpdateAdmin from "./components/Admin/UpdateAdmin";
 import CreatePostponement from "./components/Postponement/CreatePostponement";
 import DataPostponement from "./components/Postponement/DataPostponement";
 import UpdatePostponement from "./components/Postponement/UpdatePostponement";
-import SearchPostponement from "./components/Postponement/SearchPostponement";
+
 
 import DataDormitory from "./components/Dormitory/DataDormitory";
 import CreateDormitory from "./components/Dormitory/CreateDormitory";
@@ -91,7 +91,7 @@ function App() {
       <Route path="/CreatePostponement" element={<CreatePostponement />} />
       <Route path="/DataPostponement" element={<DataPostponement />} />
       <Route path="/DataPostponement/UpdatePosponement/:id" element={<UpdatePostponement />} />
-      <Route path="/DataPostponement/SearchPostponement/:id" element={<SearchPostponement />} />
+
 
       <Route path="/DataDormitory" element={<DataDormitory />} />
       <Route path="/CreateDormitory" element={<CreateDormitory />} />

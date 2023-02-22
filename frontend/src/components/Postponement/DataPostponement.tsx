@@ -23,7 +23,6 @@ import {
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { PostponementInterface } from "../../models/IPostponement";
-import SearchIcon from "@mui/icons-material/Search";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Studentbar } from "../Bar-Student";
 import Home from "../Home";
@@ -225,13 +224,6 @@ function DataPostponement() {
                                 color="info"
                               >
                                 update
-                              </Button>
-                              <Button
-                                onClick={() =>
-                                  navigate(`SearchPostponement/${row.ID}`)
-                                }
-                              >
-                                <SearchIcon />{" "}
                               </Button>
                               <Button
                                 onClick={() => handleClickOpenPopup(row.ID + "")}
