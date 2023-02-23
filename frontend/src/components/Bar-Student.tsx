@@ -50,7 +50,7 @@ export const Studentbar = ({ pageWrapId, outerContainerId }: SidemenuProps) => {
         <a className="menu-item" href="/SearchDiscipline">
           *ข้อมูลวินัย
         </a>
-        <a className="menu-item" href="/HomeStudent">
+        <a className="menu-item" href="/ShowDormitory">
           *หอพักนักศึกษา
         </a>
         <a className="menu-item logout" href="/all_scholarship">

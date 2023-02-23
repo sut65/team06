@@ -55,6 +55,7 @@ func CreatSuggestion(c *gin.Context) {
 	if tx := entity.DB().Where("id = ?", payload_suggestion.BranchID).First(&Branch); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
+	//11: ค้นหาด้วย id ของ Student
 	if tx := entity.DB().Where("id = ?", payload_suggestion.StudentID).First(&Student); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Province not found"})
 		return
