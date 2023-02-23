@@ -13,12 +13,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import SearchIcon from "@mui/icons-material/Search";
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import { DormitoryInterface } from "../../models/IDormitory";
 
@@ -38,6 +39,17 @@ const Theme = createTheme({
   },
 });
 
+function date_TO_String(date_Object: string): string {
+  // get the year, month, date, hours, and minutes seprately and append to the strig.n
+  let date_String: string =
+    date_Object.slice(5, 7) +
+    "/" +
+    date_Object.slice(8, 10) +
+    "/" +
+    date_Object.slice(0, 4);
+  return date_String;
+}
+
 function DataDormitory() {
   /////////////////////////////////////////////////////
 
@@ -50,6 +62,17 @@ function DataDormitory() {
 
   const [filter, setFilter] = useState(dormitorytable);
   const [Dormitory_Student_Number, setDormitory_Student_Number] = useState("");
+
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log('click');
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -90,7 +113,7 @@ function DataDormitory() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          // alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataDormitory";
           }, 500);
@@ -129,7 +152,7 @@ function DataDormitory() {
           <React.Fragment>
             <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
               <CssBaseline />
-              <Container maxWidth="lg">
+              <Container maxWidth="lg" sx={{ padding: 1}}>
                 <Paper sx={{ padding: 1 }}>
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
@@ -167,12 +190,12 @@ function DataDormitory() {
                       <BiSearchAlt size="30" />
                     </Box>
 
-                    <Box sx={{ marginLeft: 50, marginTop: 0.9 }}>
+                    <Box sx={{ marginLeft: 50, marginTop: 1.5 }}>
                       <Button
                         variant="contained"
                         component={RouterLink}
                         to="/CreateDormitory"
-                        color="secondary"
+                        color="info"
                         size="large"
                       >
                         create
@@ -185,10 +208,10 @@ function DataDormitory() {
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">ลำดับ</TableCell>
-                        <TableCell align="center">ID</TableCell>
                         <TableCell align="center">รหัสนักศึกษา</TableCell>
                         <TableCell align="center">ปีการศึกษา</TableCell>
                         <TableCell align="center">เลขห้องพัก</TableCell>
+                        <TableCell align="center">สาขาวิชา</TableCell>
                         <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
@@ -201,16 +224,10 @@ function DataDormitory() {
                           }}
                         >
                           <TableCell align="center">{idx + 1}</TableCell>
-                          <TableCell align="center">{row.ID}</TableCell>
-                          <TableCell align="center">
-                            {row.Dormitory_Student_Number}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Dormitory_AcademicYear}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Room_Number}
-                          </TableCell>
+                          <TableCell align="center">{row.Dormitory_Student_Number}</TableCell>
+                          <TableCell align="center">{row.Dormitory_AcademicYear}</TableCell>
+                          <TableCell align="center">{row.Room_Number}</TableCell>
+                          <TableCell align="center">{row.Branch.Branch_Name}</TableCell>
                           <TableCell align="center">
                             <ButtonGroup>
                               <Button
@@ -223,7 +240,7 @@ function DataDormitory() {
                               </Button>
 
                               <Button
-                                onClick={() => deleteDormitory(row.ID + "")}
+                                onClick={() => handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -244,6 +261,35 @@ function DataDormitory() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => deleteDormitory(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>
