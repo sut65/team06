@@ -31,6 +31,7 @@ func CreateDormitory(c *gin.Context) {
 	var Branch entity.BRANCH
 	var Dormitory entity.DORMITORY
 	var Admin entity.ADMIN
+	var Student entity.STUDENT
 
 	if err := c.ShouldBindJSON(&payload_dormitory); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Student_error": err.Error()})
@@ -65,6 +66,12 @@ func CreateDormitory(c *gin.Context) {
 		return
 	}
 
+	// 20: ค้นหา Student ด้วย number
+	if tx := entity.DB().Where("student_number = ?", payload_dormitory.Dormitory_Student_Number).First(&Student); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
+		return
+	}
+
 	//12:สร้าง entity DORMITORY
 	Dormitory.Dormitory_Student_Number = payload_dormitory.Dormitory_Student_Number
 	Dormitory.Dormitory_AcademicYear = payload_dormitory.Dormitory_AcademicYear
@@ -77,6 +84,7 @@ func CreateDormitory(c *gin.Context) {
 
 	// AdminID: Dormitory.AdminID,
 	Dormitory.Admin = Admin
+	Dormitory.Student = Student
 
 	//13:บันทึก
 	if err := entity.DB().Create(&Dormitory).Error; err != nil {
@@ -99,17 +107,30 @@ func ListDormitoryTable(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": dormitory_table})
 }
 
-// ดึงข้อมูล Dormitory by id
-func ListDormitoryByID(c *gin.Context) {
+// ดึงข้อมูล Dormitory by student_id
+// func ListDormitoryByID(c *gin.Context) {
 
-	var dormitory_by_id entity.DORMITORY
+// 	var dormitory_by_id []entity.DORMITORY
+// 	id := c.Param("id")
+// 	if err := entity.DB().Preload("DormitoryType").Preload("RoomType").Preload("Branch").Raw("SELECT * FROM dormitories WHERE student_id = ?", id).Scan(&dormitory_by_id).First(&dormitory_by_id).Error; err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"ListDormitoryByID_error": err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(http.StatusOK, gin.H{"data": dormitory_by_id})
+// }
+
+// ดึงข้อมูล Dormitory by id
+func ListDormitoryID(c *gin.Context) {
+
+	var dormitory_id entity.DORMITORY
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM dormitories WHERE id = ?", id).Scan(&dormitory_by_id).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"ListDormitoryByID_error": err.Error()})
+	if err := entity.DB().Raw("SELECT * FROM dormitories WHERE id = ?", id).Scan(&dormitory_id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"ListDormitoryID_error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": dormitory_by_id})
+	c.JSON(http.StatusOK, gin.H{"data": dormitory_id})
 }
 
 // ลบข้อมูล Dormitory by id
@@ -134,6 +155,7 @@ type UpdateDormitoryPayload struct {
 	RoomTypeID      uint `json:"RoomTypeID"`
 	BranchID        uint `json:"BranchID"`
 	AdminID         uint `json:"AdminID"`
+	
 }
 
 // แก้ไขข้อมูล Dormitory
@@ -146,6 +168,7 @@ func UpdateDormitory(c *gin.Context) {
 	var Trimester entity.TRIMESTER
 	var Branch entity.BRANCH
 	var Dormitory entity.DORMITORY
+	var Student entity.STUDENT
 	// var Admin entity.ADMIN
 
 	if err := c.ShouldBindJSON(&payload_update_dormitory); err != nil {
@@ -175,6 +198,12 @@ func UpdateDormitory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 	}
 
+	//  ค้นหา Student ด้วย number
+	if tx := entity.DB().Where("student_number = ?", payload_update_dormitory.Dormitory_Student_Number).First(&Student); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
+		return
+	}
+
 	//12:สร้าง entity DORMITORY
 
 	Dormitory.ID = payload_update_dormitory.ID
@@ -186,6 +215,7 @@ func UpdateDormitory(c *gin.Context) {
 	Dormitory.DormitoryType = DormitoryType
 	Dormitory.RoomType = RoomType
 	Dormitory.Branch = Branch
+	Dormitory.Student = Student
 
 	// AdminID: Dormitory.AdminID,
 	// Dormitory.Admin = Admin
