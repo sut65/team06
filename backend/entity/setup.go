@@ -568,6 +568,28 @@ func SetupDatabase() {
 	}
 	db.Model(&BRANCH{}).Create(&Branch2)
 
+	Branch3 := BRANCH{
+		Branch_Name:    "ฟิสิกส์",
+		Branch_Teacher: "Jackson Wang",
+		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Branch_Date: t,
+		Prefix:         Prefix5,
+		Institute:      Institute2,
+		Admin:          Admin1,
+	}
+	db.Model(&BRANCH{}).Create(&Branch3)
+
+	Branch4 := BRANCH{
+		Branch_Name:    "ชีววิทยา",
+		Branch_Teacher: "Justin Gray",
+		Branch_Info:    "ตอบโจทย์ตลาดแรงงานในอนาคต",
+		Branch_Date: t,
+		Prefix:         Prefix5,
+		Institute:      Institute2,
+		Admin:          Admin1,
+	}
+	db.Model(&BRANCH{}).Create(&Branch4)
+
 	///////////////ข้อมูลใน entity COURSE///////////////////////////////
 
 	Course1 := COURSE{
