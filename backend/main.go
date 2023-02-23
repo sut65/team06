@@ -177,8 +177,10 @@ func main() {
 			router.POST("/dormitory", controller.CreateDormitory)
 			//แสดงข้อมูลตาราง Dormitory
 			router.GET("/dormitory_table", controller.ListDormitoryTable)
-			// ดึงข้อมูล dormitory by id
-			router.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
+			// ดึงข้อมูล dormitory by student_id
+			// router.GET("/dormitory_by_id/:id", controller.ListDormitoryByID)
+			// ดึงข้อมูล Dromitpry by id
+			router.GET("/dormitory_id/:id", controller.ListDormitoryID)
 			// แก้ไขข้อมูล Dormitory
 			router.PATCH("/update_dormitory", controller.UpdateDormitory)
 			// ลบข้อมูล Dormitory by id
