@@ -3,6 +3,7 @@ import { DormitoryTypeInterface } from "./IDormitoryType"
 import { RoomTypeInterface } from "./IRoomType"
 import { TrimesterInterface } from "./ITrimester"
 import { AdminInterface } from './IAdmin'
+import { StudentInterface } from "./IStudent"
 
 export interface DormitoryInterface {
     ID: number,
@@ -10,15 +11,17 @@ export interface DormitoryInterface {
 	Dormitory_AcademicYear:   number,
 	Room_Number:              number,
 
-	TrimesterID:     number,
-	DormitoryTypeID: number,
-	RoomTypeID:      number,
-	BranchID:        number,
-	AdminID?: number
+	TrimesterID?:     number,
+	DormitoryTypeID?: number,
+	RoomTypeID?:      number,
+	BranchID?:        number,
+	AdminID?: number,
+	StudentID?: number,
 
 	Trimester:     TrimesterInterface,
 	DormitoryType: DormitoryTypeInterface,
 	RoomType:      RoomTypeInterface,
 	Branch:        BranchInterface,
 	Admin: AdminInterface,
+	Student: StudentInterface,
 }

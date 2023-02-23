@@ -60,8 +60,8 @@ function SearchDormitory() {
   };
   /////////////////// combobox /////////////////////////
 
-  const feachDormitoryByID = async () => {
-    fetch(`${apiUrl}/dormitory_by_id/${id}`, requestOptionsGet)
+  const feachDormitoryID = async () => {
+    fetch(`${apiUrl}/dormitory_id/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setDormitory(result.data);
@@ -128,7 +128,7 @@ function SearchDormitory() {
     feachDormitoryType();
     feachRoomType();
     feachTrimester();
-    feachDormitoryByID();
+    feachDormitoryID();
   }, []);
 
   /////////////////////////////////////////////////////

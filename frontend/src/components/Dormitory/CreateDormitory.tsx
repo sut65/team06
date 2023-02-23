@@ -197,7 +197,7 @@ function CreateDormitory() {
           setAlertMessage("บันทึกข้อมูลสำเร็จ");
           setSuccess(true);
           setTimeout(() => {
-            // window.location.href = "/DataDormitory";
+            window.location.href = "/DataDormitory";
           }, 500);
         } else {
           setAlertMessage(res.error);
