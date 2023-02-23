@@ -8,7 +8,7 @@ export interface SuggestionInterface {
     Suggestion_Teacher:        string,
 	Suggestion_Student_Number: string,
 	Suggestion_Student_Name:   string,
-	Suggestion_Date?:           Date | null,
+	Suggestion_Date:           Date;
 	Suggestion_Detail:         string,
 
 	PrefixID?:    number,

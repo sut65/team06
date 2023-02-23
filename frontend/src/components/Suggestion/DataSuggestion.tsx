@@ -12,11 +12,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiHome } from "react-icons/hi";
 import { BiSearchAlt } from "react-icons/bi";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import { SuggestionInterface } from "../../models/ISuggestion";
 
@@ -38,6 +39,17 @@ const Theme = createTheme({
   },
 });
 
+function date_TO_String(date_Object: string): string {
+  // get the year, month, date, hours, and minutes seprately and append to the strig.n
+  let date_String: string =
+    date_Object.slice(5, 7) +
+    "/" +
+    date_Object.slice(8, 10) +
+    "/" +
+    date_Object.slice(0, 4);
+  return date_String;
+}
+
 function DataSuggestion() {
   /////////////////////////////////////////////////////
 
@@ -50,6 +62,17 @@ function DataSuggestion() {
   );
   const [filter, setFilter] = useState(suggestiontable);
   const [Suggestion_Student_Number, setStudent_Student_Number] = useState("");
+
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [rowID, setRowID] = useState("");
+
+  const handleClickOpenPopup = (id: string) => {
+    console.log('click');
+
+    setRowID(id);
+    setIsOpenPopup(true);
+  };
+  const handleClickClosePopup = () => setIsOpenPopup(false);
 
   /////////////////////////////////////////////////////
   const apiUrl = "http://localhost:8080";
@@ -90,7 +113,7 @@ function DataSuggestion() {
         console.log(res);
         if (res.data) {
           // setSuccess(true);
-          alert(`Are you sure delete id: ${id}`);
+          // alert(`Are you sure delete id: ${id}`);
           setTimeout(() => {
             window.location.href = "/DataSuggestion";
           }, 500);
@@ -143,7 +166,7 @@ function DataSuggestion() {
           <React.Fragment>
             <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
               <CssBaseline />
-              <Container maxWidth="lg">
+              <Container maxWidth="lg" sx={{ padding: 1 }}>
                 <Paper sx={{ padding: 1 }}>
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
@@ -159,15 +182,15 @@ function DataSuggestion() {
                         SUGGESTION
                       </Typography>
                     </Box>
-                    <Box sx={{ marginTop: 2.3 }}>
+                    {/* <Box sx={{ marginTop: 2.3 }}>
                       <BiSearchAlt size="30" />
-                    </Box>
-                    <Box sx={{ marginLeft: 43.5, marginTop: 0.9 }}>
+                    </Box> */}
+                    <Box sx={{ marginLeft: 90, marginTop: 1.5 }}>
                       <Button
                         variant="contained"
                         component={RouterLink}
                         to="/CreateSuggestion"
-                        color="secondary"
+                        color="info"
                         size="large"
                       >
                         create
@@ -181,7 +204,6 @@ function DataSuggestion() {
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">ลำดับ</TableCell>
-                        <TableCell align="center">ID</TableCell>
                         <TableCell align="center">รหัสนักศึกษา</TableCell>
                         <TableCell align="center">ชื่อ-สกุล</TableCell>
                         <TableCell align="center">ชื่ออาจารย์</TableCell>
@@ -202,23 +224,12 @@ function DataSuggestion() {
                           }}
                         >
                           <TableCell align="center">{idx + 1}</TableCell>
-                          <TableCell align="center">{row.ID}</TableCell>
-                          <TableCell align="center">
-                            {row.Suggestion_Student_Number}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Suggestion_Student_Name}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Suggestion_Teacher}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Suggestion_Date + ""}
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.Suggestion_Detail}
-                          </TableCell>
-                          {/* <TableCell align="center">{row.BranchID}</TableCell> */}
+                          <TableCell align="center">{row.Suggestion_Student_Number}</TableCell>
+                          <TableCell align="center">{row.Suggestion_Student_Name}</TableCell>
+                          <TableCell align="center">{row.Suggestion_Teacher}</TableCell>
+                          <TableCell align="center">{date_TO_String(row.Suggestion_Date.toString())}</TableCell>
+                          <TableCell align="center">{row.Suggestion_Detail}</TableCell>
+                          {/* <TableCell align="center">{row.Branch.Branch_Name}</TableCell> */}
                           <TableCell align="center">
                             <ButtonGroup>
                               <Button
@@ -230,7 +241,7 @@ function DataSuggestion() {
                                 update
                               </Button>
                               <Button
-                                onClick={() => deleteSuggestion(row.ID + "")}
+                                onClick={() => handleClickOpenPopup(row.ID + "")}
                                 color="secondary"
                               >
                                 <DeleteOutlineIcon />
@@ -243,6 +254,35 @@ function DataSuggestion() {
                   </Table>
                 </TableContainer>
               </Container>
+              {/* Popup */}
+              <Dialog
+                open={isOpenPopup}
+                onClose={handleClickClosePopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#e65100",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Delete {<PriorityHighIcon fontSize="large" />}
+                  </Box>
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure to delete ?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClickClosePopup}>Cancel</Button>
+                  <Button onClick={() => deleteSuggestion(rowID + "")}>Sure</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </React.Fragment>
         </div>

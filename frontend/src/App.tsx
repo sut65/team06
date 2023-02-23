@@ -26,6 +26,7 @@ import DataDormitory from "./components/Dormitory/DataDormitory";
 import CreateDormitory from "./components/Dormitory/CreateDormitory";
 import UpdateDormitory from "./components/Dormitory/UpdateDormitory";
 import SearchDormitory from "./components/Dormitory/SearchDormitory";
+import ShowDormitory from "./components/Dormitory/ShowDromitory";
 
 import DataSuggestion from "./components/Suggestion/DataSuggestion";
 import CreateSuggestion from "./components/Suggestion/CreateSuggestion";
@@ -97,6 +98,7 @@ function App() {
       <Route path="/CreateDormitory" element={<CreateDormitory />} />
       <Route path="/DataDormitory/UpdateDormitory/:id" element={<UpdateDormitory />} />
       <Route path="/DataDormitory/SearchDormitory/:id" element={<SearchDormitory />} />
+      <Route path="/ShowDormitory" element={<ShowDormitory />} />
 
       <Route path="/DataSuggestion" element={<DataSuggestion />} />
       <Route path="/CreateSuggestion" element={<CreateSuggestion />} />
