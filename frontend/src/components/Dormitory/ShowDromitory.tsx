@@ -101,7 +101,7 @@ function ShowDormitory() {
           <React.Fragment>
             <Box sx={{ backgroundColor: "#313131", height: "100vh" }}>
               <CssBaseline />
-              <Container maxWidth="lg">
+              <Container maxWidth="lg" sx={{ padding: 1}}>
                 <Paper sx={{ padding: 1 }}>
                   <Box display={"flex"}>
                     <Box sx={{ marginTop: 1.6 }}>
@@ -111,7 +111,7 @@ function ShowDormitory() {
                     </Box>
                   </Box>
                 </Paper>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
