@@ -9,7 +9,6 @@ import (
 
 type CreateGradePayload struct {
 	Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
-		// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
 		Grade_Supject      string `json:"Grade_Supject" valid:"required~กรุณากรอกชื่อวิชา,maxstringlength(20)~โปรดกรอกชื่อวิชาให้ถูกต้อง"`
 		Grade_Code_Supject string `json:"Grade_Code_Supject" valid:"required~กรุณากรอกรหัสวิชา, matches(^\\d{6}$)~โปรดกรอกรหัสวิชาให้ถูกต้อง"`
 		Grade              string `json:"Grade"`
@@ -22,7 +21,6 @@ type CreateGradePayload struct {
 	type UpdateGradePayload struct {
 		ID                   uint   `json:"ID"`
 		Grade_Student_Number string `json:"Grade_Student_Number" valid:"required~กรุณากรอกรหัสนักศึกษา, matches(^[BMD]\\d{7}$)~โปรดกรอกรหัสนักศึกษาให้ถูกต้อง"`
-		// Grade_GPA            float32	`json:"Grade_GPA" valid:"required~"`
 		Grade_Supject      string `json:"Grade_Supject" valid:"required~กรุณากรอกชื่อวิชา,maxstringlength(20)~โปรดกรอกชื่อวิชาให้ถูกต้อง"`
 		Grade_Code_Supject string `json:"Grade_Code_Supject" valid:"required~กรุณากรอกรหัสวิชา, matches(^\\d{6}$)~โปรดกรอกรหัสวิชาให้ถูกต้อง"`
 		Grade              string `json:"Grade"`
@@ -40,7 +38,7 @@ type CreateGradePayload struct {
 		var Grade entity.GRADE
 		var Student entity.STUDENT
 	
-		if err := c.ShouldBindJSON(&payload); err != nil {
+		if err := c.ShouldBindJSON(&payload); err != nil {  //bind payload to json
 			c.JSON(http.StatusBadRequest, gin.H{"ShouldBindJSON_Grade_error": err.Error()})
 			return
 		}
@@ -50,13 +48,13 @@ type CreateGradePayload struct {
 			return
 		}
 	
-		// 8: ค้นหา Institute ด้วย id
+		//  ค้นหา Institute ด้วย id
 		if tx := entity.DB().Where("id = ?", payload.Institute).First(&Institute); tx.RowsAffected == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Institute not found"})
 			return
 		}
 	
-		// 9: ค้นหา Branch ด้วย id
+		//  ค้นหา Branch ด้วย id
 		if tx := entity.DB().Where("id = ?", payload.Branch).First(&Branch); tx.RowsAffected == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Branch not found"})
 			return
@@ -75,7 +73,7 @@ type CreateGradePayload struct {
 		}
 	
 		// 14: สร้าง entity Grade
-	
+	//ส่งจากหน้าบ้านไปหลังบ้านเข้าตัวแปร payload
 		Grade.Grade_Student_Number = payload.Grade_Student_Number
 		// Grade.Grade_GPA = payload.Grade_GPA
 		Grade.Grade_Supject = payload.Grade_Supject
@@ -88,7 +86,7 @@ type CreateGradePayload struct {
 		Grade.Admin = Admin
 		Grade.Student = Student
 	
-		// 11: บันทึก
+		// : บันทึก
 		if err := entity.DB().Create(&Grade).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"Data_Grade_error": err.Error()})
 			return
@@ -112,7 +110,7 @@ type CreateGradePayload struct {
 		c.JSON(http.StatusOK, gin.H{"data": GradeTable})
 	}
 	
-	// ดึงข้อมูล Grade by id
+	// ดึงข้อมูล Grade by student_id  
 	func ListGradeByID(c *gin.Context) {
 	
 		var GradeByID []entity.GRADE
@@ -128,7 +126,7 @@ type CreateGradePayload struct {
 		c.JSON(http.StatusOK, gin.H{"data": GradeByID})
 	}
 	
-
+// ดึงข้อมูล Grade by id 
 	func GradeByID(c *gin.Context) {
 	
 		var GradeByID entity.GRADE
@@ -190,10 +188,9 @@ type CreateGradePayload struct {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรหัสนักศึกษานี้"})
 			return
 		}
-		// update
+		// update 
 		Grade.ID = payload.ID
 		Grade.Grade_Student_Number = payload.Grade_Student_Number
-		// Grade.Grade_GPA = payload.Grade_GPA
 		Grade.Grade_Supject = payload.Grade_Supject
 		Grade.Grade_Code_Supject = payload.Grade_Code_Supject
 		Grade.Grade = payload.Grade

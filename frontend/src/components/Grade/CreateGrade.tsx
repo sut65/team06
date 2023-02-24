@@ -140,7 +140,7 @@ function CreateGrade() {
   };
   //ตัวรับข้อมูลเข้าตาราง
   function submit() {
-    let data = {
+    let data = {  //เป็น obj data
       Institute: convertType(grade.InstituteID),
       Branch: convertType(grade.BranchID),
       Admin: grade.AdminID,
@@ -154,17 +154,17 @@ function CreateGrade() {
     console.log(data);
 
     const requestOptions = {
-      method: "POST",
+      method: "POST",  //เขียนลง database
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,  
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data),  //สร้างข้อมูลส่งผ่าน body
     };
     console.log(data);
 
     fetch(`${apiUrl}/create_Grade`, requestOptions)
-      .then((response) => response.json())
+      .then((response) => response.json()) //แปลง formath json to javasript obj
       .then((res) => {
         console.log(res);
         if (res.data) {
@@ -180,12 +180,12 @@ function CreateGrade() {
       });
   }
 
-  /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////// //เช็คว่ามีการ login เข้ามาจริงๆมั้ย 
   const [token, setToken] = useState<String>("");
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");  //ดึง token มาเซทให่ตัวแปร
     if (token) {
-      setToken(token);
+      setToken(token); 
     }
   }, []);
 
