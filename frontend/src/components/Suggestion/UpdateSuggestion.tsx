@@ -227,13 +227,13 @@ function UpdateSuggestion() {
         />
         <div id="page-CreateSuggestion">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "260vh" }}>
+            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
               <CssBaseline />
               <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ marginTop: 1.6 }}>
-                      <Typography variant="h4" gutterBottom>
+                    <Box sx={{ marginTop: 1.5 }}>
+                      <Typography variant="h5" gutterBottom>
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -283,7 +283,7 @@ function UpdateSuggestion() {
                     <Box sx={{ flexGrow: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
-                          <h4>เสนอความคิดเห็น</h4>
+                          <h4> รายละเอียดการแก้ไขการเสนอความคิดเห็น </h4>
                           <hr />
                         </Grid>
                         <Grid item xs={2}>
@@ -436,7 +436,7 @@ function UpdateSuggestion() {
                             variant="contained"
                             size="large"
                             fullWidth
-                            color="primary"
+                            color="info"
                             onClick={update}
                           >
                             update
@@ -448,7 +448,7 @@ function UpdateSuggestion() {
                             variant="contained"
                             size="large"
                             fullWidth
-                            color="secondary"
+                            color="primary"
                             component={RouterLink}
                             to="/DataSuggestion"
                           >

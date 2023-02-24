@@ -191,8 +191,9 @@ func main() {
 			router.POST("/suggestion", controller.CreatSuggestion)
 			//แสดงข้อมูลตาราง Suggestion
 			router.GET("/suggestion_table", controller.ListSuggestionTable)
-			// ดึงข้อมูล Suggestion by id
+			// ดึงข้อมูล Suggestion by student_id
 			router.GET("/suggestion_by_id/:id", controller.ListSuggestionByID)
+			// ดึงข้อมูล Suggestion by id
 			router.GET("/suggestion_id/:id", controller.ListSuggestionID)
 			// แก้ไขข้อมูล Suggestion
 			router.PATCH("/update_suggestion", controller.UpdateSuggestion)
