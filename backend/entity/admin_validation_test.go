@@ -76,3 +76,24 @@ func Test_Validate_Admin_Address(t *testing.T) {
 	// err.Error ต้องมี error message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("Admin_Address: 12 does not validate as minstringlength(20)"))
 }
+func Test_Admin(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	admin := ADMIN{
+		Admin_Name:     "สมใจ จิตดี",
+		Admin_Email:    "Admin0001@gmail.com",
+		Admin_Password: "123456789",
+		Admin_Tel:      "0956156705",
+		Admin_Address:  "121225fffffffffffffffffffffffffffffffff", //ผิด
+
+	}
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(admin)
+
+	// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
+	g.Expect(ok).To(BeTrue())
+
+	// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
+	g.Expect(err).To(BeNil())
+
+}
