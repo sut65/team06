@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Paper } from "@mui/material";
 import React from "react";
 
 import { Homebar } from "./Bar-Home";
@@ -20,13 +20,8 @@ function Home() {
               sm={4}
               md={12}
               sx={{
-                backgroundImage:
-                  "url(https://images.unsplash.com/photo-1571235854001-2c64e3fdd06a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)",
+                backgroundColor: "#F5E9CF",
                 backgroundRepeat: "secondary",
-                backgroundColor: (t) =>
-                  t.palette.mode === "dark"
-                    ? t.palette.grey[50]
-                    : t.palette.grey[900],
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -34,9 +29,30 @@ function Home() {
               <div>
                 <Container>
                   <Box>
-                    <h1 style={{ textAlign: "center", color: "#ffffff" }}>
-                      
+                    <h1 style={{ textAlign: "center", color: "#434242" }}>
+                      523332 Software Engineering
                     </h1>
+                    <h2 style={{ textAlign: "center", color: "#434242" }}>
+                      TEAM06 ระบบประวัตินักศึกษา
+                    </h2>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6304249 ธนกฤต น้ำนวล
+                    </h3>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6306304 วนัสนันท์ จันทร์มล
+                    </h3>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6311391 ศุภกานต์ แสงจันทร์
+                    </h3>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6321437 ชุตินันท์ เจริญครบุรี
+                    </h3>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6322113 ปรารถนา บุตรโท
+                    </h3>
+                    <h3 style={{ textAlign: "center", color: "#434242" }}>
+                    B6332426 นฤมน เกษรบัว
+                    </h3>
                   </Box>
                 </Container>
               </div>
