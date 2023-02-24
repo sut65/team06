@@ -73,4 +73,17 @@ func Test_Validate_PersonalID(t *testing.T) {
 
 	})
 
+	t.Run("Positive Case", func(t *testing.T) {
+		scholarshipap := SCHOLARSHIPAP{
+			Identity_Card: "1134900124129",
+			Reasons:       "It is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by theIt is a long established fact that a reader will be distracted by the",
+			GPAX:          3.88, 
+		}
+
+		ok, err := govalidator.ValidateStruct(scholarshipap)
+		g.Expect(ok).To(BeTrue())
+		g.Expect(err).To(BeNil())
+	})
+
 }
+

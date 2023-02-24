@@ -73,4 +73,16 @@ func Test_Validate_Branch_Name(t *testing.T) {
 
 	})
 
+		t.Run("Positive Case", func(t *testing.T) {
+			branch := BRANCH{
+				Branch_Name:    "วิศวกรรมคอมพิวเตอร์",
+				Branch_Teacher: "uiui ui",
+				Branch_Info:    "What is Lorem Ipsum?Lorem Ipsum is simply dummy text",
+			}
+
+		ok, err := govalidator.ValidateStruct(branch)
+		g.Expect(ok).To(BeTrue())
+		g.Expect(err).To(BeNil())
+	})
+	
 }
