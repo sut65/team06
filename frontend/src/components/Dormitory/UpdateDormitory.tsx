@@ -74,7 +74,7 @@ function UpdateDormitory() {
   /////////////////// combobox /////////////////////////
 
   const feachDormitoryByID = async () => {
-    fetch(`${apiUrl}/dormitory_by_id/${id}`, requestOptionsGet)
+    fetch(`${apiUrl}/dormitory_id/${id}`, requestOptionsGet)
       .then((response) => response.json())
       .then((result) => {
         result.data && setDormitory(result.data);
@@ -227,13 +227,13 @@ function UpdateDormitory() {
         />
       <div id="page-UpdateDormitory">
       <React.Fragment>
-        <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+        <Box sx={{ backgroundColor: "#313131", height: "135vh" }}>
           <CssBaseline />
           <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="h4" gutterBottom>
+                    <Box sx={{ flexGrow: 1 ,marginTop: 1.5}}>
+                      <Typography variant="h5" gutterBottom>
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -282,7 +282,7 @@ function UpdateDormitory() {
                   <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
-                        <h4>ข้อมูลหอพักนักศึกษา</h4>
+                        <h4> รายละเอียดการแก้ไขข้อมูลหอพักนักศึกษา </h4>
                         <hr />
                       </Grid>
                       
@@ -314,7 +314,7 @@ function UpdateDormitory() {
                         />
                       </Grid>
                       
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <p>ภาคการศึกษา</p>
                         <Select
                           fullWidth
@@ -334,8 +334,8 @@ function UpdateDormitory() {
                           ))}
                         </Select>
                       </Grid>
-                      <Grid item xs={2}></Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}></Grid>
+                      <Grid item xs={4}>
                         <p>ประเภทหอพัก</p>
                         <Select
                           fullWidth
@@ -355,8 +355,8 @@ function UpdateDormitory() {
                           ))}
                         </Select>
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={8}></Grid>
+                      <Grid item xs={4}>
                         <p>ประเภทห้องพัก</p>
                         <Select
                           fullWidth
@@ -376,8 +376,8 @@ function UpdateDormitory() {
                           ))}
                         </Select>
                       </Grid>
-                      <Grid item xs={6}></Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={8}></Grid>
+                      <Grid item xs={4}>
                         <p>สาขาวิชา</p>
                         <Select
                           fullWidth
@@ -397,7 +397,7 @@ function UpdateDormitory() {
                           ))}
                         </Select>
                       </Grid>
-                      <Grid item xs={6}></Grid>
+                      <Grid item xs={8}></Grid>
 
                       <Grid item xs={4}>
                         <p>เลขห้องพัก</p>
@@ -416,7 +416,12 @@ function UpdateDormitory() {
                       <Grid item xs={12}></Grid>
                       <Grid item xs={6}></Grid>        
                       <Grid item xs={3}>
-                        <Button variant="contained" size="large" fullWidth onClick={update}>
+                        <Button 
+                          variant="contained" 
+                          size="large" 
+                          color="info"
+                          fullWidth 
+                          onClick={update}>
                           update
                         </Button>
                       </Grid>
@@ -424,6 +429,7 @@ function UpdateDormitory() {
                         <Button
                           variant="contained"
                           size="large"
+                          color="primary"
                           fullWidth
                           component={RouterLink}
                           to="/DataDormitory"

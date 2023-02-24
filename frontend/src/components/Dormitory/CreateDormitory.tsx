@@ -217,12 +217,12 @@ function CreateDormitory() {
         />
         <div id="page-CreateSuggestion">
           <React.Fragment>
-            <Box sx={{ backgroundColor: "#313131", height: "125vh" }}>
+            <Box sx={{ backgroundColor: "#313131", height: "135vh" }}>
               <CssBaseline />
               <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ flexGrow: 1 }}>
+                    <Box sx={{ flexGrow: 1 ,marginTop: 1.5}}>
                       <Typography variant="h5" gutterBottom>
                         <Button
                           color="inherit"
@@ -272,7 +272,7 @@ function CreateDormitory() {
                     <Box sx={{ flexGrow: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
-                          <h4>ข้อมูลหอพักนักศึกษา</h4>
+                          <h4> รายละเอียดข้อมูลหอพักนักศึกษา</h4>
                           <hr />
                         </Grid>
 
@@ -304,7 +304,7 @@ function CreateDormitory() {
                           />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={4}>
                           <p>ภาคการศึกษา</p>
                           <Select
                             fullWidth
@@ -324,8 +324,8 @@ function CreateDormitory() {
                             ))}
                           </Select>
                         </Grid>
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={4}></Grid>
+                        <Grid item xs={4}>
                           <p>ประเภทหอพัก</p>
                           <Select
                             fullWidth
@@ -345,8 +345,8 @@ function CreateDormitory() {
                             ))}
                           </Select>
                         </Grid>
-                        <Grid item xs={6}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
                           <p>ประเภทห้องพัก</p>
                           <Select
                             fullWidth
@@ -366,8 +366,8 @@ function CreateDormitory() {
                             ))}
                           </Select>
                         </Grid>
-                        <Grid item xs={6}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
                           <p>สาขาวิชา</p>
                           <Select
                             fullWidth
@@ -387,7 +387,7 @@ function CreateDormitory() {
                             ))}
                           </Select>
                         </Grid>
-                        <Grid item xs={6}></Grid>
+                        <Grid item xs={8}></Grid>
 
                         <Grid item xs={4}>
                           <p>เลขห้องพัก</p>
@@ -409,6 +409,7 @@ function CreateDormitory() {
                           <Button
                             variant="contained"
                             size="large"
+                            color="info"
                             fullWidth
                             onClick={submit}
                           >
@@ -419,6 +420,7 @@ function CreateDormitory() {
                           <Button
                             variant="contained"
                             size="large"
+                            color="primary"
                             fullWidth
                             component={RouterLink}
                             to="/DataDormitory"

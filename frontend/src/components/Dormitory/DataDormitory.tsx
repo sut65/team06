@@ -210,6 +210,7 @@ function DataDormitory() {
                         <TableCell align="center">ลำดับ</TableCell>
                         <TableCell align="center">รหัสนักศึกษา</TableCell>
                         <TableCell align="center">ปีการศึกษา</TableCell>
+                        <TableCell align="center">ประเภทหอพัก</TableCell>
                         <TableCell align="center">เลขห้องพัก</TableCell>
                         <TableCell align="center">สาขาวิชา</TableCell>
                         <TableCell align="center"></TableCell>
@@ -226,6 +227,7 @@ function DataDormitory() {
                           <TableCell align="center">{idx + 1}</TableCell>
                           <TableCell align="center">{row.Dormitory_Student_Number}</TableCell>
                           <TableCell align="center">{row.Dormitory_AcademicYear}</TableCell>
+                          <TableCell align="center">{row.DormitoryType.Dormitory_Type_Name}</TableCell>
                           <TableCell align="center">{row.Room_Number}</TableCell>
                           <TableCell align="center">{row.Branch.Branch_Name}</TableCell>
                           <TableCell align="center">

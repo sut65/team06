@@ -146,8 +146,8 @@ function SearchDormitory() {
               <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="h4" gutterBottom>
+                    <Box sx={{ flexGrow: 1 , marginTop: 1.5}}>
+                      <Typography variant="h5" gutterBottom>
                         <Button
                           color="inherit"
                           component={RouterLink}
