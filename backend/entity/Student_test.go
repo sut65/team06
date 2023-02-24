@@ -8,6 +8,27 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+func Test_Validate_Student_Positive(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	student := STUDENT{
+		Student_Year_Of_Entry: time.Now(),
+		Student_Number:        "B6300001",
+		Student_Name:          "ศุภกานต์ แสงจันทร์",
+		Student_Birthday:      time.Now(),
+		Student_Tel:           "0987564387",
+		Student_Identity_Card: "1139600134216",
+		Student_Nationality:   "ไทย",
+		Student_Religion:      "พุทธ",
+		Student_Address:       "23/21ต.คลอง1 อ.คลองหลวง จ.ปทุมธานี",
+		Student_Fathers_Name:  "สมชาย แสงจันทร์",
+		Student_Mothers_Name:  "สมหญิง แสงจันทร์",
+	}
+	ok, err := govalidator.ValidateStruct(student)
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
+}
+
 func Test_Validate_Student_Number(t *testing.T) {
 	g := NewGomegaWithT(t)
 
