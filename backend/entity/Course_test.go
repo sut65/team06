@@ -7,6 +7,21 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+func Test_Validate_Course_Positive(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	Course := COURSE{
+		Course_Name:    "วิศวกรรมเครื่องกลหลักสูตร(พ.ศ.2560)",
+		Course_Teacher: "แอบมอง คนดี",
+		Course_Credit:  120,
+		Course_Detail:  "เป็นหลักสูตรของสาขาวิศวกรรมเครื่องกลเป็นหลักสูตรที่ออกแบบมาเพื่อตอบโจทย์กับอนาคต",
+		Course_Year:    2560,
+	}
+	ok, err := govalidator.ValidateStruct(Course)
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
+}
+
 func Test_Validate_Course_Credit(t *testing.T) {
 	g := NewGomegaWithT(t)
 
