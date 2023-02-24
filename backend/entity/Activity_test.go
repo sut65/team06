@@ -105,3 +105,24 @@ func Test_Validate_Activity_Year(t *testing.T) {
 	// err.Error ต้องมี error message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("Activity_Year: non zero value required"))
 }
+
+func Test_Validate_Activity_Positive(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	Activity := ACTIVITY{
+		Activity_Student_Number: "B6300000",
+		Activity_Name:           "กิจกรรมปลูกป่ารักโลก",
+		Location:                "ป่าชายเลน",
+		Position:                "เข้าร่วมกิจกรรม",
+		Activity_Date:           time.Now(),
+		Activity_Year:           "2565",
+		Hour:                    "12",
+	}
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Activity)
+
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
+
+}
+
