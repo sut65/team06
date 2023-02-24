@@ -45,7 +45,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function UpdateGrade() {
   /////////////////////////////////////////////////////
 
-  let { id } = useParams();
+  let { id } = useParams(); //เอา id มาจาก paramitet ของ url
   const [institute, setInstitute] = useState<InstituteInterface[]>([]);
   const [branch, setBranch] = useState<BranchInterface[]>([]);
   const [grade, setGrade] = useState<Partial<GradeInterface>>({});
@@ -146,16 +146,16 @@ function UpdateGrade() {
     console.log(data);
 
     const requestOptions = {
-      method: "PATCH",
+      method: "PATCH", //update
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`, 
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     };
 
     fetch(`${apiUrl}/update_grade`, requestOptions)
-      .then((response) => response.json())
+      .then((response) => response.json()) //แปลง json มาเป็น javascript obj
       .then((res) => {
         console.log(res);
         if (res.data) {

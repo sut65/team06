@@ -98,7 +98,7 @@ function SearchGrade() {
   };
 
   /////////////////////////////////////////////////////
-  useEffect(() => {
+  useEffect(() => {  
     feachInstitute();
     feachBranch();
     feachGradeByID();

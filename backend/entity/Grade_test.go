@@ -137,3 +137,19 @@ func Test_Validate_Grade_Code_Supject_Not_Null(t *testing.T) {
 	// err.Error ต้องมี error message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("Grade_Code_Supject: non zero value required"))
 }
+
+func Test_Validate_Grade_Positive(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	Grade := GRADE{
+		Grade_Student_Number: "B6300000",
+		Grade_Code_Supject:   "523332",
+		Grade_Supject:        "SOFTWARE ENGINEERING",
+	}
+	// ตรวจสอบด้วย govalidator
+	ok, err := govalidator.ValidateStruct(Grade)
+	g.Expect(ok).To(BeTrue())
+	g.Expect(err).To(BeNil())
+
+	
+}
