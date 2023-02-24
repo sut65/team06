@@ -139,6 +139,16 @@ function DataSuggestion() {
     setFilter(NewFilter);
   }, [suggestiontable, Suggestion_Student_Number]);
 
+    /////////////////////////////////////////////////////
+
+    const addHours = (date: Date, hours: number): Date => {
+      const result = new Date(date);
+      result.setHours(result.getHours() + hours);
+      return result;
+    };
+  
+    ///////////////////////////////////////////////////////////////////////
+
   /////////////////////////////////////////////////////
 
   const [token, setToken] = useState<String>("");
@@ -227,7 +237,7 @@ function DataSuggestion() {
                           <TableCell align="center">{row.Suggestion_Student_Number}</TableCell>
                           <TableCell align="center">{row.Suggestion_Student_Name}</TableCell>
                           <TableCell align="center">{row.Suggestion_Teacher}</TableCell>
-                          <TableCell align="center">{date_TO_String(row.Suggestion_Date.toString())}</TableCell>
+                          <TableCell align="center">{date_TO_String(addHours(row.Suggestion_Date, 7).toISOString())}</TableCell>
                           <TableCell align="center">{row.Suggestion_Detail}</TableCell>
                           {/* <TableCell align="center">{row.Branch.Branch_Name}</TableCell> */}
                           <TableCell align="center">

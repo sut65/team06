@@ -231,8 +231,8 @@ function CreateSuggestion() {
               <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Paper sx={{ padding: 2 }}>
                   <Box display={"flex"}>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="h4" gutterBottom>
+                    <Box sx={{ flexGrow: 1 , marginTop: 1.5}}>
+                      <Typography variant="h5" gutterBottom>
                         <Button
                           color="inherit"
                           component={RouterLink}
@@ -281,7 +281,7 @@ function CreateSuggestion() {
                     <Box sx={{ flexGrow: 1 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
-                          <h4>เสนอความคิดเห็น</h4>
+                          <h4> รายละเอียดการเสนอความคิดเห็น </h4>
                           <hr />
                         </Grid>
                         <Grid item xs={2}>
@@ -435,7 +435,7 @@ function CreateSuggestion() {
                             variant="contained"
                             size="large"
                             fullWidth
-                            color="primary"
+                            color="info"
                             onClick={submit}
                           >
                             submit
@@ -447,7 +447,7 @@ function CreateSuggestion() {
                             variant="contained"
                             size="large"
                             fullWidth
-                            color="secondary"
+                            color="primary"
                             component={RouterLink}
                             to="/DataSuggestion"
                           >
